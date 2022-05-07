@@ -1,6 +1,6 @@
 <script>
-   import { mongoTrack, version } from "../../store";
-   // import { onMount } from "svelte";
+   import { mongoTrack, version, tabsOrChords } from "../../store";
+   import { onMount } from "svelte";
 
    let container;
    let embed;
@@ -26,5 +26,5 @@
 </svelte:head>
 
 <div>
-   <div bind:this={container} class="" style="height: 500px" />
+   <div bind:this={container} style="height: 500px" />
 </div>

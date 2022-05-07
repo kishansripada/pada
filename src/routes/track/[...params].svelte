@@ -30,11 +30,9 @@
    </button>
 </div>
 
-{#if $mongoTrack}
+{#if $tabsOrChords == "tabs" && $mongoTrack}
    {#await $mongoTrack then mongoTrack}
-      <div style="display: {$tabsOrChords == 'tabs' ? 'block' : 'none'};">
-         <Tabs />
-      </div>
+      <Tabs />
    {/await}
 {/if}
 

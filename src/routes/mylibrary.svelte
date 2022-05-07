@@ -1,1 +1,1 @@
-mylib
+MY LIB

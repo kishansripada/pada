@@ -1,5 +1,5 @@
-var client_id = "29110b23f6d14d67856438c2504dd2c4"; // Your client id
-var client_secret = "66a194de8fc54b7eac48ae165ecdd09f"; // Your secret
+var client_id = "01a3817b86784869a571c4fa82ec3de7"; // Your client id
+var client_secret = "19e1972a694740ff8537940a773c3ac3"; // Your secret
 
 export async function getToken() {
    let body = await fetch("https://accounts.spotify.com/api/token", {
@@ -130,7 +130,7 @@ export async function search(query, types, limit, token) {
 }
 export async function getAuthToken(code) {
    let body = await fetch("https://accounts.spotify.com/api/token", {
-      body: `grant_type=authorization_code&code=${code}&redirect_uri=${window.location.origin}&client_id=29110b23f6d14d67856438c2504dd2c4&client_secret=66a194de8fc54b7eac48ae165ecdd09f`,
+      body: `grant_type=authorization_code&code=${code}&redirect_uri=${window.location.origin}&client_id=${client_id}&client_secret=${client_secret}`,
       headers: {
          "Content-Type": "application/x-www-form-urlencoded",
       },
