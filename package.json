@@ -1,0 +1,29 @@
+{
+   "name": "boptabs",
+   "version": "0.0.1",
+   "scripts": {
+      "dev": "svelte-kit dev",
+      "build": "svelte-kit build",
+      "package": "svelte-kit package",
+      "preview": "svelte-kit preview",
+      "prepare": "svelte-kit sync",
+      "lint": "eslint --ignore-path .gitignore ."
+   },
+   "devDependencies": {
+      "@sveltejs/adapter-auto": "next",
+      "@sveltejs/kit": "next",
+      "autoprefixer": "^10.4.7",
+      "eslint": "^7.32.0",
+      "eslint-plugin-svelte3": "^3.2.1",
+      "postcss": "^8.4.13",
+      "svelte": "^3.46.0",
+      "tailwindcss": "^3.0.24"
+   },
+   "type": "module",
+   "dependencies": {
+      "@fontsource/fira-mono": "^4.5.0",
+      "@lukeed/uuid": "^2.0.0",
+      "cookie": "^0.4.1",
+      "realm-web": "^1.7.0"
+   }
+}
