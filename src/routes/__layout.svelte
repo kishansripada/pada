@@ -13,7 +13,7 @@
 <main>
    <slot class="container" />
 </main>
-{#if $isPremium}
+{#if $isPremium && browser}
    <WebPlayback />
 {/if}
 

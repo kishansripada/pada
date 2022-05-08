@@ -8,8 +8,9 @@ export const version = writable({
    chords: 0,
 });
 export const tabsOrChords = writable("tabs");
-export const loggedIn = writable("false");
-export const isPremium = writable("false");
+export const loggedIn = writable(false);
+export const isPremium = writable(false);
+export const spotifyPosition = writable(null);
 
 export const logIn = readable(function logIn() {
    console.log(window.location.origin);

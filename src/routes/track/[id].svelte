@@ -6,11 +6,9 @@
    import { page } from "$app/stores";
    import { trackDetails, mongoTrack, tabsOrChords, version } from "../../store.js";
 
-   $: [myId, myTabsOrChords, myVersion] = $page.params.params.split("/");
-
-   $: trackDetails.set(fetch(`/api/trackdetails/${myId}`).then((r) => r.json()));
-   $: mongoTrack.set(fetch(`/api/${myId}`).then((r) => r.json()));
-
+   $: if ($page.params.id) trackDetails.set(fetch(`/api/trackdetails/${$page.params.id}`).then((r) => r.json()));
+   $: mongoTrack.set(fetch(`/api/${$page.params.id}`).then((r) => r.json()));
+   $: console.log({ $trackDetails });
    const switchType = () => tabsOrChords.update((current) => (current == "tabs" ? "chords" : "tabs"));
 </script>
 
