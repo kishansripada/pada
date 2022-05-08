@@ -1,6 +1,9 @@
 <script>
    import { trackDetails, loggedIn, spotifyPosition } from "../store";
    import { page } from "$app/stores";
+   import playIcon from "../static/play.svg";
+   import pauseIcon from "../static/pause.svg";
+
    $: console.log({ $page });
    let player;
    let play;
@@ -42,14 +45,20 @@
    async function playPause() {
       // check to make sure play and player and initialized
       if (play && player) {
+         //   if there isn't a track queued, don't do anything
+         if (!$trackDetails) return;
          //   get the current track id from store
          let id = (await $trackDetails.then((trackDetails) => trackDetails)).id;
          player.getCurrentState().then((state) => {
             // if the current songs playing is the song that its in the store OR
             // if the user in on a page that is not /track/id THEN
             // play/pause the current song
+            paused = state ? !state.paused : true;
+
             if (state?.track_window?.current_track?.id == id || $page.routeId !== "track/[id]") {
-               paused = state.paused;
+               //    paused = !state.paused;
+               paused = state ? !state.paused : true;
+
                player.togglePlay();
             } else {
                // otherwise, the user is viewing a differnt song than is in the database OR the state is null so the new song should be queued
@@ -57,6 +66,7 @@
                   playerInstance: player,
                   spotify_uri: `spotify:track:${id}`,
                });
+               paused = false;
             }
          });
       }
@@ -79,4 +89,6 @@
    <script src="https://sdk.scdn.co/spotify-player.js"></script>
 </svelte:head>
 
-<button on:click={playPause}>CLIKC TO PLAY</button>
+<button class="w-16 fixed bottom-2 left-1/2 transform -translate-x-1/2" on:click={playPause}
+   ><img src={paused ? playIcon : pauseIcon} alt="" /></button
+>
