@@ -29,3 +29,12 @@ export const logIn = readable(function logIn() {
 
    window.location.href = "https://accounts.spotify.com/authorize?" + querystring;
 });
+
+export const getGroups = readable(function getGroups(list) {
+   let result = [[], [], [], []];
+   list.forEach((x, index) => {
+      let remainder = index % 16;
+      result[Math.floor(remainder / 4)].push(x);
+   });
+   return result;
+});

@@ -13,14 +13,17 @@
    $: console.log({ $trackDetails });
 </script>
 
-{#await $trackDetails then trackDetails}
-   <div transition:fade={{ delay: 250, duration: 300 }}>
+{#await $trackDetails}
+   <div class="shadow-xl rounded-[20px] h-64 bg-white" />
+{:then trackDetails}
+   <div transition:fade={{ delay: 0, duration: 100 }}>
       <TrackDetails />
    </div>
-   <div class="py-4">
-      <TabsChordsNav />
-   </div>
 {/await}
+
+<div class="py-4">
+   <TabsChordsNav />
+</div>
 
 {#if $tabsOrChords == "tabs" && $mongoTrack}
    {#await $mongoTrack then mongoTrack}
