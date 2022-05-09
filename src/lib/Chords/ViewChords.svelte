@@ -9,10 +9,9 @@
 </script>
 
 {#await filterApprovedChords() then approvedChords}
-   <!-- {JSON.stringify(approvedChords[$version.chords].chords)}     -->
    <div class="flex flex-row">
       {#each $getGroups(approvedChords[$version.chords].chords) as group, i}
-         <div class="grid gap-4 grid-cols-4  basis-1/4 ">
+         <div class="grid gap-2 grid-cols-4 basis-1/4 ">
             {#each group as group}
                <button>
                   <div class="bg-slate-200 rounded h-12 w-full hover:bg-orange-300 grid place-items-center text-xl">
