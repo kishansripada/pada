@@ -1,15 +1,20 @@
 <script>
-   import { mongoTrack } from "../store";
+   import { mongoTrack, isWritingChords } from "../store";
    import Info from "./Info.svelte";
    import ViewChords from "./Chords/ViewChords.svelte";
    import WriteChords from "./Chords/WriteChords.svelte";
+   import { browser } from "$app/env";
 </script>
 
 {#await $mongoTrack then mongoTrack}
-   {#if mongoTrack.chords.length}
-      <Info />
-      <ViewChords />
+   {#if !$isWritingChords}
+      {#if mongoTrack.chords.length}
+         <Info />
+         <ViewChords />
+      {:else}
+         <p>No Chords!</p>
+      {/if}
    {:else}
-      <div>No Chords!</div>
+      <WriteChords />
    {/if}
 {/await}

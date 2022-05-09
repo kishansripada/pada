@@ -9,8 +9,8 @@
    // let access_token = getToken().then((tokenObject) => token.set(tokenObject.access_token));
 </script>
 
+<Nav />
 <main class="container">
-   <Nav />
    <slot />
 </main>
 

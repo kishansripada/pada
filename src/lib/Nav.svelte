@@ -5,7 +5,7 @@
    import logo from "../static/logo.svg";
 </script>
 
-<div class="sticky top-0 z-50 bg-white rounded-b">
+<div class="sticky top-0 z-50 bg-white rounded-b px-10">
    <div class="flex flex-row justify-between items-center h-24 pt-2">
       <div class="flex flex-row">
          <a href="/" class="transition ease-in-out hover:-translate-y-1 duration-300 px-2">Home</a>
