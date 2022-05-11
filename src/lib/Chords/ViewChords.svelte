@@ -1,37 +1,51 @@
 <script>
 import { version, spotifyPosition, getGroups } from "../../store";
 
+import { createEventDispatcher } from "svelte";
+
+const dispatch = createEventDispatcher();
+
+function changeSpotifyPosition(bar) {
+   console.log(bar);
+   dispatch("positionChange", {
+      position: bar * 1000,
+   });
+}
+
+// gets mongoTrack.chords from Chord.svlete
 export let chordCharts;
 
-$: approvedChords = chordCharts.filter((chordChart) => chordChart.approved);
+// filters out only chords that are approved
+$: approvedChordsCharts = chordCharts.filter((chordChart) => chordChart.approved);
 
-$: currentChords = approvedChords[$version.chords];
+// gets the current user selected version from the approved chords ONLY
+$: currentChordChart = approvedChordsCharts[$version.chords];
 
-$: currentBar = currentChords.chords.findIndex((beat) => {
+// get fill the chords from the currentVersion with empty fillers in order to make it a perfect rectangle in render
+$: currentChords = [...currentChordChart.chords, ...new Array(16 - (currentChordChart.chords.length % 16)).fill({ filler: true })];
+
+// given the spotify position, calculate the current bar of rthe song
+$: currentBar = currentChords.findIndex((beat) => {
    return $spotifyPosition / 1000 < beat.start;
 });
 $: console.log(currentBar);
 </script>
 
-{#await currentChords then currentChords}
-   <div class="flex flex-row">
-      {#each $getGroups(currentChords.chords) as group, i}
-         <div class="grid gap-2 grid-cols-4 basis-1/4 ">
-            {#each group as group, j}
-               <button>
-                  {#await currentBar then currentBar}
-                     <div
-                        class="bg-transparent text-white outline-white outline rounded h-12 w-full hover:bg-orange-500 grid place-items-center text-xl"
-                        class:bg-orange-500="{Math.floor(j / 4) * 16 + i * 4 + (j % 4) == currentBar}">
-                        {group.chord || ""}
-                     </div>
-                  {/await}
-               </button>
-            {/each}
-         </div>
-         {#if i !== 3}
-            <div class="bg-slate-300 w-2 mx-2 rounded"></div>
-         {/if}
-      {/each}
-   </div>
-{/await}
+<div class="flex flex-row ">
+   {#each $getGroups(currentChords) as group, i}
+      <div class="grid basis-1/4 grid-cols-4 gap-2 ">
+         {#each group as group, j}
+            <button on:click="{() => changeSpotifyPosition(Math.floor(j / 4) * 16 + i * 4 + (j % 4))}">
+               <div
+                  class="grid h-12 w-full place-items-center rounded bg-white/5 text-xl text-white outline hover:bg-white/25 "
+                  class:bg-slate-400="{Math.floor(j / 4) * 16 + i * 4 + (j % 4) == currentBar}">
+                  {group.chord || ""}
+               </div>
+            </button>
+         {/each}
+      </div>
+      {#if i !== 3}
+         <div class="mx-2 w-2 rounded bg-slate-300"></div>
+      {/if}
+   {/each}
+</div>

@@ -3,7 +3,7 @@ import { isWritingChords } from "../store";
 export let trackDetails;
 </script>
 
-<div class="flex h-64 flex-row rounded-[20px] shadow-2xl">
+<div class="flex h-64 flex-row rounded-[20px] bg-white/10 shadow-2xl">
    <img class="w-64 rounded-[20px]  " src="{trackDetails.album.images[0].url}" alt="" />
 
    <div class="flex flex-col pl-7 pt-3 text-white ">
@@ -20,8 +20,9 @@ export let trackDetails;
       </div>
    </div>
 
-   <div class="ml-auto flex w-56 flex-col py-3 pr-3">
-      <button class="mt-auto rounded-full bg-blue-400 py-1 px-3" on:click="{() => isWritingChords.update((state) => !state)}"
-         >{$isWritingChords ? "Cancel 🚫" : "Write Chords ✍"}</button>
+   <div class="ml-auto flex  flex-col py-3 pr-3">
+      <button
+         class="mt-auto rounded-full border border-solid border-gray-300 py-1 px-3 text-white hover:bg-white/10"
+         on:click="{() => isWritingChords.update((state) => !state)}">{$isWritingChords ? "cancel 🚫" : "write chords ✍"}</button>
    </div>
 </div>

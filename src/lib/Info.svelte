@@ -12,7 +12,7 @@ export let mongoTrack;
    border
    border-solid
    border-gray-300
-bg-transparent
+bg-white/5
 bg-clip-padding	
  bg-no-repeat px-3
 py-1.5 text-base font-normal
@@ -23,7 +23,7 @@ transition  ease-in-out"
    aria-label="Default select example">
    {#each mongoTrack[$tabsOrChords].filter((x) => x.approved) as version, index}
       <option value="{index}">
-         Version {index + 1}
+         version {index + 1}
       </option>
    {/each}
 </select>

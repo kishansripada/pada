@@ -1,8 +1,8 @@
 <script>
-import { trackDetails, loggedIn, spotifyPosition } from "../store";
+import { trackDetails, loggedIn, spotifyPosition } from "../../store.js";
 import { page } from "$app/stores";
-import playIcon from "../static/play.svg";
-import pauseIcon from "../static/pause.svg";
+import playIcon from "../../static/play.svg";
+import pauseIcon from "../../static/pause.svg";
 
 // $: console.log({ $page });
 let player;

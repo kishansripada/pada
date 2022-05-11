@@ -17,12 +17,12 @@ $: console.log({ $trackDetails });
 {#await $trackDetails}
    <div class="shadow-4xl rounded-[20px] h-64 "></div>
 {:then trackDetails}
-   <div transition:fade="{{ delay: 0, duration: 100 }}">
+   <div transition:fade="{{ delay: 0, duration: 100 }}" class="pt-7">
       <TrackDetails trackDetails="{trackDetails}" />
    </div>
 {/await}
 
-<div class="py-4">
+<div class="pb-4 pt-9">
    <TabsChordsNav />
 </div>
 

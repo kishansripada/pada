@@ -13,6 +13,8 @@ export const isPremium = writable(false);
 export const spotifyPosition = writable(null);
 export const isWritingChords = writable(false);
 
+
+
 export const logIn = readable(function logIn() {
    console.log(window.location.origin);
    let scope = ["streaming", "user-read-email", "user-read-private", "user-library-read"].join(" ");

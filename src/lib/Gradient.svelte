@@ -14,6 +14,7 @@ let colors = Vibrant.from(albumUrl)
    .then((colors) => colors.join(","));
 
 console.log(colors);
+
 var createdStyleTag = document.createElement("style");
 createdStyleTag.textContent = `@keyframes gradient {
    0% {
@@ -28,6 +29,7 @@ createdStyleTag.textContent = `@keyframes gradient {
 }`;
 
 document.body.appendChild(createdStyleTag);
+// document.body.removeChild(createdStyleTag);
 </script>
 
 {#if browser}
@@ -35,7 +37,8 @@ document.body.appendChild(createdStyleTag);
       <div
          class="fixed top-0 -z-50 h-full w-full body"
          style=" background: linear-gradient(-45deg, {colors});
-      animation: gradient 45s ease infinite;
+     animation: gradient 45s ease infinite; 
+
       background-size: 400% 400%;
       height: 100vh;">
       </div>
