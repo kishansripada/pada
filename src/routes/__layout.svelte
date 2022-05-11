@@ -1,22 +1,40 @@
 <script>
-   import "../app.css";
-   import { browser } from "$app/env";
-   import { isPremium } from "../store.js";
+import "../app.css";
+import { browser } from "$app/env";
+import { isPremium, trackDetails } from "../store.js";
 
-   import LogIn from "$lib/LogIn.svelte";
-   import Nav from "$lib/Nav.svelte";
-   import WebPlayback from "$lib/WebPlayback.svelte";
-   // let access_token = getToken().then((tokenObject) => token.set(tokenObject.access_token));
+import LogIn from "$lib/LogIn.svelte";
+import Nav from "$lib/Nav.svelte";
+import WebPlayback from "$lib/WebPlayback.svelte";
+
+// const getAverageColor = async () => {
+//    const fac = new FastAverageColor();
+//    if (!$trackDetails) return;
+//    let test = await $trackDetails.then((trackDetails) => trackDetails);
+//    let color = fac
+//       .getColorAsync(test.album.images[0].url)
+//       .then((color) => {
+//          return color;
+//       })
+//       .catch((e) => {
+//          console.log(e);
+//       });
+//    return color;
+// };
+// $: color = getAverageColor();
+// let access_token = getToken().then((tokenObject) => token.set(tokenObject.access_token));
 </script>
 
 <Nav />
-<main class="container">
+<main class="container ">
    <slot />
 </main>
 
-<!-- <div class="blur-lg fixed top-0 w-full -z-50 opacity-50">
-   <img class="w-full" src="https://i.scdn.co/image/ab67616d0000b2731ae71e77aef7c34227027daa" alt="" />
-</div> -->
+<!-- <div class="fixed top-0 -z-50 h-full w-full" style="background: linear-gradient(#e66465, #e66465);"></div> -->
+
+<!-- <svelte:head>
+   <script src="https://unpkg.com/fast-average-color/dist/index.min.js" on:load="{getAverageColor}"></script>
+</svelte:head> -->
 
 {#if $isPremium && browser}
    <WebPlayback />

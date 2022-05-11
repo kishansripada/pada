@@ -1,16 +1,16 @@
 <script>
-   import { mongoTrack } from "../store";
-   import { fade } from "svelte/transition";
+// import { mongoTrack } from "../store";
+import { fade } from "svelte/transition";
 
-   import Info from "./Info.svelte";
-   import Flat from "../lib/Tabs/Flat.svelte";
+import Info from "./Info.svelte";
+import Flat from "../lib/Tabs/Flat.svelte";
+export let mongoTrack;
+// console.log({ mongoTrack });
 </script>
 
-{#await $mongoTrack then mongoTrack}
-   {#if mongoTrack.tabs.length}
-      <Info />
-      <Flat />
-   {:else}
-      <div>No Tabs!</div>
-   {/if}
-{/await}
+{#if mongoTrack.tabs.length}
+   <Info mongoTrack="{mongoTrack}" />
+   <Flat tabs="{mongoTrack.tabs}" />
+{:else}
+   <div>No Tabs!</div>
+{/if}

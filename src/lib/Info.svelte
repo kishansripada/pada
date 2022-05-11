@@ -1,30 +1,28 @@
 <script>
-   import { version, mongoTrack, tabsOrChords } from "../store";
+import { version, tabsOrChords } from "../store";
+export let mongoTrack;
 </script>
 
-{#await $mongoTrack then mongoTrack}
-   <select
-      bind:value={$version[$tabsOrChords]}
-      class="form-select appearance-none
+<select
+   bind:value="{$version[$tabsOrChords]}"
+   class="form-select m-0
    block
-   px-3
-   py-1.5
-   text-base
-   font-normal
-text-gray-700
+   appearance-none
+   rounded
+   border
+   border-solid
+border-gray-300
 bg-white bg-clip-padding bg-no-repeat
-border border-solid border-gray-300
-rounded
+px-3 py-1.5 text-base
+font-normal
+text-gray-700
 transition
 ease-in-out
-m-0
-focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-      aria-label="Default select example"
-   >
-      {#each mongoTrack[$tabsOrChords].filter((x) => x.approved) as version, index}
-         <option value={index}>
-            Version {index + 1}
-         </option>
-      {/each}
-   </select>
-{/await}
+focus:border-blue-600 focus:bg-white focus:text-gray-700 focus:outline-none"
+   aria-label="Default select example">
+   {#each mongoTrack[$tabsOrChords].filter((x) => x.approved) as version, index}
+      <option value="{index}">
+         Version {index + 1}
+      </option>
+   {/each}
+</select>

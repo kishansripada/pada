@@ -1,27 +1,38 @@
 <script>
-   import { mongoTrack, version, spotifyPosition, getGroups } from "../../store";
-   async function filterApprovedChords() {
-      let chords = await $mongoTrack.then((mongoTrack) => mongoTrack.chords);
-      return await chords.filter((chord) => chord.approved);
-   }
+import { version, spotifyPosition, getGroups } from "../../store";
 
-   $: console.log({ $spotifyPosition });
+export let chordCharts;
+
+$: approvedChords = chordCharts.filter((chordChart) => chordChart.approved);
+
+$: currentChords = approvedChords[$version.chords];
+
+$: currentBar = currentChords.chords.findIndex((beat) => {
+   return $spotifyPosition / 1000 < beat.start;
+});
+$: console.log(currentBar);
 </script>
 
-{#await filterApprovedChords() then approvedChords}
+<!-- <p>{JSON.stringify(approvedChords)}</p> -->
+
+{#await currentChords then currentChords}
    <div class="flex flex-row">
-      {#each $getGroups(approvedChords[$version.chords].chords) as group, i}
+      {#each $getGroups(currentChords.chords) as group, i}
          <div class="grid gap-2 grid-cols-4 basis-1/4 ">
-            {#each group as group}
+            {#each group as group, j}
                <button>
-                  <div class="bg-slate-200 rounded h-12 w-full hover:bg-orange-300 grid place-items-center text-xl">
-                     {group.chord || ""}
-                  </div>
+                  {#await currentBar then currentBar}
+                     <div
+                        class="bg-slate-200 rounded h-12 w-full hover:bg-orange-300 grid place-items-center text-xl"
+                        class:bg-orange-300="{j + 4 * i == currentBar}">
+                        {group.chord || j}
+                     </div>
+                  {/await}
                </button>
             {/each}
          </div>
          {#if i !== 3}
-            <div class="bg-slate-600 w-2 mx-2 rounded" />
+            <div class="bg-slate-600 w-2 mx-2 rounded"></div>
          {/if}
       {/each}
    </div>
