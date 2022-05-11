@@ -3,6 +3,7 @@ import TrackDetails from "$lib/TrackDetails.svelte";
 import Tabs from "$lib/Tabs.svelte";
 import Chords from "$lib/Chords.svelte";
 import TabsChordsNav from "$lib/TabsChordsNav.svelte";
+
 import { fade } from "svelte/transition";
 
 import { page } from "$app/stores";
@@ -14,7 +15,7 @@ $: console.log({ $trackDetails });
 </script>
 
 {#await $trackDetails}
-   <div class="shadow-xl rounded-[20px] h-64 bg-white"></div>
+   <div class="shadow-4xl rounded-[20px] h-64 "></div>
 {:then trackDetails}
    <div transition:fade="{{ delay: 0, duration: 100 }}">
       <TrackDetails trackDetails="{trackDetails}" />

@@ -1,69 +1,67 @@
 <script>
-   import { mongoTrack, version, spotifyPosition, getGroups } from "../../store";
-   import { onMount } from "svelte";
+import { mongoTrack, version, spotifyPosition, getGroups } from "../../store";
+import { onMount } from "svelte";
 
-   async function filterApprovedChords() {
-      let chords = await $mongoTrack.then((mongoTrack) => mongoTrack.chords);
-      return await chords.filter((chord) => chord.approved);
+// export let chordCharts;
+
+let data;
+$mongoTrack.then((mongoTrack) => {
+   data = [
+      ["", "", "", "", "", "", "", ""],
+      ["", "", "", "", "", "", "", ""],
+      ["", "", "", "", "", "", "", ""],
+      ["", "", "", "", "", "", "", ""],
+   ];
+});
+
+let gridElement;
+
+let gridStatus = {
+   isScriptLoaded: false,
+   isStyleLoaded: false,
+   isMounted: false,
+   isInited: false,
+};
+
+onMount(() => {
+   gridStatus.isMounted = true;
+   if (gridStatus.isScriptLoaded && gridStatus.isStyleLoaded) gridInit();
+});
+
+function scriptLoaded() {
+   gridStatus.isScriptLoaded = true;
+   if (gridStatus.isMounted && gridStatus.isStyleLoaded) gridInit();
+}
+
+function styleLoaded() {
+   gridStatus.isStyleLoaded = true;
+   if (gridStatus.isScriptLoaded && gridStatus.isMounted) gridInit();
+}
+
+function gridInit() {
+   if (!gridStatus.isInited) {
+      gridStatus.isInited = true;
+      new Handsontable(gridElement, {
+         data: data,
+         rowHeaders: false,
+         colHeaders: false,
+         stretchH: "all",
+         licenseKey: "non-commercial-and-evaluation", // for non-commercial use only
+      });
    }
-   let data;
-   $mongoTrack.then((mongoTrack) => {
-      data = [
-         ["", "", "", "", "", "", "", ""],
-         ["", "", "", "", "", "", "", ""],
-         ["", "", "", "", "", "", "", ""],
-         ["", "", "", "", "", "", "", ""],
-      ];
-   });
+}
 
-   let gridElement;
-
-   let gridStatus = {
-      isScriptLoaded: false,
-      isStyleLoaded: false,
-      isMounted: false,
-      isInited: false,
-   };
-
-   onMount(() => {
-      gridStatus.isMounted = true;
-      if (gridStatus.isScriptLoaded && gridStatus.isStyleLoaded) gridInit();
-   });
-
-   function scriptLoaded() {
-      gridStatus.isScriptLoaded = true;
-      if (gridStatus.isMounted && gridStatus.isStyleLoaded) gridInit();
-   }
-
-   function styleLoaded() {
-      gridStatus.isStyleLoaded = true;
-      if (gridStatus.isScriptLoaded && gridStatus.isMounted) gridInit();
-   }
-
-   function gridInit() {
-      if (!gridStatus.isInited) {
-         gridStatus.isInited = true;
-         new Handsontable(gridElement, {
-            data: data,
-            rowHeaders: false,
-            colHeaders: false,
-            stretchH: "all",
-            licenseKey: "non-commercial-and-evaluation", // for non-commercial use only
-         });
-      }
-   }
-
-   function firstRowRenderer(instance, td, row, col, prop, value, cellProperties) {
-      Handsontable.renderers.TextRenderer.apply(this, arguments);
-      td.style.fontWeight = "bold";
-      td.style.color = "green";
-      td.style.background = "#CEC";
-   }
+function firstRowRenderer(instance, td, row, col, prop, value, cellProperties) {
+   Handsontable.renderers.TextRenderer.apply(this, arguments);
+   td.style.fontWeight = "bold";
+   td.style.color = "green";
+   td.style.background = "#CEC";
+}
 </script>
 
 <svelte:head>
-   <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js" on:load={scriptLoaded}></script>
-   <link href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" rel="stylesheet" on:load={styleLoaded} />
+   <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js" on:load="{scriptLoaded}"></script>
+   <link href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css" rel="stylesheet" on:load="{styleLoaded}" />
 </svelte:head>
 
 <!-- 
@@ -85,4 +83,4 @@
       {/each}
    </div>
 {/await} -->
-<div class="" bind:this={gridElement} />
+<div class="" bind:this="{gridElement}"></div>

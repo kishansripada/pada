@@ -8,8 +8,11 @@ export let mongoTrack;
 // console.log({ mongoTrack });
 </script>
 
-{#if mongoTrack.tabs.length}
-   <Info mongoTrack="{mongoTrack}" />
+{#if mongoTrack?.tabs?.length}
+   <div class="py-3">
+      <Info mongoTrack="{mongoTrack}" />
+   </div>
+
    <Flat tabs="{mongoTrack.tabs}" />
 {:else}
    <div>No Tabs!</div>

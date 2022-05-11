@@ -8,13 +8,16 @@ import { browser } from "$app/env";
 
 {#await $mongoTrack then mongoTrack}
    {#if !$isWritingChords}
-      {#if mongoTrack.chords.length}
-         <Info mongoTrack="{mongoTrack}" />
+      {#if mongoTrack.chords?.length}
+         <div class="py-3">
+            <Info mongoTrack="{mongoTrack}" />
+         </div>
+
          <ViewChords chordCharts="{mongoTrack.chords}" />
       {:else}
          <p>No Chords!</p>
       {/if}
    {:else}
-      <WriteChords />
+      <WriteChords chordCharts="{mongoTrack.chords}" />
    {/if}
 {/await}

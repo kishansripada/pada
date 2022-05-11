@@ -6,23 +6,7 @@ import { isPremium, trackDetails } from "../store.js";
 import LogIn from "$lib/LogIn.svelte";
 import Nav from "$lib/Nav.svelte";
 import WebPlayback from "$lib/WebPlayback.svelte";
-
-// const getAverageColor = async () => {
-//    const fac = new FastAverageColor();
-//    if (!$trackDetails) return;
-//    let test = await $trackDetails.then((trackDetails) => trackDetails);
-//    let color = fac
-//       .getColorAsync(test.album.images[0].url)
-//       .then((color) => {
-//          return color;
-//       })
-//       .catch((e) => {
-//          console.log(e);
-//       });
-//    return color;
-// };
-// $: color = getAverageColor();
-// let access_token = getToken().then((tokenObject) => token.set(tokenObject.access_token));
+import Gradient from "$lib/Gradient.svelte";
 </script>
 
 <Nav />
@@ -30,18 +14,18 @@ import WebPlayback from "$lib/WebPlayback.svelte";
    <slot />
 </main>
 
-<!-- <div class="fixed top-0 -z-50 h-full w-full" style="background: linear-gradient(#e66465, #e66465);"></div> -->
-
-<!-- <svelte:head>
-   <script src="https://unpkg.com/fast-average-color/dist/index.min.js" on:load="{getAverageColor}"></script>
-</svelte:head> -->
-
 {#if $isPremium && browser}
    <WebPlayback />
 {/if}
 
 {#if browser}
    <LogIn />
+{/if}
+
+{#if $trackDetails}
+   {#await $trackDetails then trackDetails}
+      <Gradient albumUrl="{trackDetails.album.images[0].url}" />
+   {/await}
 {/if}
 
 <style>
