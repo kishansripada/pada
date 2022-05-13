@@ -23,11 +23,14 @@ import Footer from "../lib/Footer.svelte";
    {#await $trackDetails then trackDetails}
       <Gradient albumUrl="{trackDetails.album.images[0].url}" />
    {/await}
+{:else}
+   <div class="fixed top-0 -z-40 h-full w-full body bg-black/50"></div>
 {/if}
 
 <main class="container ">
    <slot />
 </main>
+
 <div class="pt-10">
    <Footer />
 </div>
