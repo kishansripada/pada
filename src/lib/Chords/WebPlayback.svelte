@@ -1,15 +1,16 @@
 <script>
-import { trackDetails, loggedIn, spotifyPosition, logIn } from "../../store.js";
+import { trackDetails, loggedIn, spotifyPosition, logIn, chordPosition } from "../../store.js";
 import { page } from "$app/stores";
 import playIcon from "../../static/play.svg";
 import pauseIcon from "../../static/pause.svg";
 
-// $: console.log({ $page });
 let player;
 let play;
 let paused = true;
 
-$: console.log({ paused });
+// $: console.log({ paused });
+
+// define player, play
 window.onSpotifyWebPlaybackSDKReady = () => {
    player = new window.Spotify.Player({
       name: "Web Playback SDK",
@@ -40,6 +41,15 @@ window.onSpotifyWebPlaybackSDKReady = () => {
    });
    player.connect();
 };
+
+// when click on chord change position to that bar
+$: if (player) {
+   player.isLoaded.then(() => {
+      player.seek($chordPosition.bar * 1000).then(() => {
+         console.log("Changed position!");
+      });
+   });
+}
 
 // when play/pause button is clicled
 async function playPause() {
@@ -74,6 +84,7 @@ async function playPause() {
    }
 }
 
+// every 50ms get the position of the song and send it to the store
 let interval = window.setInterval(() => {
    //   console.log("checked state");
    if (play && player) {

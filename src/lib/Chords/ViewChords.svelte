@@ -1,15 +1,22 @@
 <script>
-import { version, spotifyPosition, getGroups } from "../../store";
+import { version, spotifyPosition, getGroups, chordPosition } from "../../store";
 
-import { createEventDispatcher } from "svelte";
-
-const dispatch = createEventDispatcher();
-
-function changeSpotifyPosition(bar) {
-   console.log(bar);
-   dispatch("positionChange", {
-      position: bar * 1000,
+const scrollIntoView = (currentBar) => {
+   console.log(currentBar);
+   const el = document.getElementById(currentBar);
+   console.log(el);
+   if (!el) return;
+   el.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+      inline: "center",
    });
+};
+
+$: scrollIntoView(currentBar);
+// when chord is clicked send the beat number to the store
+function changeSpotifyPosition(bar) {
+   chordPosition.set({ bar: bar });
 }
 
 // gets mongoTrack.chords from Chord.svlete
@@ -28,15 +35,16 @@ $: currentChords = [...currentChordChart.chords, ...new Array(16 - (currentChord
 $: currentBar = currentChords.findIndex((beat) => {
    return $spotifyPosition / 1000 < beat.start;
 });
-$: console.log(currentBar);
+// $: console.log(currentBar);
 </script>
 
 <div class="flex flex-row ">
-   {#each $getGroups(currentChords) as group, i}
+   {#each $getGroups(currentChords) as groups, i}
       <div class="grid basis-1/4 grid-cols-4 gap-2 ">
-         {#each group as group, j}
-            <button on:click="{() => changeSpotifyPosition(Math.floor(j / 4) * 16 + i * 4 + (j % 4))}">
+         {#each groups as group, j}
+            <button on:click="{() => changeSpotifyPosition(group.start)}">
                <div
+                  id="{Math.floor(j / 4) * 16 + i * 4 + (j % 4)}"
                   class="grid h-12 w-full place-items-center rounded bg-white/5 text-xl text-white outline hover:bg-white/25 "
                   class:bg-slate-400="{Math.floor(j / 4) * 16 + i * 4 + (j % 4) == currentBar}">
                   {group.chord || ""}
@@ -49,3 +57,5 @@ $: console.log(currentBar);
       {/if}
    {/each}
 </div>
+
+<!-- <p id="test">element</p> -->

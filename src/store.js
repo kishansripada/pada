@@ -12,7 +12,7 @@ export const loggedIn = writable(false);
 export const isPremium = writable(false);
 export const spotifyPosition = writable(null);
 export const isWritingChords = writable(false);
-
+export const chordPosition = writable({ bar: 0 });
 
 
 export const logIn = readable(function logIn() {
