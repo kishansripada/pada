@@ -9,15 +9,15 @@ import { fade } from "svelte/transition";
 import { page } from "$app/stores";
 import { trackDetails, mongoTrack, tabsOrChords, version } from "../../store.js";
 
-$: if ($page.params.id) trackDetails.set(fetch(`/api/trackdetails/${$page.params.id}`).then((r) => r.json()));
-$: mongoTrack.set(fetch(`/api/${$page.params.id}`).then((r) => r.json()));
+$: if ($page.params.id) trackDetails.set(fetch(`/api/spotify/trackdetails/${$page.params.id}`).then((r) => r.json()));
+$: mongoTrack.set(fetch(`/api/gettrack/${$page.params.id}`).then((r) => r.json()));
 $: console.log({ $trackDetails });
 </script>
 
 {#await $trackDetails}
-   <div class="shadow-4xl rounded-[20px] h-64 "></div>
+   <div class="shadow-4xl rounded-[20px] h-64 pt-0 bg-white/10"></div>
 {:then trackDetails}
-   <div transition:fade="{{ delay: 0, duration: 100 }}" class="pt-7">
+   <div transition:fade="{{ delay: 0, duration: 250 }}" class="pt-0">
       <TrackDetails trackDetails="{trackDetails}" />
    </div>
 {/await}

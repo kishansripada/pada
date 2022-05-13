@@ -32,18 +32,19 @@ document.body.appendChild(createdStyleTag);
 // document.body.removeChild(createdStyleTag);
 </script>
 
-{#if browser}
-   {#await colors then colors}
-      <div
-         class="fixed top-0 -z-50 h-full w-full body"
-         style=" background: linear-gradient(-45deg, {colors});
+<!-- {#if browser} -->
+{#await colors then colors}
+   <div
+      class="fixed top-0 -z-50 h-full w-full body bg-slate-600"
+      style=" background: linear-gradient(-45deg, {colors});
      animation: gradient 45s ease infinite; 
 
       background-size: 400% 400%;
       height: 100vh;">
-      </div>
-   {/await}
-{/if}
+   </div>
+   <div class="fixed top-0 -z-40 h-full w-full body bg-black/30"></div>
+{/await}
+<!-- {/if} -->
 
 <!-- transition:fade="{{ delay: 0, duration: 300 }}" -->
 <style>

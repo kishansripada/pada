@@ -1,5 +1,5 @@
 <script>
-import { trackDetails, loggedIn, spotifyPosition } from "../../store.js";
+import { trackDetails, loggedIn, spotifyPosition, logIn } from "../../store.js";
 import { page } from "$app/stores";
 import playIcon from "../../static/play.svg";
 import pauseIcon from "../../static/pause.svg";
@@ -43,6 +43,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
 // when play/pause button is clicled
 async function playPause() {
+   if (!$loggedIn) logIn();
+
    // check to make sure play and player and initialized
    if (play && player) {
       //   if there isn't a track queued, don't do anything

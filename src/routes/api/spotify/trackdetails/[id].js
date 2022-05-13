@@ -1,5 +1,4 @@
-import { getToken, getTrack, getArtists, getTrackFeatures } from "../../../spotify.js";
-// console.log(token);
+import { getToken, getTrack, getArtists, getTrackFeatures } from "../../../../spotify.js";
 
 export async function get({ params }) {
    let token = await getToken().then((token) => token.access_token);

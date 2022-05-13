@@ -45,7 +45,7 @@ $: console.log(currentBar);
          {/each}
       </div>
       {#if i !== 3}
-         <div class="mx-2 w-2 rounded bg-slate-300"></div>
+         <div class="mx-2 w-2 rounded bg-white/60"></div>
       {/if}
    {/each}
 </div>
