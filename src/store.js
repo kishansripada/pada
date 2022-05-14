@@ -13,7 +13,7 @@ export const isPremium = writable(false);
 export const spotifyPosition = writable(null);
 export const isWritingChords = writable(false);
 export const chordPosition = writable({ bar: 0 });
-
+export const isUploadingTabs = writable(false)
 
 export const logIn = readable(function logIn() {
    console.log(window.location.origin);

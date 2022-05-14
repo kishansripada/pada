@@ -9,7 +9,7 @@ import { browser } from "$app/env";
 {#await $mongoTrack then mongoTrack}
    {#if !$isWritingChords}
       {#if mongoTrack.chords?.length}
-         <div class="py-3">
+         <div class="">
             <Info mongoTrack="{mongoTrack}" />
          </div>
 

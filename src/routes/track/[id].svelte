@@ -9,7 +9,10 @@ import { fade } from "svelte/transition";
 import { page } from "$app/stores";
 import { trackDetails, mongoTrack, tabsOrChords, version } from "../../store.js";
 
-$: if ($page.params.id) trackDetails.set(fetch(`/api/spotify/trackdetails/${$page.params.id}`).then((r) => r.json()));
+$: if ($page.params.id) {
+   trackDetails.set(fetch(`/api/spotify/trackdetails/${$page.params.id}`).then((r) => r.json()));
+}
+
 $: mongoTrack.set(fetch(`/api/gettrack/${$page.params.id}`).then((r) => r.json()));
 $: console.log({ $trackDetails });
 </script>

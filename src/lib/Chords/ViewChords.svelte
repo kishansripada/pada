@@ -1,10 +1,11 @@
 <script>
 import { version, spotifyPosition, getGroups, chordPosition } from "../../store";
 
+let autoScroll = true;
+
 const scrollIntoView = (currentBar) => {
-   console.log(currentBar);
+   if (!autoScroll) return;
    const el = document.getElementById(currentBar);
-   console.log(el);
    if (!el) return;
    el.scrollIntoView({
       behavior: "smooth",
@@ -14,6 +15,7 @@ const scrollIntoView = (currentBar) => {
 };
 
 $: scrollIntoView(currentBar);
+
 // when chord is clicked send the beat number to the store
 function changeSpotifyPosition(bar) {
    chordPosition.set({ bar: bar });
@@ -37,6 +39,12 @@ $: currentBar = currentChords.findIndex((beat) => {
 });
 // $: console.log(currentBar);
 </script>
+
+<!-- chord components -->
+<div class="flex flex-row items-center py-9">
+   <input type="checkbox" value="" class="w-16" bind:checked="{autoScroll}" />
+   <label for="remember" class="text-white">Auto Scroll</label>
+</div>
 
 <div class="flex flex-row ">
    {#each $getGroups(currentChords) as groups, i}

@@ -1,5 +1,5 @@
 <script>
-import { isWritingChords } from "../store";
+import { isWritingChords, tabsOrChords, isUploadingTabs } from "../store";
 export let trackDetails;
 
 const formattedTime = () => {
@@ -62,8 +62,19 @@ const formattedKey = () => {
       <p class="pt-2">🎼 {formattedKey()}</p>
       <p class="pt-2">⏱ {Math.round(trackDetails.features.tempo)} bpm</p>
       <p class="pt-2">&#128293; {trackDetails.popularity}</p>
-      <button
-         class="border-white-300 mt-auto rounded-full border border-solid py-1 px-3 text-white hover:bg-white/10"
-         on:click="{() => isWritingChords.update((state) => !state)}">{$isWritingChords ? "cancel 🚫" : "write chords ✍"}</button>
+
+      {#if $tabsOrChords == "tabs"}
+         <button
+            class="border-white-300 mt-auto rounded-full border border-solid py-1 px-3 text-white hover:bg-white/10"
+            on:click="{() => isUploadingTabs.update((state) => !state)}"
+            >{$isUploadingTabs ? "cancel 🚫" : "upload tabs 🔼"}
+         </button>
+      {:else}
+         <button
+            class="border-white-300 mt-auto rounded-full border border-solid py-1 px-3 text-white hover:bg-white/10"
+            on:click="{() => isWritingChords.update((state) => !state)}"
+            >{$isWritingChords ? "cancel 🚫" : "write chords ✍"}
+         </button>
+      {/if}
    </div>
 </div>
