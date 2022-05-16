@@ -1,5 +1,5 @@
 <script>
-import { isUploadingTabs } from "../store";
+import { isUploadingTabs, trackDetails } from "../store";
 import { fade } from "svelte/transition";
 
 import Info from "./Info.svelte";
@@ -10,7 +10,7 @@ export let mongoTrack;
 </script>
 
 {#if !$isUploadingTabs}
-   {#if mongoTrack?.tabs?.length}
+   {#if mongoTrack?.tabs?.filter((x) => x.approved).length}
       <div class="py-3">
          <Info mongoTrack="{mongoTrack}" />
       </div>
@@ -19,5 +19,7 @@ export let mongoTrack;
       <div>No Tabs!</div>
    {/if}
 {:else}
-   <UploadTabs />
+   {#await $trackDetails then trackDetails}
+      <UploadTabs trackDetails="{trackDetails}" mongoTrack="{mongoTrack}" />
+   {/await}
 {/if}

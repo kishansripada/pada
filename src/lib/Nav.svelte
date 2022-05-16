@@ -1,25 +1,15 @@
 <script>
 import { loggedIn } from "../store.js";
 import searchIcon from "../static/search.svg";
-import xIcon from "../static/x.svg";
 import logo from "../static/logo.svg";
 import { slide } from "svelte/transition";
+import Search from "../lib/Search.svelte";
 let isSearching = false;
 </script>
 
 <div class="bg-white/10 px-10">
    {#if isSearching}
-      <div class="flex h-24 flex-row items-center" transition:slide>
-         <div class="flex w-full flex-row rounded-xl outline outline-white ">
-            <input
-               class="w-full  appearance-none bg-transparent py-3 px-5 text-3xl  text-white placeholder:text-white/50  focus:outline-none"
-               placeholder="Search for tracks or artists..."
-               type="text" />
-            <button on:click="{() => (isSearching = false)}">
-               <img class="w-10 pr-3" src="{xIcon}" alt="" />
-            </button>
-         </div>
-      </div>
+      <Search bind:isSearching />
    {:else}
       <div class="flex h-24 flex-row items-center justify-between" transition:slide>
          <div class="flex flex-row items-center">
