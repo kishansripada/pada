@@ -2,7 +2,7 @@
    <div class="container flex items-center space-x-2">
       <div class="relative overflow-hidden rounded-full">
          <img src="https://avatars.githubusercontent.com/u/23283093?v=4" alt="" class="bg-gray-200" style="width:35px;height:35px" loading="lazy" />
-         <div class="absolute inset-0 rounded-full border border-black border-opacity-10"></div>
+         <!-- <div class="absolute inset-0 rounded-full border border-black border-opacity-10"></div> -->
       </div>
       <p>
          Designed by

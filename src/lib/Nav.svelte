@@ -1,16 +1,15 @@
 <script>
-import { loggedIn } from "../store.js";
+import { loggedIn, isSearching } from "../store.js";
 import searchIcon from "../static/search.svg";
 import logo from "../static/logo.svg";
 import { slide } from "svelte/transition";
 import Search from "../lib/Search.svelte";
-let isSearching = false;
 </script>
 
-<div class="bg-white/10 px-10">
-   {#if isSearching}
-      <Search bind:isSearching />
-   {:else}
+{#if $isSearching}
+   <Search />
+{:else}
+   <div class="bg-white/10 px-10">
       <div class="flex h-24 flex-row items-center justify-between" transition:slide>
          <div class="flex flex-row items-center">
             <a href="/" class="px-2 text-2xl text-white transition duration-300 ease-in-out hover:-translate-y-1">home</a>
@@ -28,8 +27,8 @@ let isSearching = false;
 
          <a class="absolute left-1/2 -translate-x-1/2 transform text-white" href="/"> <img class="w-40" src="{logo}" alt="" /></a>
 
-         <button on:click="{() => (isSearching = true)}"
+         <button on:click="{() => isSearching.set(true)}"
             ><img class="w-6 fill-white text-white transition duration-300 ease-in-out hover:-translate-y-1" src="{searchIcon}" alt="" /></button>
       </div>
-   {/if}
-</div>
+   </div>
+{/if}

@@ -19,7 +19,7 @@ const postFiles = async () => {
 
    if (trackReadable.tabs) {
       // if track exists
-      let doneUploading = user.functions
+      user.functions
          .addNewMusicXml(trackDetails.id, {
             approved: false,
             musicXml: xml,

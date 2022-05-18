@@ -5,12 +5,12 @@ const user = await app.logIn(credentials);
 console.log("new client");
 
 export async function get({ params }) {
-    let track = await user.functions.search(params.query);
+    let results = await user.functions.search(params.query);
     console.log("new data");
     return {
         status: 200,
-        body: {
-            ...track,
-        },
+        body: [
+            ...results,
+        ],
     };
 }

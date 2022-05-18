@@ -4,13 +4,11 @@ import { getToken, search } from "../../../../spotify.js";
 export async function get({ params }) {
     let token = await getToken().then((token) => token.access_token);
 
-    let results = await search(params.query, ["track"], 4, token);
+    let results = await search(params.query, ["track"], 4, token)
 
     return {
         status: 200,
-        body: {
-            results,
-        },
+        body: results.tracks.items
     };
 
 }
