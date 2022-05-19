@@ -42,7 +42,7 @@ const formattedKey = () => {
    <img class="w-64 rounded-[20px]" src="{trackDetails.album.images[0].url}" alt="" />
 
    <div class="flex flex-col pl-7 pt-3 text-white ">
-      <p class="pb-2 text-4xl">{trackDetails.name}</p>
+      <p class="pb-2 text-4xl">{trackDetails.name.length > 40 ? trackDetails.name.substring(0, 40) + "..." : trackDetails.name}</p>
       <p class="">{trackDetails.album.name}</p>
 
       <div class="mt-auto mb-3 flex flex-nowrap">

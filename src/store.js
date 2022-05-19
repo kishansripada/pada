@@ -15,9 +15,11 @@ export const isWritingChords = writable(false);
 export const chordPosition = writable({ bar: 0 });
 export const isUploadingTabs = writable(false)
 export const isSearching = writable(false)
+export const spotifyIsPaused = writable(true)
+
 
 export const logIn = readable(function logIn() {
-   console.log(window.location.origin);
+   // console.log(window.location.origin);
    let scope = ["streaming", "user-read-email", "user-read-private", "user-library-read"].join(" ");
    let params = {
       response_type: "code",

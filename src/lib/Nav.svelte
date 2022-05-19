@@ -10,7 +10,8 @@ import Search from "../lib/Search.svelte";
    <Search />
 {:else}
    <div class="bg-white/10 px-10">
-      <div class="flex h-24 flex-row items-center justify-between" transition:slide>
+      <!-- transition:slide -->
+      <div class="flex h-24 flex-row items-center justify-between">
          <div class="flex flex-row items-center">
             <a href="/" class="px-2 text-2xl text-white transition duration-300 ease-in-out hover:-translate-y-1">home</a>
 

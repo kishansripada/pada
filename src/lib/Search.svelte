@@ -8,6 +8,8 @@ const app = new App({ id: "boptabs-wwrqq" });
 const credentials = Credentials.anonymous();
 let user = app.logIn(credentials);
 
+let token = fetch(`/api/spotify/gettoken`).then((r) => r.json());
+
 let mongoSearchResults = [];
 let spotifySearchResults = [];
 
@@ -16,12 +18,31 @@ $: if (!$isSearching) {
    spotifySearchResults = [];
 }
 
-// let token = fetch(`/api/spotify/gettoken`).then((r) => r.json());
+// everytime isSearching changes, check if its true, if it is then wait 50ms (so DOM element can load) then focus cursor on it
+let inputField;
+$: if ($isSearching) {
+   if (inputField) {
+      inputField.focus();
+   }
+}
+
+const numTabsChords = (track) => {
+   let numTabs = track.tabs.filter((tab) => tab.approved).length;
+   let numChords = track.chords.filter((chords) => chords.approved).length;
+
+   if (numTabs && numChords) {
+      return `${numTabs} ${numTabs == 1 ? "tab" : "tabs"} & ${numChords} chords`;
+   } else if (numTabs) {
+      return `${numTabs} ${numTabs == 1 ? "tab" : "tabs"}`;
+   } else {
+      return `${numChords} chords`;
+   }
+};
 
 const search = async (query) => {
+   mongoSearchResults = [];
+   spotifySearchResults = [];
    if (!query.length) {
-      mongoSearchResults = [];
-      spotifySearchResults = [];
       return;
    }
 
@@ -42,7 +63,8 @@ const search = async (query) => {
    //////////SPOTIFY
    // if less than 4 mongo results, get from spotify
    if (mongoResults.length < 4) {
-      let spotifyResults = await fetch(`/api/spotify/search/${query}`).then((r) => r.json());
+      let access_token = (await token).token;
+      let spotifyResults = await fetch(`/api/spotify/search/${query}?token=${access_token}`).then((r) => r.json());
 
       // remove songs from Spotify that are in mongo results
       spotifyResults = spotifyResults.filter((track) => {
@@ -52,18 +74,18 @@ const search = async (query) => {
       spotifySearchResults = spotifyResults.slice(0, 4 - mongoResults.length);
       console.log({ spotifySearchResults });
    }
-
-   // let access_token = (await token).token;
 };
 </script>
 
 <div class="bg-white/10 px-10">
-   <div class="flex h-24 flex-row items-center" transition:slide>
+   <!-- transition:slide -->
+   <div class="flex h-24 flex-row items-center">
       <div class="flex w-full flex-row rounded-xl outline outline-white ">
          <input
             class="w-full  appearance-none bg-transparent py-3 px-5 text-3xl  text-white placeholder:text-white/50  focus:outline-none"
-            placeholder="Search for tracks or artists..."
+            placeholder="Search for tracks..."
             type="text"
+            bind:this="{inputField}"
             on:keyup="{({ target: { value } }) => search(value)}" />
          <button on:click="{() => isSearching.set(false)}">
             <img class="w-10 pr-3" src="{xIcon}" alt="" />
@@ -72,16 +94,38 @@ const search = async (query) => {
    </div>
 </div>
 
-<div class="absolute w-full px-10 text-white backdrop-blur-xl">
-   {#each mongoSearchResults as result}
-      <a href="/track/{result.spotifyId}" on:click="{() => isSearching.set(false)}">
-         <div class="my-3  h-24 cursor-pointer rounded pt-3 outline outline-white hover:bg-white/10 ">
+<div class="absolute w-full px-10  backdrop-blur-xl">
+   <!-- MONGODB -->
+   {#each mongoSearchResults as track}
+      <a href="/track/{track.spotifyId}" on:click="{() => isSearching.set(false)}">
+         <div class="my-3  flex h-24 cursor-pointer flex-row rounded py-3 text-white outline outline-white hover:bg-white/10">
             <div class="flex flex-col px-7">
                <p class="text-3xl">
-                  {result.name}
+                  {track.name}
                </p>
                <p class="text-md">
-                  {result.primaryArtist}
+                  {track.primaryArtist}
+               </p>
+            </div>
+            <div class="ml-auto mr-5 w-20 rounded bg-white/20">
+               <p class="text-center">
+                  {numTabsChords(track)}
+               </p>
+            </div>
+         </div>
+      </a>
+   {/each}
+
+   <!-- SPOTIFY -->
+   {#each spotifySearchResults as track}
+      <a href="/track/{track.id}" on:click="{() => isSearching.set(false)}">
+         <div class="my-3  flex h-24 cursor-pointer flex-col rounded pt-3 text-white/50 outline outline-white hover:bg-white/10">
+            <div class="flex flex-col px-7">
+               <p class="text-3xl">
+                  {track.name}
+               </p>
+               <p class="text-md">
+                  {track.artists.map((artist) => artist.name).join(", ")}
                </p>
             </div>
          </div>

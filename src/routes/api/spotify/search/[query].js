@@ -1,10 +1,8 @@
 import { getToken, search } from "../../../../spotify.js";
 // console.log(token);
 
-export async function get({ params }) {
-    let token = await getToken().then((token) => token.access_token);
-
-    let results = await search(params.query, ["track"], 4, token)
+export async function get(req) {
+    let results = await search(req.params.query, ["track"], 4, req.url.searchParams.get("token"))
 
     return {
         status: 200,

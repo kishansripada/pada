@@ -1,6 +1,8 @@
 <script>
 import { version, tabsOrChords } from "../../store";
 import { onMount } from "svelte";
+import { browser } from "$app/env";
+
 export let tabs;
 
 let container;
@@ -15,7 +17,7 @@ function loadFlat() {
    });
 }
 
-$: if (embed) {
+$: if (embed && browser) {
    embed.loadMusicXML(tabs[$version.tabs].musicXml);
 }
 </script>
@@ -25,5 +27,7 @@ $: if (embed) {
 </svelte:head>
 
 <div>
-   <div bind:this="{container}" style="height: 500px"></div>
+   {#if browser}
+      <div bind:this="{container}" style="height: 500px"></div>
+   {/if}
 </div>

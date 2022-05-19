@@ -1,14 +1,11 @@
 <script>
-import { trackDetails, loggedIn, spotifyPosition, logIn, chordPosition } from "../../store.js";
+import { trackDetails, loggedIn, spotifyPosition, logIn, chordPosition, spotifyIsPaused } from "../../store.js";
 import { page } from "$app/stores";
 import playIcon from "../../static/play.svg";
 import pauseIcon from "../../static/pause.svg";
 
 let player;
 let play;
-let paused = true;
-
-// $: console.log({ paused });
 
 // define player, play
 window.onSpotifyWebPlaybackSDKReady = () => {
@@ -65,11 +62,11 @@ async function playPause() {
          // if the current songs playing is the song that its in the store OR
          // if the user in on a page that is not /track/id THEN
          // play/pause the current song
-         paused = state ? !state.paused : true;
+         spotifyIsPaused.set(state ? !state.paused : true);
 
          if (state?.track_window?.current_track?.id == id || $page.routeId !== "track/[id]") {
             //    paused = !state.paused;
-            paused = state ? !state.paused : true;
+            spotifyIsPaused.set(state ? !state.paused : true);
 
             player.togglePlay();
          } else {
@@ -78,7 +75,7 @@ async function playPause() {
                playerInstance: player,
                spotify_uri: `spotify:track:${id}`,
             });
-            paused = false;
+            spotifyIsPaused.set(false);
          }
       });
    }
@@ -103,4 +100,4 @@ let interval = window.setInterval(() => {
 </svelte:head>
 
 <button class="fixed bottom-2 left-1/2 w-16 -translate-x-1/2 transform" on:click="{playPause}"
-   ><img src="{paused ? playIcon : pauseIcon}" alt="" /></button>
+   ><img src="{$spotifyIsPaused ? playIcon : pauseIcon}" alt="" /></button>

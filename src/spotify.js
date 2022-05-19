@@ -1,5 +1,5 @@
-var client_id = "01a3817b86784869a571c4fa82ec3de7"; // Your client id
-var client_secret = "19e1972a694740ff8537940a773c3ac3"; // Your secret
+const client_id = "01a3817b86784869a571c4fa82ec3de7"; // Your client id
+const client_secret = "19e1972a694740ff8537940a773c3ac3"; // Your secret
 
 export async function getToken() {
    let body = await fetch("https://accounts.spotify.com/api/token", {
