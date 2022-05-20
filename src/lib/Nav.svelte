@@ -20,7 +20,6 @@ import Search from "../lib/Search.svelte";
 
             <!-- <a href="/track/7gVwgc8b3XnO87TpmXXFA5" class="px-2 text-white" aria-current="page">Diva</a> -->
 
-            <a href="/track/7DnAm9FOTWE3cUvso43HhI" class="px-2 text-white" aria-current="page">psyco</a>
             {#if $loggedIn}
                <a href="/mylibrary" class="px-2 text-white">my library 📚</a>
             {/if}

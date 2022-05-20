@@ -7,7 +7,6 @@ import { App, Credentials } from "realm-web";
 const app = new App({ id: "boptabs-wwrqq" });
 const credentials = Credentials.anonymous();
 let user = app.logIn(credentials);
-
 let token = fetch(`/api/spotify/gettoken`).then((r) => r.json());
 
 let mongoSearchResults = [];
@@ -75,6 +74,15 @@ const search = async (query) => {
       console.log({ spotifySearchResults });
    }
 };
+
+let timer;
+
+const debounce = (query) => {
+   clearTimeout(timer);
+   timer = setTimeout(() => {
+      search(query);
+   }, 500);
+};
 </script>
 
 <div class="bg-white/10 px-10">
@@ -86,7 +94,7 @@ const search = async (query) => {
             placeholder="Search for tracks..."
             type="text"
             bind:this="{inputField}"
-            on:keyup="{({ target: { value } }) => search(value)}" />
+            on:keyup="{({ target: { value } }) => debounce(value)}" />
          <button on:click="{() => isSearching.set(false)}">
             <img class="w-10 pr-3" src="{xIcon}" alt="" />
          </button>
@@ -98,7 +106,7 @@ const search = async (query) => {
    <!-- MONGODB -->
    {#each mongoSearchResults as track}
       <a href="/track/{track.spotifyId}" on:click="{() => isSearching.set(false)}">
-         <div class="my-3  flex h-24 cursor-pointer flex-row rounded py-3 text-white outline outline-white hover:bg-white/10">
+         <div class="my-3  flex h-24 cursor-pointer flex-row rounded-xl pt-3 text-white outline outline-white hover:bg-white/10">
             <div class="flex flex-col px-7">
                <p class="text-3xl">
                   {track.name}
@@ -107,10 +115,8 @@ const search = async (query) => {
                   {track.primaryArtist}
                </p>
             </div>
-            <div class="ml-auto mr-5 w-20 rounded bg-white/20">
-               <p class="text-center">
-                  {numTabsChords(track)}
-               </p>
+            <div class="ml-auto mt-auto flex flex-col pr-3 pb-2">
+               {numTabsChords(track)}
             </div>
          </div>
       </a>
@@ -119,7 +125,7 @@ const search = async (query) => {
    <!-- SPOTIFY -->
    {#each spotifySearchResults as track}
       <a href="/track/{track.id}" on:click="{() => isSearching.set(false)}">
-         <div class="my-3  flex h-24 cursor-pointer flex-col rounded pt-3 text-white/50 outline outline-white hover:bg-white/10">
+         <div class="my-3  flex h-24 cursor-pointer flex-col rounded-xl pt-3 text-white/50 outline outline-white hover:bg-white/10">
             <div class="flex flex-col px-7">
                <p class="text-3xl">
                   {track.name}
