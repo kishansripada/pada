@@ -1,6 +1,6 @@
 <script>
 import { isUploadingTabs, trackDetails } from "../store";
-import { fade } from "svelte/transition";
+// import { fade } from "svelte/transition";
 
 import Info from "./Info.svelte";
 import Flat from "../lib/Tabs/Flat.svelte";

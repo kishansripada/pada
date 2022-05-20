@@ -6,7 +6,7 @@ console.log("new client");
 
 export async function get({ params }) {
    let track = await user.functions.getTrack(params.id);
-   console.log("new data");
+   // console.log("new data");
    return {
       status: 200,
       body: {

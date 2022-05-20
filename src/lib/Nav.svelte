@@ -27,8 +27,9 @@ import Search from "../lib/Search.svelte";
 
          <a class="absolute left-1/2 -translate-x-1/2 transform text-white" href="/"> <img class="w-40" src="{logo}" alt="" /></a>
 
-         <button on:click="{() => isSearching.set(true)}"
-            ><img class="w-6 fill-white text-white transition duration-300 ease-in-out hover:-translate-y-1" src="{searchIcon}" alt="" /></button>
+         <button on:click="{() => isSearching.set(true)}">
+            <img class="w-6 fill-white text-white transition duration-300 ease-in-out hover:-translate-y-1" src="{searchIcon}" alt="" />
+         </button>
       </div>
    </div>
 {/if}

@@ -46,7 +46,7 @@ document.body.appendChild(createdStyleTag);
       height: 100vh;">
       </div>
    {/await}
-   <div class="body fixed top-0 -z-40 h-full w-full bg-black/30"></div>
+   <!-- <div class="body fixed top-0 -z-40 h-full w-full bg-black/30"></div> -->
 </div>
 
 <!-- transition:fade="{{ delay: 0, duration: 300 }}" -->
