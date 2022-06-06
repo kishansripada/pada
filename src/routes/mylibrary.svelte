@@ -51,7 +51,7 @@ const getUserSavedTracks = async (access_token) => {
 <div class="grid grid-cols-3 gap-3 text-white">
    {#each tabbedSavedTracks as track}
       <a href="{`/track/${track.track.id}`}">
-         <div class="  flex h-20 w-full flex-row rounded-xl bg-white/10 outline hover:bg-white/20">
+         <div class="  flex h-20 w-full flex-row rounded-xl bg-white/10  hover:bg-white/20">
             <img class="h-20 rounded-xl" src="{track.track.album.images[0].url}" alt="" />
             <div class="flex flex-col pl-2 pt-1">
                <p>{track.name}</p>

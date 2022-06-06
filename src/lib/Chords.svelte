@@ -18,6 +18,6 @@ import { browser } from "$app/env";
          <p>No Chords!</p>
       {/if}
    {:else}
-      <WriteChords chordCharts="{mongoTrack.chords}" />
+      <WriteChords />
    {/if}
 {/await}

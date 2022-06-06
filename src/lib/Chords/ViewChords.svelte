@@ -35,9 +35,8 @@ $: currentChords = [...currentChordChart.chords, ...new Array(16 - (currentChord
 
 // given the spotify position, calculate the current bar of rthe song
 $: currentBar = currentChords.findIndex((beat) => {
-   return $spotifyPosition / 1000 < beat.start;
+   return $spotifyPosition / 1000 < beat.start + beat.duration;
 });
-// $: console.log(currentBar);
 </script>
 
 <!-- chord components -->

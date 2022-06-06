@@ -51,53 +51,66 @@ $: if (player) {
 // when play/pause button is clicled
 async function playPause() {
    if (!$loggedIn) logIn();
-
    // check to make sure play and player and initialized
-   if (play && player) {
-      //   if there isn't a track queued, don't do anything
-      if (!$trackDetails) return;
-      //   get the current track id from store
-      let id = (await $trackDetails.then((trackDetails) => trackDetails)).id;
-      player.getCurrentState().then((state) => {
-         // if the current songs playing is the song that its in the store OR
-         // if the user in on a page that is not /track/id THEN
-         // play/pause the current song
-         spotifyIsPaused.set(state ? !state.paused : true);
+   //   if there isn't a track queued, don't do anything
+   if (!play || !player || !$trackDetails) return;
+   //   get the current track id from store
+   let id = (await $trackDetails.then((trackDetails) => trackDetails)).id;
+   let state = await player.getCurrentState();
+   // if the current songs playing is the song that its in the store OR
+   // if the user in on a page that is not /track/id THEN
+   // play/pause the current song
+   spotifyIsPaused.set(state ? !state.paused : true);
 
-         if (state?.track_window?.current_track?.id == id || $page.routeId !== "track/[id]") {
-            //    paused = !state.paused;
-            spotifyIsPaused.set(state ? !state.paused : true);
+   if (state?.track_window?.current_track?.id == id || $page.routeId !== "track/[id]") {
+      //    paused = !state.paused;
+      spotifyIsPaused.set(state ? !state.paused : true);
 
-            player.togglePlay();
-         } else {
-            // otherwise, the user is viewing a differnt song than is in the database OR the state is null so the new song should be queued
-            play({
-               playerInstance: player,
-               spotify_uri: `spotify:track:${id}`,
-            });
-            spotifyIsPaused.set(false);
-         }
+      player.togglePlay();
+   } else {
+      // otherwise, the user is viewing a differnt song than is in the database OR the state is null so the new song should be queued
+      play({
+         playerInstance: player,
+         spotify_uri: `spotify:track:${id}`,
       });
+      spotifyIsPaused.set(false);
    }
 }
 
 // every 50ms get the position of the song and send it to the store
 let interval = window.setInterval(() => {
    //   console.log("checked state");
-   if (play && player) {
-      player.getCurrentState().then((state) => {
-         if (state && !state.paused) {
-            //    console.log("set position");
-            spotifyPosition.set(state.position);
-         }
-      });
-   }
+   if (!play || !player) return;
+   player.getCurrentState().then((state) => {
+      if (state && !state.paused) {
+         //    console.log("set position");
+         spotifyPosition.set(state.position);
+      }
+   });
 }, 50);
+
+async function handleChangeMsPosition(event) {
+   if (!play || !player) return;
+   let length = (await $trackDetails).duration_ms;
+   player.isLoaded.then(() => {
+      player.seek((event.offsetX / 500) * length);
+   });
+}
 </script>
 
 <svelte:head>
    <script src="https://sdk.scdn.co/spotify-player.js"></script>
 </svelte:head>
 
-<button class="fixed bottom-2 left-1/2 w-16 -translate-x-1/2 transform" on:click="{playPause}"
-   ><img src="{$spotifyIsPaused ? playIcon : pauseIcon}" alt="" /></button>
+<div class="fixed bottom-4 left-1/2 flex h-12 w-[600px] -translate-x-1/2 transform flex-row items-center rounded-full bg-white/60">
+   <button class=" w-12 pl-2" on:click="{playPause}"><img src="{$spotifyIsPaused ? playIcon : pauseIcon}" alt="" /></button>
+
+   <div class="relative pb-2" on:click="{handleChangeMsPosition}">
+      <div class="absolute h-2 rounded-full bg-gray-400" style="width: 500px"></div>
+      {#if $trackDetails}
+         {#await $trackDetails then trackDetails}
+            <div class="absolute h-2 rounded-full bg-red-600" style="width: {($spotifyPosition / trackDetails.duration_ms) * 500}px"></div>
+         {/await}
+      {/if}
+   </div>
+</div>
