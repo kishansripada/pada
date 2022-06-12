@@ -2,6 +2,8 @@
 import { loggedIn, logIn, isPremium } from "../store";
 import { onMount } from "svelte";
 import { getAuthToken, getUser } from "../spotify";
+// import { user } from "./mongoclient";
+// console.log(user);
 
 $: cookies = document.cookie.split("; ").reduce((prev, current) => {
    const [name, ...value] = current.split("=");

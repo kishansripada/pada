@@ -30,7 +30,7 @@ $: approvedChordsCharts = chordCharts.filter((chordChart) => chordChart.approved
 // gets the current user selected version from the approved chords ONLY
 $: currentChordChart = approvedChordsCharts[$version.chords];
 
-// get fill the chords from the currentVersion with empty fillers in order to make it a perfect rectangle in render
+//  fill the chords from the currentVersion with empty fillers in order to make it a perfect rectangle in render
 $: currentChords = [...currentChordChart.chords, ...new Array(16 - (currentChordChart.chords.length % 16)).fill({ filler: true })];
 
 // given the spotify position, calculate the current bar of rthe song

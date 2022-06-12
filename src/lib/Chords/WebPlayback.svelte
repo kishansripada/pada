@@ -42,9 +42,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 // when click on chord change position to that bar
 $: if (player) {
    player.isLoaded.then(() => {
-      player.seek($chordPosition.bar * 1000).then(() => {
-         console.log("Changed position!");
-      });
+      player.seek($chordPosition.bar * 1000);
    });
 }
 
@@ -61,11 +59,9 @@ async function playPause() {
    // if the user in on a page that is not /track/id THEN
    // play/pause the current song
    spotifyIsPaused.set(state ? !state.paused : true);
-
    if (state?.track_window?.current_track?.id == id || $page.routeId !== "track/[id]") {
       //    paused = !state.paused;
       spotifyIsPaused.set(state ? !state.paused : true);
-
       player.togglePlay();
    } else {
       // otherwise, the user is viewing a differnt song than is in the database OR the state is null so the new song should be queued
@@ -78,15 +74,12 @@ async function playPause() {
 }
 
 // every 50ms get the position of the song and send it to the store
-let interval = window.setInterval(() => {
-   //   console.log("checked state");
+let interval = window.setInterval(async () => {
    if (!play || !player) return;
-   player.getCurrentState().then((state) => {
-      if (state && !state.paused) {
-         //    console.log("set position");
-         spotifyPosition.set(state.position);
-      }
-   });
+   let state = await player.getCurrentState();
+   if (state && !state.paused) {
+      spotifyPosition.set(state.position);
+   }
 }, 50);
 
 async function handleChangeMsPosition(event) {
@@ -102,14 +95,14 @@ async function handleChangeMsPosition(event) {
    <script src="https://sdk.scdn.co/spotify-player.js"></script>
 </svelte:head>
 
-<div class="fixed bottom-4 left-1/2 flex h-12 w-[600px] -translate-x-1/2 transform flex-row items-center rounded-full bg-white/60">
+<div class="fixed bottom-4 left-1/2 flex h-12 w-[575px] -translate-x-1/2 transform flex-row items-center rounded-full bg-white/40 backdrop-blur-md	 ">
    <button class=" w-12 pl-2" on:click="{playPause}"><img src="{$spotifyIsPaused ? playIcon : pauseIcon}" alt="" /></button>
 
-   <div class="relative pb-2" on:click="{handleChangeMsPosition}">
-      <div class="absolute h-2 rounded-full bg-gray-400" style="width: 500px"></div>
+   <div class="relative pb-2 pl-1" on:click="{handleChangeMsPosition}">
+      <div class="absolute h-2 rounded-full bg-gray-500" style="width: 500px"></div>
       {#if $trackDetails}
          {#await $trackDetails then trackDetails}
-            <div class="absolute h-2 rounded-full bg-red-600" style="width: {($spotifyPosition / trackDetails.duration_ms) * 500}px"></div>
+            <div class="absolute h-2 rounded-full bg-gray-700" style="width: {($spotifyPosition / trackDetails.duration_ms) * 500}px"></div>
          {/await}
       {/if}
    </div>

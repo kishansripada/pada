@@ -1,0 +1,45 @@
+
+type User {
+    name: String!
+    email: String! @unique
+    tabs: [Tab!]! @relation
+    chords: [ChordChart!]! @relation
+}
+
+type Track {
+    spotifyId: String! @unique
+    tabs: [Tab!]!
+    chords: [ChordChart!]!
+}
+
+
+type Tab {
+    approved: Boolean!
+    musicXml: String!
+    rating: Int!
+    author: User! @relation
+    description: String!
+    dateSubmitted: String!
+}
+
+
+type ChordChart {
+    approved: Boolean!
+    chords: [Beat!]!
+    rating: Int!
+    author: User! @relation
+    description: String!
+    dateSubmitted: String!
+}
+
+type Beat {
+    start: Float!
+    duration: Float!
+    chord: Chord!
+}
+
+type Chord {
+    tonality: String!
+    type: String!
+    extension: String
+}
