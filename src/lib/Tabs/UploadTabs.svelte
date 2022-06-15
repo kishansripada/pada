@@ -3,6 +3,8 @@ import { isUploadingTabs, mongoTrack } from "../../store.js";
 import { App, Credentials } from "realm-web";
 import { page } from "$app/stores";
 
+import { toast } from "@zerodevx/svelte-toast";
+
 const app = new App({ id: "boptabs-wwrqq" });
 const credentials = Credentials.anonymous();
 let user = app.logIn(credentials);
@@ -18,6 +20,7 @@ const postFiles = async () => {
    let trackReadable = await $mongoTrack;
 
    if (trackReadable.tabs) {
+      const id = toast.push("Uploading");
       // if track exists
       user.functions
          .addNewMusicXml(trackDetails.id, {
@@ -28,7 +31,11 @@ const postFiles = async () => {
             description: description,
             dateSubmitted: new Date(),
          }) // re get mongo track so that the app knows it exists and no duplicates
-         .then(() => mongoTrack.set(fetch(`/api/gettrack/${$page.params.id}`).then((r) => r.json())));
+         .then(() => {
+            toast.pop(id || fn || undefined);
+            toast.push("Thank you for uploading!");
+            mongoTrack.set(fetch(`/api/gettrack/${$page.params.id}`).then((r) => r.json()));
+         });
    } else {
       // if track doesn't exist
       let document = {

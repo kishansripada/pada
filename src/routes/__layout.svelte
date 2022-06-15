@@ -2,6 +2,7 @@
 import "../app.css";
 import { browser } from "$app/env";
 import { isPremium, trackDetails } from "../store.js";
+import { SvelteToast } from "@zerodevx/svelte-toast";
 
 import LogIn from "$lib/LogIn.svelte";
 import Nav from "$lib/Nav.svelte";
@@ -10,6 +11,7 @@ import Gradient from "$lib/Gradient.svelte";
 import Footer from "../lib/Footer.svelte";
 </script>
 
+<SvelteToast />
 <Nav />
 {#if $isPremium && browser}
    <WebPlayback />

@@ -2,14 +2,14 @@
 type User {
     name: String!
     email: String! @unique
-    tabs: [Tab!]! @relation
-    chords: [ChordChart!]! @relation
+    tabs: [Tab!] @relation(name: "user_tabs")
+    chords: [ChordChart!] @relation(name: "user_chordcharts")
 }
 
 type Track {
     spotifyId: String! @unique
-    tabs: [Tab!]!
-    chords: [ChordChart!]!
+    tabs: [Tab!]! @relation
+    chords: [ChordChart!]! @relation
 }
 
 
@@ -17,9 +17,10 @@ type Tab {
     approved: Boolean!
     musicXml: String!
     rating: Int!
-    author: User! @relation
+    author: User! @relation(name: "user_tabs")
     description: String!
     dateSubmitted: String!
+    track: Track! @relation
 }
 
 
@@ -27,19 +28,21 @@ type ChordChart {
     approved: Boolean!
     chords: [Beat!]!
     rating: Int!
-    author: User! @relation
+    author: User! @relation(name: "user_chordcharts")
     description: String!
     dateSubmitted: String!
+    track: Track @relation
 }
 
-type Beat {
+type Beat @embedded {
     start: Float!
     duration: Float!
     chord: Chord!
 }
 
-type Chord {
+type Chord @embedded {
     tonality: String!
     type: String!
     extension: String
 }
+

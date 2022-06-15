@@ -12,6 +12,7 @@
    "devDependencies": {
       "@sveltejs/adapter-auto": "next",
       "@sveltejs/kit": "next",
+      "@zerodevx/svelte-toast": "^0.7.2",
       "autoprefixer": "^10.4.7",
       "eslint": "^7.32.0",
       "eslint-plugin-svelte3": "^3.2.1",
