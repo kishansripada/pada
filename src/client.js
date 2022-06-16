@@ -12,3 +12,12 @@ export default createClient({
         };
     },
 });
+
+export const clientWithCookieSession = token => createClient({
+    url,
+    fetchOptions: () => {
+        return {
+            headers: { authorization: token ? `Bearer ${token}` : '' },
+        };
+    },
+});

@@ -51,6 +51,9 @@ type Mutation {
     login(email: String!, password: String!): Token @resolver(name: "login")
 }
 
+type Query {
+  findUserByEmail(email: String): User
+}
 # Embeded type for returned token response
 type Token @embedded {
     ttl: Time!
