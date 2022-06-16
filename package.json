@@ -26,6 +26,8 @@
    "dependencies": {
       "@fontsource/fira-mono": "^4.5.0",
       "@lukeed/uuid": "^2.0.0",
+      "@urql/svelte": "^2.0.1",
+      "graphql": "^16.5.0",
       "node-vibrant": "^3.1.6",
       "realm-web": "^1.7.0"
    }

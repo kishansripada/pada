@@ -19,7 +19,6 @@ type Tab {
     rating: Int!
     author: User! @relation(name: "user_tabs")
     description: String!
-    dateSubmitted: String!
     track: Track! @relation
 }
 
@@ -46,3 +45,16 @@ type Chord @embedded {
     extension: String
 }
 
+
+type Mutation {
+    registerUser(email: String!, password: String!, name: String!): User @resolver(name: "registerUser")
+    login(email: String!, password: String!): Token @resolver(name: "login")
+}
+
+# Embeded type for returned token response
+type Token @embedded {
+    ttl: Time!
+    secret: String!
+    email: String!
+    ownerId: String!
+}
