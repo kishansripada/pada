@@ -3,6 +3,7 @@ import TrackDetails from "$lib/TrackDetails.svelte";
 import Tabs from "$lib/Tabs.svelte";
 import Chords from "$lib/Chords.svelte";
 import TabsChordsNav from "$lib/TabsChordsNav.svelte";
+import Gradient from "$lib/Gradient.svelte";
 
 import { fade } from "svelte/transition";
 
@@ -37,5 +38,11 @@ $: console.log({ $trackDetails });
 {#if $tabsOrChords == "chords" && $mongoTrack}
    {#await $mongoTrack then mongoTrack}
       <Chords />
+   {/await}
+{/if}
+
+{#if $trackDetails}
+   {#await $trackDetails then trackDetails}
+      <Gradient albumUrl="{trackDetails.album.images[0].url}" />
    {/await}
 {/if}

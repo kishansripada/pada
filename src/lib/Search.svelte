@@ -88,9 +88,9 @@ const debounce = (query) => {
 <div class="bg-white/10 px-10">
    <!-- transition:slide -->
    <div class="flex h-24 flex-row items-center">
-      <div class="flex w-full flex-row rounded-xl outline outline-white ">
+      <div class="flex w-full flex-row rounded-xl outline  outline-[#091834] ">
          <input
-            class="w-full  appearance-none bg-transparent py-3 px-5 text-3xl  text-white placeholder:text-white/50  focus:outline-none"
+            class="w-full  appearance-none bg-transparent py-3 px-5 text-3xl  text-[#091834] placeholder:text-[#091834]/50  focus:outline-none"
             placeholder="Search for tracks..."
             type="text"
             bind:this="{inputField}"
@@ -106,7 +106,7 @@ const debounce = (query) => {
    <!-- MONGODB -->
    {#each mongoSearchResults as track}
       <a href="/track/{track.spotifyId}" on:click="{() => isSearching.set(false)}">
-         <div class="my-3  flex h-24 cursor-pointer flex-row rounded-xl pt-3 text-white outline outline-white hover:bg-white/10">
+         <div class="my-3  flex h-24 cursor-pointer flex-row rounded-xl pt-3 text-[#091834] outline outline-[#091834] hover:bg-white/10">
             <div class="flex flex-col px-7">
                <p class="text-3xl">
                   {track.name}
@@ -125,7 +125,7 @@ const debounce = (query) => {
    <!-- SPOTIFY -->
    {#each spotifySearchResults as track}
       <a href="/track/{track.id}" on:click="{() => isSearching.set(false)}">
-         <div class="my-3  flex h-24 cursor-pointer flex-col rounded-xl pt-3 text-white/50 outline outline-white hover:bg-white/10">
+         <div class="my-3  flex h-24 cursor-pointer flex-col rounded-xl pt-3 text-[#091834]/50 outline outline-white hover:bg-white/10">
             <div class="flex flex-col px-7">
                <p class="text-3xl">
                   {track.name}

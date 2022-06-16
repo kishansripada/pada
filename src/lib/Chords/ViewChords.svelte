@@ -42,7 +42,7 @@ $: currentBar = currentChords.findIndex((beat) => {
 <!-- chord components -->
 <div class="flex flex-row items-center py-9">
    <input type="checkbox" value="" class="w-16" bind:checked="{autoScroll}" />
-   <label for="remember" class="text-white">Auto Scroll</label>
+   <label for="remember" class="text-[#091834]">Auto Scroll</label>
 </div>
 
 <div class="flex flex-row ">
@@ -52,7 +52,7 @@ $: currentBar = currentChords.findIndex((beat) => {
             <button on:click="{() => changeSpotifyPosition(group.start)}">
                <div
                   id="{Math.floor(j / 4) * 16 + i * 4 + (j % 4)}"
-                  class="grid h-12 w-full place-items-center rounded bg-white/5 text-xl text-white outline hover:bg-white/25 "
+                  class="grid h-12 w-full place-items-center rounded bg-white/5 text-xl text-[#091834] outline hover:bg-white/25 "
                   class:bg-slate-400="{Math.floor(j / 4) * 16 + i * 4 + (j % 4) == currentBar}">
                   {group.chord || ""}
                </div>

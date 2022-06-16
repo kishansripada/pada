@@ -48,7 +48,7 @@ const getUserSavedTracks = async (access_token) => {
 };
 </script>
 
-<div class="grid grid-cols-3 gap-3 text-white">
+<div class="grid grid-cols-3 gap-3 text-[#091834]">
    {#each tabbedSavedTracks as track}
       <a href="{`/track/${track.track.id}`}">
          <div class="  flex h-20 w-full flex-row rounded-xl bg-white/10  hover:bg-white/20">

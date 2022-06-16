@@ -65,16 +65,16 @@ const postFiles = async () => {
 </script>
 
 <div class="flex flex-row justify-center">
-   <div class="flex h-80 w-1/3 flex-col items-center rounded-[20px] bg-white/10 text-white shadow-2xl">
+   <div class="flex h-80 w-1/3 flex-col items-center rounded-[20px] bg-white/10 text-[#091834] shadow-2xl">
       <p class="pt-3 text-xl">🔼 upload a MusicXml file 🔼</p>
 
       <div class="mb-3 w-96 pt-4">
-         <input class=" mx-4  rounded bg-transparent outline outline-white focus:outline-none" type="file" accept=".xml" bind:files />
+         <input class=" mx-4  rounded bg-transparent outline outline-[#091834] focus:outline-none" type="file" accept=".xml" bind:files />
       </div>
 
       <div class="pt-2">
          <textarea
-            class="resize-none rounded bg-transparent px-2 py-1 outline  outline-white placeholder:text-white/50"
+            class="resize-none rounded bg-transparent px-2 py-1 outline  outline-[#091834] placeholder:text-[#091834]/50"
             placeholder="Description..."
             cols="30"
             rows="5"

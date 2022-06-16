@@ -41,7 +41,7 @@ const formattedKey = () => {
 <div class="flex h-64 flex-row rounded-[20px] bg-white/10 shadow-2xl ">
    <img class="w-64 rounded-[20px]" src="{trackDetails.album.images[0].url}" alt="" />
 
-   <div class="flex flex-col pl-7 pt-3 text-white ">
+   <div class="flex flex-col pl-7 pt-3 text-[#091834] ">
       <p class="pb-2 text-4xl">{trackDetails.name.length > 40 ? trackDetails.name.substring(0, 40) + "..." : trackDetails.name}</p>
       <p class="">{trackDetails.album.name}</p>
 
@@ -55,8 +55,8 @@ const formattedKey = () => {
       </div>
    </div>
 
-   <div class="ml-auto flex flex-col py-3 pr-2 text-right text-white">
-      <p class="text-xs text-white">⚡️ powered by Spotify</p>
+   <div class="ml-auto flex flex-col py-3 pr-2 text-right text-[#091834]">
+      <p class="text-xs text-[#091834]">⚡️ powered by Spotify</p>
       <p class="pt-2">{trackDetails.album.release_date}</p>
       <p class="pt-2">⏳ {formattedTime()}</p>
       <p class="pt-2">🎼 {formattedKey()}</p>
@@ -65,13 +65,13 @@ const formattedKey = () => {
 
       {#if $tabsOrChords == "tabs"}
          <button
-            class="border-white-300 mt-auto rounded-full border border-solid py-1 px-3 text-white hover:bg-white/10"
+            class="border-white-300 mt-auto rounded-xl border border-solid py-1 px-3 text-[#091834] transition duration-200 hover:bg-[#091834] hover:text-white"
             on:click="{() => isUploadingTabs.update((state) => !state)}"
             >{$isUploadingTabs ? "cancel 🚫" : "upload tabs 🔼"}
          </button>
       {:else}
          <button
-            class="border-white-300 mt-auto rounded-full border border-solid py-1 px-3 text-white hover:bg-white/10"
+            class="border-white-300 mt-auto rounded-xl border border-solid py-1 px-3 text-[#091834] hover:bg-[#091834] hover:text-white transition duration-200"
             on:click="{() => isWritingChords.update((state) => !state)}"
             >{$isWritingChords ? "cancel 🚫" : "write chords ✍"}
          </button>
