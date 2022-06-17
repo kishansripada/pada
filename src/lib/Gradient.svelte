@@ -11,8 +11,7 @@ let colors = Vibrant.from(albumUrl)
    .maxColorCount(5)
    .getSwatches()
    .then((palette) => Object.entries(palette).filter((color) => color[1]._population > 0))
-   .then((colors) => colors.map((color) => color[1].hex))
-   .then((colors) => colors.join(","));
+   .then((colors) => colors.map((color) => color[1].hex));
 
 var createdStyleTag = document.createElement("style");
 createdStyleTag.textContent = `@keyframes gradient {
@@ -51,14 +50,14 @@ document.body.appendChild(createdStyleTag);
 
 <!-- <div class="z-1 absolute  left-1/2 h-96   bg-black"></div> -->
 
-<div transition:fade class="absolute left-1/2 top-[30px]  -z-50 w-[75rem] -translate-x-1/2">
+<div transition:fade class="absolute left-1/2 top-[-300px] -z-50 w-[75rem] -translate-x-1/2">
    {#await colors then colors}
       <!-- <div
          class="absolute top-16 -z-30 h-96 w-full"
          style="   background:linear-gradient(90deg, rgba(255, 255, 255, 1) 1%, rgba(255, 255, 255, 0) 15%, rgba(255, 255, 255, 0.3) 85%, rgba(255, 255, 255, 1) 100%);
          ">
       </div> -->
-      <div></div>
+
       <div
          class="absolute -z-30 h-[500px] w-[75rem]"
          style="background:linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.15) 15%, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.15) 85%, rgba(255, 255, 255, 1) 100%);
@@ -72,13 +71,26 @@ document.body.appendChild(createdStyleTag);
 
       <div
          class="absolute  -z-50 h-[500px] w-[75rem] opacity-60"
-         style=" background: linear-gradient(-45deg, {colors});
-  animation: gradient 45s ease infinite; 
+         style=" background: linear-gradient(-45deg, {colors.join(',')});
+  animation: gradient 30s ease infinite; 
   background-size: 400% 400%
    ">
       </div>
    {/await}
 </div>
+{#await colors then colors}
+   <div transition:fade class="">
+      <div
+         class="absolute top-[-200px] right-[-600px]  h-[700px] w-[1000px] -z-50"
+         style="background:radial-gradient(circle at 50% 50%, {colors[0]} 0%, rgba(255, 255, 255, 0) 60%);
+">
+      </div>
+      <div
+         class="absolute top-[-200px] left-[-600px] -z-50 h-[700px] w-[1000px]  bg-black "
+         style="background:radial-gradient(circle at 50% 50%, {colors[1]} 0%, rgba(255, 255, 255, 0) 60%);
+">
+      </div>
+   </div>{/await}
 
 <!-- transition:fade="{{ delay: 0, duration: 300 }}" -->
 <style>

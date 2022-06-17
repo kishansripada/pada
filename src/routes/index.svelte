@@ -1,6 +1,8 @@
 <script>
 import { caroselData } from "../home.js";
 import { onMount } from "svelte";
+import { fade } from "svelte/transition";
+import Typewriter from "svelte-typewriter";
 </script>
 
 <!-- 
@@ -32,53 +34,57 @@ import { onMount } from "svelte";
       {/each}
    </div>
 </div> -->
-<div class="bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text pt-16 text-7xl font-extrabold text-transparent">
-   Interactive, Beautiful
-   <p>Tablatures<span class="blink">.</span></p>
+<!-- COLOR SPLOTCHES -->
+<div transition:fade class="">
+   <div
+      class="absolute top-[-200px] right-[-600px] -z-50 h-[700px] w-[1000px] bg-black"
+      style="background:radial-gradient(circle at 50% 50%, rgba(227,28,121, 0.4) 0%, rgba(255, 255, 255, 0) 60%);
+">
+   </div>
+   <div
+      class="absolute top-[300px] left-[-600px] -z-50 h-[700px] w-[1000px]  bg-black "
+      style="background:radial-gradient(circle at 50% 50%, rgba(29, 185, 84, 0.4) 0%, rgba(255, 255, 255, 0) 60%);
+">
+   </div>
+   <div
+      class="absolute top-[640px] right-[-600px] -z-50 h-[700px] w-[1000px]  bg-black "
+      style="background:radial-gradient(circle at 50% 50%, rgba(0, 145, 255, 0.4) 0%, rgba(255, 255, 255, 0) 60%);
+">
+   </div>
+</div>
+<!--  -->
+
+<div class="bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text pt-16 text-8xl font-extrabold text-transparent">
+   <div class="inline-flex">
+      {"Interactive, "}
+      <span
+         ><Typewriter loop cursor="{true}">
+            <h1>Modern</h1>
+            <p>Fast</p>
+            <p>Simple</p>
+            <p>Synced</p>
+         </Typewriter></span>
+   </div>
+</div>
+<div class="bg-gradient-to-r from-blue-400 to-red-600 bg-clip-text pt-4 text-8xl font-extrabold text-transparent">
+   <Typewriter loop cursor="{true}">
+      <h1>Tablatures</h1>
+      <p>Chords</p>
+   </Typewriter>
 </div>
 
-<div class="flex flex-row pt-48 ">
+<div class="absolute top-[500px] right-[50px] flex flex-row">
    <div class="ml-auto flex flex-col">
       <h1 class="  bg-gradient-to-r from-green-400 to-black bg-clip-text  text-7xl font-extrabold text-transparent">Synced With</h1>
       <h1 class=" bg-gradient-to-r from-green-400 to-black bg-clip-text text-7xl font-extrabold text-transparent">Spotify</h1>
    </div>
 </div>
 
-<div class="flex flex-row pt-48 ">
+<!-- <div class="flex flex-row pt-48 ">
    <div class="mr-auto flex flex-col">
       <h1 class="  bg-gradient-to-r from-blue-400 to-green-500 bg-clip-text  text-7xl font-extrabold text-transparent">AI Generated</h1>
       <h1 class=" bg-gradient-to-r from-blue-400 to-green-500 bg-clip-text text-7xl font-extrabold text-transparent">Chords</h1>
    </div>
-</div>
-
+</div> -->
 <style>
-.blink {
-   -webkit-animation: 1.5s linear infinite condemned_blink_effect; /* for Safari 4.0 - 8.0 */
-   animation: 1.5s linear infinite condemned_blink_effect;
-}
-
-/* for Safari 4.0 - 8.0 */
-@-webkit-keyframes condemned_blink_effect {
-   0% {
-      visibility: hidden;
-   }
-   50% {
-      visibility: hidden;
-   }
-   100% {
-      visibility: visible;
-   }
-}
-
-@keyframes condemned_blink_effect {
-   0% {
-      visibility: hidden;
-   }
-   50% {
-      visibility: hidden;
-   }
-   100% {
-      visibility: visible;
-   }
-}
 </style>

@@ -1,4 +1,4 @@
-<div class="bg-white/25 py-10">
+<!-- <div class="bg-white/25 py-10">
    <div class="container flex flex-row items-center ">
       <img
          src="https://avatars.githubusercontent.com/u/23283093?v=4"
@@ -22,4 +22,4 @@
             loading="lazy" />
       </a>
    </div>
-</div>
+</div> -->
