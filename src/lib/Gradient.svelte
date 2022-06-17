@@ -2,16 +2,17 @@
 import { browser } from "$app/env";
 import * as Vibrant from "node-vibrant";
 import { fade } from "svelte/transition";
-import { blur } from "svelte/transition";
-import { spotifyIsPaused } from "../store.js";
+import { spotifyIsPaused, colors } from "../store.js";
 
 export let albumUrl;
 
-let colors = Vibrant.from(albumUrl)
-   .maxColorCount(5)
-   .getSwatches()
-   .then((palette) => Object.entries(palette).filter((color) => color[1]._population > 0))
-   .then((colors) => colors.map((color) => color[1].hex));
+colors.set(
+   Vibrant.from(albumUrl)
+      .maxColorCount(5)
+      .getSwatches()
+      .then((palette) => Object.entries(palette).filter((color) => color[1]._population > 0))
+      .then((colors) => colors.map((color) => color[1].hex))
+);
 
 var createdStyleTag = document.createElement("style");
 createdStyleTag.textContent = `@keyframes gradient {
@@ -57,7 +58,7 @@ document.body.appendChild(createdStyleTag);
          style="   background:linear-gradient(90deg, rgba(255, 255, 255, 1) 1%, rgba(255, 255, 255, 0) 15%, rgba(255, 255, 255, 0.3) 85%, rgba(255, 255, 255, 1) 100%);
          ">
       </div> -->
-
+      <!-- 
       <div
          class="absolute -z-30 h-[500px] w-[75rem]"
          style="background:linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.15) 15%, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.15) 85%, rgba(255, 255, 255, 1) 100%);
@@ -75,22 +76,26 @@ document.body.appendChild(createdStyleTag);
   animation: gradient 30s ease infinite; 
   background-size: 400% 400%
    ">
-      </div>
+      </div> -->
    {/await}
 </div>
-{#await colors then colors}
-   <div transition:fade class="">
-      <div
-         class="absolute top-[-200px] right-[-600px]  h-[700px] w-[1000px] -z-50"
-         style="background:radial-gradient(circle at 50% 50%, {colors[0]} 0%, rgba(255, 255, 255, 0) 60%);
+
+{#if $colors}
+   {#await $colors then colors}
+      <div transition:fade class="">
+         <div
+            class="absolute top-[-200px] right-[-600px]  h-[700px] w-[1000px] -z-50"
+            style="background:radial-gradient(circle at 50% 50%, {colors[0]} 0%, rgba(255, 255, 255, 0) 60%);
 ">
-      </div>
-      <div
-         class="absolute top-[-200px] left-[-600px] -z-50 h-[700px] w-[1000px]  bg-black "
-         style="background:radial-gradient(circle at 50% 50%, {colors[1]} 0%, rgba(255, 255, 255, 0) 60%);
+         </div>
+         <div
+            class="absolute top-[-200px] left-[-600px] -z-50 h-[700px] w-[1000px]  bg-black "
+            style="background:radial-gradient(circle at 50% 50%, {colors[1]} 0%, rgba(255, 255, 255, 0) 60%);
 ">
+         </div>
       </div>
-   </div>{/await}
+   {/await}
+{/if}
 
 <!-- transition:fade="{{ delay: 0, duration: 300 }}" -->
 <style>

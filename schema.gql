@@ -8,6 +8,8 @@ type User {
 
 type Track {
     spotifyId: String! @unique
+    name: String!
+    artists: [String!]!
     tabs: [Tab!]! @relation
     chords: [ChordChart!]! @relation
 }
@@ -49,6 +51,7 @@ type Chord @embedded {
 type Mutation {
     registerUser(email: String!, password: String!, name: String!): User @resolver(name: "registerUser")
     login(email: String!, password: String!): Token @resolver(name: "login")
+    addTrack(spotifyId: String!, name: String!, artists: [String!]!): Track @resolver(name: "addTrack")
 }
 
 type Query {

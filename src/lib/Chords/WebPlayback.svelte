@@ -95,7 +95,8 @@ async function handleChangeMsPosition(event) {
    <script src="https://sdk.scdn.co/spotify-player.js"></script>
 </svelte:head>
 
-<div class="fixed bottom-4 left-1/2 flex h-12 w-[575px] -translate-x-1/2 transform flex-row items-center rounded-full bg-white/40 backdrop-blur-md	 ">
+<div
+   class="fixed bottom-4 left-1/2 z-50 flex h-12 w-[575px] -translate-x-1/2 transform flex-row items-center rounded-full	 bg-white/40 backdrop-blur-md">
    <button class=" w-12 pl-2" on:click="{playPause}"><img src="{$spotifyIsPaused ? playIcon : pauseIcon}" alt="" /></button>
 
    <div class="relative pb-2 pl-1" on:click="{handleChangeMsPosition}">

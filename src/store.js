@@ -8,6 +8,7 @@ export const version = writable({
    chords: 0,
 });
 export const tabsOrChords = writable("tabs");
+export const colors = writable(null);
 export const loggedIn = writable(false);
 export const isPremium = writable(false);
 export const spotifyPosition = writable(null);
@@ -16,7 +17,7 @@ export const chordPosition = writable({ bar: 0 });
 export const isUploadingTabs = writable(false)
 export const isSearching = writable(false)
 export const spotifyIsPaused = writable(true)
-
+export const faunaSession = writable(null);
 
 export const logIn = readable(function logIn() {
    // console.log(window.location.origin);

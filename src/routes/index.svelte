@@ -3,53 +3,45 @@ import { caroselData } from "../home.js";
 import { onMount } from "svelte";
 import { fade } from "svelte/transition";
 import Typewriter from "svelte-typewriter";
+import exampleTab from "../static/exampleTab.png";
+import exampleTab1 from "../static/exampleTab1.png";
+let scrollPosition = 0;
+$: console.log(scrollPosition);
 </script>
 
-<!-- 
-<div id="container">
-   <div class="photobanner flex flex-row">
-      {#each caroselData as track}
-         <a class="" href="{`/track/${track.track.id}`}">
-            <div class="relative mx-2 h-32 w-32 overflow-hidden ">
-               <img class="h-32 rounded-xl" src="{track.track.album.images[0].url}" alt="" />
-               <div
-                  class=" text-md absolute inset-x-0 bottom-0 flex h-32 w-full flex-col rounded-xl bg-black/30 py-2.5 px-3 text-center  text-white backdrop-blur-sm hover:bg-black/10 ">
-                  {track.name}
-                  <p class="mt-auto text-xs">{track.primaryArtist}</p>
-               </div>
-            </div>
-         </a>
-      {/each}
-      {#each caroselData.slice(0, 4) as track}
-         <a href="{`/track/${track.track.id}`}">
-            <div class="relative h-32 w-32 overflow-hidden ">
-               <img class="h-32 rounded-xl" src="{track.track.album.images[0].url}" alt="" />
-               <div
-                  class=" text-md absolute inset-x-0 bottom-0 flex h-32 w-full flex-col rounded-xl bg-black/30 py-2.5 px-3 text-center  text-white  backdrop-blur-sm hover:bg-black/10">
-                  {track.name}
-                  <p class="mt-auto text-xs">{track.primaryArtist}</p>
-               </div>
-            </div>
-         </a>
-      {/each}
-   </div>
-</div> -->
+<svelte:window bind:scrollY="{scrollPosition}" />
+
 <!-- COLOR SPLOTCHES -->
-<div transition:fade class="">
+<div class="static" transition:fade>
    <div
-      class="absolute top-[-200px] right-[-600px] -z-50 h-[700px] w-[1000px] bg-black"
-      style="background:radial-gradient(circle at 50% 50%, rgba(227,28,121, 0.4) 0%, rgba(255, 255, 255, 0) 60%);
+      class="absolute  top-[-200px] right-[-300px] -z-40 h-[700px] w-[1000px]"
+      style="background:radial-gradient(circle at 50% 50%, rgba(227,28,121, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
 ">
    </div>
    <div
-      class="absolute top-[300px] left-[-600px] -z-50 h-[700px] w-[1000px]  bg-black "
-      style="background:radial-gradient(circle at 50% 50%, rgba(29, 185, 84, 0.4) 0%, rgba(255, 255, 255, 0) 60%);
+      class="absolute top-[600px] left-[-500px] -z-40 h-[700px] w-[1000px]"
+      style="background:radial-gradient(circle at 50% 50%, rgba(29, 185, 84, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
 ">
    </div>
    <div
-      class="absolute top-[640px] right-[-600px] -z-50 h-[700px] w-[1000px]  bg-black "
-      style="background:radial-gradient(circle at 50% 50%, rgba(0, 145, 255, 0.4) 0%, rgba(255, 255, 255, 0) 60%);
+      class="absolute top-[-200px] left-[-400px] -z-40 h-[700px] w-[1000px] "
+      style="background:radial-gradient(circle at 50% 50%, rgba(0, 145, 255, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
 ">
+   </div>
+
+   <div>
+      <img
+         class=" absolute  top-[600px] -z-50 h-[200px] select-none	"
+         style="transform: rotate({scrollPosition / 24 - 20}deg); right: {75 + scrollPosition / 10}px; opacity: {0.85 - scrollPosition / 700}"
+         src="{exampleTab}"
+         alt="" />
+   </div>
+   <div>
+      <img
+         class=" absolute top-[375px] -z-50 h-[200px] rotate-[-20deg] select-none"
+         style="transform: rotate({scrollPosition / 24 - 20}deg); right: {75 + scrollPosition / 10}px; opacity: {0.85 - scrollPosition / 700}"
+         src="{exampleTab1}"
+         alt="" />
    </div>
 </div>
 <!--  -->
@@ -73,7 +65,7 @@ import Typewriter from "svelte-typewriter";
    </Typewriter>
 </div>
 
-<div class="absolute top-[500px] right-[50px] flex flex-row">
+<div class="absolute top-[1400px] right-[100px] flex flex-row">
    <div class="ml-auto flex flex-col">
       <h1 class="  bg-gradient-to-r from-green-400 to-black bg-clip-text  text-7xl font-extrabold text-transparent">Synced With</h1>
       <h1 class=" bg-gradient-to-r from-green-400 to-black bg-clip-text text-7xl font-extrabold text-transparent">Spotify</h1>

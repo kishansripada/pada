@@ -28,7 +28,7 @@ let userData = queryStore({ client, query: findCurrentOwner, variables: { email 
 $: console.log($userData);
 </script>
 
-<div class="uk-container wrap">
+<div class="">
    {#if !cookies}
       <p>You are not Loged in.</p>
       <a href="/login">Login</a>
@@ -37,11 +37,11 @@ $: console.log($userData);
    {#if $userData.data}
       <h4>{$userData.data.findUserByEmail.name}</h4>
       <div><b>Email:</b> {$userData.data.findUserByEmail.email}</div>
-      <ul class="uk-list uk-list-large uk-list-striped">
+      <ul class="">
          {#each $userData.data.findUserByEmail.tabs.data as tab}
             <li>
-               <div class="container">
-                  <p uk-margin>
+               <div class="">
+                  <p>
                      <a href="/store/{tab._id}">View</a>
                   </p>
                </div>
