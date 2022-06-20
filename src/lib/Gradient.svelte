@@ -14,6 +14,7 @@ colors.set(
       .then((colors) => colors.map((color) => color[1].hex))
 );
 
+$: console.log($colors);
 var createdStyleTag = document.createElement("style");
 createdStyleTag.textContent = `@keyframes gradient {
    0% {
@@ -85,12 +86,22 @@ document.body.appendChild(createdStyleTag);
       <div transition:fade class="">
          <div
             class="absolute top-[-200px] right-[-600px]  h-[700px] w-[1000px] -z-50"
-            style="background:radial-gradient(circle at 50% 50%, {colors[0]} 0%, rgba(255, 255, 255, 0) 60%);
+            style="background:radial-gradient(circle at 50% 50%, {colors[0]} 0%, rgba(255, 255, 255, 0) 50%);
 ">
          </div>
          <div
             class="absolute top-[-200px] left-[-600px] -z-50 h-[700px] w-[1000px]  bg-black "
             style="background:radial-gradient(circle at 50% 50%, {colors[1]} 0%, rgba(255, 255, 255, 0) 60%);
+">
+         </div>
+         <div
+            class="absolute top-[-500px] left-[40%] -z-50 h-[700px] w-[1000px]  bg-black "
+            style="background:radial-gradient(circle at 50% 50%, {colors[2]} 0%, rgba(255, 255, 255, 0) 60%); opacity: 1;
+">
+         </div>
+         <div
+            class="absolute top-[-500px] right-[40%] -z-50 h-[700px] w-[1000px]  bg-black "
+            style="background:radial-gradient(circle at 50% 50%, {colors[3] || colors[0]} 0%, rgba(255, 255, 255, 0) 60%);
 ">
          </div>
       </div>

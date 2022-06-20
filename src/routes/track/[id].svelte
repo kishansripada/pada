@@ -5,8 +5,6 @@ import Chords from "$lib/Chords.svelte";
 import TabsChordsNav from "$lib/TabsChordsNav.svelte";
 import Gradient from "$lib/Gradient.svelte";
 
-import { fade } from "svelte/transition";
-
 import { page } from "$app/stores";
 import { trackDetails, mongoTrack, tabsOrChords, version } from "../../store.js";
 
@@ -15,7 +13,10 @@ $: if ($page.params.id) {
 }
 
 $: mongoTrack.set(fetch(`/api/gettrack/${$page.params.id}`).then((r) => r.json()));
+
 $: console.log({ $trackDetails });
+
+let a = 3;
 </script>
 
 <!-- <div transition:fade="{{ delay: 0, duration: 250 }}" class="pt-0"> -->

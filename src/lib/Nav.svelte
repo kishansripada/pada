@@ -15,6 +15,12 @@ faunaSession.subscribe((val) => {
       faunaSession.set(user);
    }
 });
+
+const logout = () => {
+   Cookies.remove("fauna-session");
+   faunaSession.update(() => null);
+   window.location.reload();
+};
 </script>
 
 {#if $isSearching}
@@ -22,6 +28,7 @@ faunaSession.subscribe((val) => {
 {:else}
    <div class="bg-white/0 px-10">
       <!-- transition:slide -->
+
       <div class="flex h-24 flex-row items-center justify-between">
          <div class="flex flex-row items-center">
             <a href="/" class="px-2 text-2xl text-[#091834] transition duration-300 ease-in-out hover:-translate-y-1">home</a>
@@ -48,7 +55,7 @@ faunaSession.subscribe((val) => {
 
             {#if user}
                <a href="/myprofile">My Profile</a>
-               <button on:click="{() => Cookies.remove('fauna-session')}">Logout</button>
+               <button on:click="{logout}">Logout</button>
             {:else}
                <a href="/login">Login</a>
                <a href="/signup" class=""> Signup </a>
@@ -57,3 +64,5 @@ faunaSession.subscribe((val) => {
       </div>
    </div>
 {/if}
+
+Query( Lambda( ["spotifyTrackId"], Select( ["data", 0], Paginate(Match("unique_Track_spotifyId", Var("spotifyTrackId"))) ) ) )

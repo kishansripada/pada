@@ -1,10 +1,9 @@
 <script>
-import { version, tabsOrChords } from "../../store";
-import { onMount } from "svelte";
+import { version } from "../../store";
 import { browser } from "$app/env";
 
-export let tabs;
-
+export let xml;
+export let style;
 let container;
 let embed;
 
@@ -18,7 +17,7 @@ function loadFlat() {
 }
 
 $: if (embed && browser) {
-   embed.loadMusicXML(tabs[$version.tabs].musicXml);
+   embed.loadMusicXML(xml);
 }
 </script>
 
@@ -28,6 +27,6 @@ $: if (embed && browser) {
 
 <div>
    {#if browser}
-      <div bind:this="{container}" style="height: 500px"></div>
+      <div style="{style}" bind:this="{container}"></div>
    {/if}
 </div>

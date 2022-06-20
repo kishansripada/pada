@@ -52,10 +52,13 @@ type Mutation {
     registerUser(email: String!, password: String!, name: String!): User @resolver(name: "registerUser")
     login(email: String!, password: String!): Token @resolver(name: "login")
     addTrack(spotifyId: String!, name: String!, artists: [String!]!): Track @resolver(name: "addTrack")
+    addTab(spotifyId: String!, authorId: ID!, description: String!, musicXml: String!): Tab @resolver(name: "addTab")
 }
 
 type Query {
   findUserByEmail(email: String): User
+    getApprovedTracksAndChords(spotifyId: String!): [Tab] @resolver(name: "getApprovedTracksAndChords")
+
 }
 # Embeded type for returned token response
 type Token @embedded {
