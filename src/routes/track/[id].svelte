@@ -1,49 +1,40 @@
+<script context="module">
+export async function load({ params, fetch }) {
+   const trackDetails = await fetch(`/api/spotify/trackdetails/${params.id}`).then((r) => r.json());
+   return { props: { trackDetails } };
+}
+</script>
+
 <script>
 import TrackDetails from "$lib/TrackDetails.svelte";
 import Tabs from "$lib/Tabs.svelte";
 import Chords from "$lib/Chords.svelte";
 import TabsChordsNav from "$lib/TabsChordsNav.svelte";
 import Gradient from "$lib/Gradient.svelte";
+import { browser } from "$app/env";
+import { tabsOrChords, version, playbackData } from "../../store.js";
 
-import { page } from "$app/stores";
-import { trackDetails, mongoTrack, tabsOrChords, version } from "../../store.js";
-
-$: if ($page.params.id) {
-   trackDetails.set(fetch(`/api/spotify/trackdetails/${$page.params.id}`).then((r) => r.json()));
-}
-
-$: mongoTrack.set(fetch(`/api/gettrack/${$page.params.id}`).then((r) => r.json()));
-
-$: console.log({ $trackDetails });
-
-let a = 3;
+export let trackDetails;
+console.log(trackDetails);
+$: playbackData.set(trackDetails);
 </script>
 
-<!-- <div transition:fade="{{ delay: 0, duration: 250 }}" class="pt-0"> -->
-{#await $trackDetails}
-   <div class="shadow-4xl rounded-[20px] h-64 pt-0 bg-white/10"></div>
-{:then trackDetails}
-   <TrackDetails trackDetails="{trackDetails}" />
-{/await}
+<TrackDetails trackDetails="{trackDetails}" />
 
 <div class="pb-4 pt-9">
    <TabsChordsNav />
 </div>
-<!-- </div> -->
-{#if $tabsOrChords == "tabs" && $mongoTrack}
-   {#await $mongoTrack then mongoTrack}
-      <Tabs mongoTrack="{mongoTrack}" />
-   {/await}
+
+{#if $tabsOrChords == "tabs"}
+   <Tabs />
 {/if}
 
-{#if $tabsOrChords == "chords" && $mongoTrack}
+<!-- {#if $tabsOrChords == "chords" && $mongoTrack}
    {#await $mongoTrack then mongoTrack}
       <Chords />
    {/await}
-{/if}
+{/if} -->
 
-{#if $trackDetails}
-   {#await $trackDetails then trackDetails}
-      <Gradient albumUrl="{trackDetails.album.images[0].url}" />
-   {/await}
+{#if browser}
+   <Gradient albumUrl="{trackDetails.album.images[0].url}" />
 {/if}

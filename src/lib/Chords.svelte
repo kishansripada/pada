@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 import { mongoTrack, isWritingChords } from "../store";
 import Info from "./Info.svelte";
 import ViewChords from "./Chords/ViewChords.svelte";
@@ -20,4 +20,4 @@ import { browser } from "$app/env";
    {:else}
       <WriteChords />
    {/if}
-{/await}
+{/await} -->

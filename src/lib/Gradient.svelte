@@ -6,7 +6,7 @@ import { spotifyIsPaused, colors } from "../store.js";
 
 export let albumUrl;
 
-colors.set(
+$: colors.set(
    Vibrant.from(albumUrl)
       .maxColorCount(5)
       .getSwatches()

@@ -53,9 +53,9 @@ onMount(async () => {
 {/if}
 
 {#if !$loggedIn}
-   <button>
+   <button class="z-50">
       <img
-         class="fixed right-2 bottom-2 w-72"
+         class="fixed right-2 bottom-2  w-72"
          alt=""
          src="https://raw.githubusercontent.com/kishansripada/BopTabs/master/src/assets/connectSpotify.svg"
          on:click="{$logIn}" />

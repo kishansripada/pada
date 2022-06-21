@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 import { App, Credentials } from "realm-web";
 import { writable } from "svelte/store";
 import { onMount } from "svelte";
@@ -60,4 +60,4 @@ const getUserSavedTracks = async (access_token) => {
          </div>
       </a>
    {/each}
-</div>
+</div> -->

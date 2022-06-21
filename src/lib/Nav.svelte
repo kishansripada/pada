@@ -64,5 +64,3 @@ const logout = () => {
       </div>
    </div>
 {/if}
-
-Query( Lambda( ["spotifyTrackId"], Select( ["data", 0], Paginate(Match("unique_Track_spotifyId", Var("spotifyTrackId"))) ) ) )

@@ -27,7 +27,7 @@ $: if ($resp?.fetching == false) {
    if ($resp?.data?.login) {
       Cookies.set("fauna-session", JSON.stringify($resp.data.login), { expires: new Date($resp.data.login.ttl) });
       goto("/");
-      faunaSession.update(() => $resp.data.login);
+      faunaSession.update(() => resp.data.login);
    }
 
    //    if ($resp?.error?.message) {

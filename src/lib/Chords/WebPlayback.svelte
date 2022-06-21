@@ -1,5 +1,5 @@
 <script>
-import { trackDetails, loggedIn, spotifyPosition, logIn, chordPosition, spotifyIsPaused } from "../../store.js";
+import { playbackData, loggedIn, spotifyPosition, logIn, chordPosition, spotifyIsPaused } from "../../store.js";
 import { page } from "$app/stores";
 import playIcon from "../../static/play.svg";
 import pauseIcon from "../../static/pause.svg";
@@ -51,9 +51,9 @@ async function playPause() {
    if (!$loggedIn) logIn();
    // check to make sure play and player and initialized
    //   if there isn't a track queued, don't do anything
-   if (!play || !player || !$trackDetails) return;
+   if (!play || !player || !$playbackData) return;
    //   get the current track id from store
-   let id = (await $trackDetails.then((trackDetails) => trackDetails)).id;
+   let id = $playbackData.id;
    let state = await player.getCurrentState();
    // if the current songs playing is the song that its in the store OR
    // if the user in on a page that is not /track/id THEN
@@ -84,7 +84,7 @@ let interval = window.setInterval(async () => {
 
 async function handleChangeMsPosition(event) {
    if (!play || !player) return;
-   let length = (await $trackDetails).duration_ms;
+   let length = $playbackData.duration_ms;
    player.isLoaded.then(() => {
       player.seek((event.offsetX / 500) * length);
    });
@@ -101,9 +101,9 @@ async function handleChangeMsPosition(event) {
 
    <div class="relative pb-2 pl-1" on:click="{handleChangeMsPosition}">
       <div class="absolute h-2 rounded-full bg-gray-500" style="width: 500px"></div>
-      {#if $trackDetails}
-         {#await $trackDetails then trackDetails}
-            <div class="absolute h-2 rounded-full bg-gray-700" style="width: {($spotifyPosition / trackDetails.duration_ms) * 500}px"></div>
+      {#if $playbackData}
+         {#await $playbackData then playbackData}
+            <div class="absolute h-2 rounded-full bg-gray-700" style="width: {($spotifyPosition / playbackData.duration_ms) * 500}px"></div>
          {/await}
       {/if}
    </div>

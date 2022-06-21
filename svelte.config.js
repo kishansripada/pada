@@ -6,7 +6,7 @@ const config = {
 		adapter: adapter(),
 		vite: {
 			optimizeDeps: {
-				exclude: ['@urql/svelte']
+				exclude: ['@urql/svelte'],
 			}
 		},
 		// Override http methods in the Todo forms

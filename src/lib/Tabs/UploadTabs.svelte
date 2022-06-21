@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 import { isUploadingTabs, mongoTrack } from "../../store.js";
 import { App, Credentials } from "realm-web";
 import { page } from "$app/stores";
@@ -83,4 +83,4 @@ const postFiles = async () => {
 
       <button class="mt-auto mb-5 rounded px-5 py-2 outline outline-white hover:bg-white/10" on:click="{() => postFiles()}">Upload</button>
    </div>
-</div>
+</div> -->
