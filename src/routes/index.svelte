@@ -3,6 +3,7 @@ import { homePageMusicXml } from "../homePageMusicXml.js";
 import Flat from "../lib/Tabs/Flat.svelte";
 import { onMount } from "svelte";
 import { fade } from "svelte/transition";
+import { browser } from "$app/env";
 import Typewriter from "svelte-typewriter";
 import exampleTab from "../static/exampleTab.png";
 import exampleTab1 from "../static/exampleTab1.png";
@@ -28,30 +29,31 @@ onMount(() => {
 
 <!-- COLOR SPLOTCHES -->
 <!-- <div class="absolute -z-40 h-96 overflow-hidden" transition:fade> -->
-<div
-   class="absolute top-[-200px] right-[-300px] h-[700px] w-[1000px] overflow-hidden"
-   style="background:radial-gradient(circle at 50% 50%, rgba(227,28,121, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
+<div class="">
+   <div
+      class="absolute top-[-200px] right-[-300px] -z-40 h-[700px] w-[1000px] "
+      style="background:radial-gradient(circle at 50% 50%, rgba(227,28,121, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
 ">
-</div>
+   </div>
 
-<div
-   class="absolute top-[-200px] left-[-400px] -z-40 h-[700px] w-[1000px] overflow-hidden"
-   style="background:radial-gradient(circle at 50% 50%, rgba(0, 145, 255, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
+   <div
+      class="absolute top-[-200px] left-[-400px] -z-40 h-[700px] w-[1000px] overflow-hidden"
+      style="background:radial-gradient(circle at 50% 50%, rgba(0, 145, 255, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
 ">
-</div>
+   </div>
 
-<div
-   class="absolute top-[800px] left-[-400px] -z-40 h-[700px] w-[1000px] overflow-hidden"
-   style="background:radial-gradient(circle at 50% 50%, rgba(29, 185, 84, 0.3) 0%, rgba(255, 255, 255, 0) 60%);}
+   <div
+      class="absolute top-[800px] left-[-400px] -z-40 h-[700px] w-[1000px] overflow-hidden"
+      style="background:radial-gradient(circle at 50% 50%, rgba(29, 185, 84, 0.3) 0%, rgba(255, 255, 255, 0) 60%);}
 ">
-</div>
+   </div>
 
-<div
-   class="absolute top-[1400px] right-[-400px] -z-40 h-[700px] w-[1000px] overflow-hidden"
-   style="background:radial-gradient(circle at 50% 50%, rgba(227, 28, 121, 0.15) 0%, rgba(255, 255, 255, 0) 60%);}
+   <div
+      class="absolute top-[1400px] right-[-400px] -z-40 h-[700px] w-[1000px] overflow-hidden"
+      style="background:radial-gradient(circle at 50% 50%, rgba(227, 28, 121, 0.15) 0%, rgba(255, 255, 255, 0) 60%);}
 ">
+   </div>
 </div>
-<!-- </div> -->
 
 <div id="BANNER" class="h-[800px]">
    <div class="bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text pt-16 text-8xl font-extrabold text-transparent">
@@ -59,7 +61,7 @@ onMount(() => {
          {"Interactive, "}
          <span
             ><Typewriter loop cursor="{true}">
-               <h1>Modern</h1>
+               <p>Modern</p>
                <p>Fast</p>
                <p>Simple</p>
                <p>Synced</p>
@@ -152,30 +154,32 @@ onMount(() => {
             oEnd: 1,
             i: scrollPosition,
          })};">
-         Hear It.
+         Feel It.
       </h1>
    </div>
 
-   <div class="absolute top-[250px]  w-96 text-xl">
+   <div class="absolute top-[250px] w-96 text-xl">
       <p>
          Bop Tabs never displays static tabs. Listen to all your dynamic, <span
             class="  bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text font-bold text-transparent">interactive</span> tablatures to get a sense of
          the rhythm
       </p>
    </div>
-
-   <div class="absolute right-[0] top-[50px] -z-50">
-      <Flat xml="{homePageMusicXml}" style="height:300px; width: 600px" />
-   </div>
+   {#if browser}
+      <div class="absolute right-[0] top-[50px] -z-50">
+         <Flat xml="{homePageMusicXml}" style="height:300px; width: 700px" />
+      </div>
+   {/if}
 </div>
 
 <div class="absolute top-[3000px] right-[100px] w-full">test</div>
 
-<!-- <div class="flex flex-row pt-48 ">
+<div class="flex flex-row pt-48 ">
    <div class="mr-auto flex flex-col">
       <h1 class="  bg-gradient-to-r from-blue-400 to-green-500 bg-clip-text  text-7xl font-extrabold text-transparent">AI Generated</h1>
       <h1 class=" bg-gradient-to-r from-blue-400 to-green-500 bg-clip-text text-7xl font-extrabold text-transparent">Chords</h1>
    </div>
-</div> -->
+</div>
+
 <style>
 </style>

@@ -37,22 +37,19 @@ $: if ($resp?.fetching == false) {
 }
 </script>
 
-<h1 class="bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-8xl font-extrabold text-transparent">Login</h1>
-<div class="flex justify-center text-[#091834] ">
-   <div class="flex h-96 w-96 flex-col justify-center rounded-[20px] bg-[#091834]/10 shadow-2xl">
-      <div class="ml-auto mr-4 w-64">
-         <div class="flex flex-row items-center">
-            <p>email:</p>
-            <input type="text" bind:value="{email}" class="my-4 h-8 w-64 rounded bg-transparent outline outline-[#091834]" />
-         </div>
+<div class="ml-36 mt-16 flex flex-col">
+   <p class="font-bold">Sign In</p>
+   <p class="">New to BopTabs? <a class="text-blue-600" href="/signup">Sign up for an account</a></p>
 
-         <div class="flex flex-row items-center">
-            <p>Password:</p>
-            <input bind:value="{password}" type="password" class=" h-8 w-64 rounded bg-transparent outline outline-[#091834]" />
-         </div>
-      </div>
-
-      <button on:click="{login}" class="w-20 rounded outline outline-[#091834]"> Login </button>
-      <a href="/signup" class="w-20 rounded outline outline-[#091834]"> Signup </a>
+   <div class="mr-auto flex flex-col items-center pt-10 pb-5">
+      <p class="font mr-auto pb-2">email</p>
+      <input type="text" bind:value="{email}" class="h-8 w-96 rounded bg-transparent outline outline-[#091834]" />
    </div>
+
+   <div class="mr-auto flex flex-col items-center">
+      <p class="mr-auto pb-2">password</p>
+      <input bind:value="{password}" type="password" class=" h-8 w-96 rounded bg-transparent outline outline-[#091834]" />
+   </div>
+
+   <button on:click="{login}" class=" mt-10 mb-4 w-96 rounded py-1 outline outline-[#091834]"> Login </button>
 </div>
