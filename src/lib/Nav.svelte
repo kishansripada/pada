@@ -26,7 +26,7 @@ const logout = () => {
 {#if $isSearching}
    <Search />
 {:else}
-   <div class="bg-white/0 px-10">
+   <div class="bg-white/100 px-10">
       <div class="flex h-24 flex-row items-center justify-between">
          <div class="flex flex-row items-center pl-16">
             <a href="/" class="px-2  text-[#091834] transition duration-300 ease-in-out hover:-translate-y-1 text-lg">home</a>

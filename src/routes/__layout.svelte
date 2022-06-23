@@ -11,7 +11,10 @@ import Footer from "../lib/Footer.svelte";
 </script>
 
 <SvelteToast />
-<Nav />
+<div class="sticky top-0 z-40">
+   <Nav />
+</div>
+
 {#if $isPremium && browser}
    <WebPlayback />
 {/if}

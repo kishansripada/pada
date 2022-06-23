@@ -38,18 +38,18 @@ $: if ($resp?.fetching == false) {
 </script>
 
 <div class="ml-36 mt-16 flex flex-col">
-   <p class="font-bold">Sign In</p>
-   <p class="">New to BopTabs? <a class="text-blue-600" href="/signup">Sign up for an account</a></p>
+   <p class="pb-3 text-4xl font-light">log in</p>
+   <p class="">new to BopTabs? <a class="text-blue-600" href="/signup">sign up for an account</a></p>
 
    <div class="mr-auto flex flex-col items-center pt-10 pb-5">
       <p class="font mr-auto pb-2">email</p>
-      <input type="text" bind:value="{email}" class="h-8 w-96 rounded bg-transparent outline outline-[#091834]" />
+      <input type="text" bind:value="{email}" class=" h-8 w-96 rounded bg-transparent px-2 outline outline-[#091834]" />
    </div>
 
    <div class="mr-auto flex flex-col items-center">
       <p class="mr-auto pb-2">password</p>
-      <input bind:value="{password}" type="password" class=" h-8 w-96 rounded bg-transparent outline outline-[#091834]" />
+      <input bind:value="{password}" type="password" class="h-8 w-96 rounded bg-transparent px-2 outline outline-[#091834]" />
    </div>
 
-   <button on:click="{login}" class=" mt-10 mb-4 w-96 rounded py-1 outline outline-[#091834]"> Login </button>
+   <button on:click="{login}" class=" mt-10 mb-4 w-96 rounded py-1 outline outline-[#091834]"> log in </button>
 </div>

@@ -31,25 +31,25 @@ onMount(() => {
 <!-- <div class="absolute -z-40 h-96 overflow-hidden" transition:fade> -->
 <div class="">
    <div
-      class="absolute top-[-200px] right-[-300px] -z-40 h-[700px] w-[1000px] "
+      class="pointer-events-none absolute top-[-200px] right-[-300px] z-40 h-[700px] w-[1000px]	"
       style="background:radial-gradient(circle at 50% 50%, rgba(227,28,121, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
 ">
    </div>
 
    <div
-      class="absolute top-[-200px] left-[-400px] -z-40 h-[700px] w-[1000px] overflow-hidden"
+      class="pointer-events-none absolute top-[-200px] left-[-400px] z-40 h-[700px] w-[1000px] overflow-hidden	"
       style="background:radial-gradient(circle at 50% 50%, rgba(0, 145, 255, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
 ">
    </div>
 
    <div
-      class="absolute top-[800px] left-[-400px] -z-40 h-[700px] w-[1000px] overflow-hidden"
+      class="pointer-events-none absolute top-[800px] left-[-400px] -z-40 h-[700px] w-[1000px] overflow-hidden	"
       style="background:radial-gradient(circle at 50% 50%, rgba(29, 185, 84, 0.3) 0%, rgba(255, 255, 255, 0) 60%);}
 ">
    </div>
 
    <div
-      class="absolute top-[1400px] right-[-400px] -z-40 h-[700px] w-[1000px] overflow-hidden"
+      class="pointer-events-none absolute top-[1400px] right-[-400px] -z-40 h-[700px] w-[1000px] overflow-hidden	"
       style="background:radial-gradient(circle at 50% 50%, rgba(227, 28, 121, 0.15) 0%, rgba(255, 255, 255, 0) 60%);}
 ">
    </div>
@@ -146,9 +146,10 @@ onMount(() => {
       <h1
          class=" absolute bg-gradient-to-r from-pink-600 to-purple-400 bg-clip-text text-7xl font-extrabold text-transparent"
          style="
-         top: {linear({ iStart: 1000, iEnd: 1100, oStart: -500, oEnd: 150, i: scrollPosition })}px;
+         top: {linear({ iStart: 900, iEnd: 1100, oStart: -500, oEnd: 150, i: scrollPosition })}px;
+         font-size:{linear({ iStart: 1070, iEnd: 1100, oStart: 90, oEnd: 72, i: scrollPosition })}px;
          opacity: {linear({
-            iStart: 1000,
+            iStart: 900,
             iEnd: 1100,
             oStart: 0,
             oEnd: 1,
