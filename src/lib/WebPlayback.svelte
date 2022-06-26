@@ -51,7 +51,9 @@ async function playPause() {
    if (!$loggedIn) logIn();
    // check to make sure play and player and initialized
    //   if there isn't a track queued, don't do anything
+
    if (!play || !player || !$playbackData) return;
+
    //   get the current track id from store
    let id = $playbackData.id;
    let state = await player.getCurrentState();
@@ -59,7 +61,8 @@ async function playPause() {
    // if the user in on a page that is not /track/id THEN
    // play/pause the current song
    spotifyIsPaused.set(state ? !state.paused : true);
-   if (state?.track_window?.current_track?.id == id || $page.routeId !== "track/[id]") {
+
+   if (state?.track_window?.current_track?.id == id || ($page.routeId !== "track/[id]/tabs" && $page.routeId !== "track/[id]/chords")) {
       //    paused = !state.paused;
       spotifyIsPaused.set(state ? !state.paused : true);
       player.togglePlay();

@@ -27,33 +27,47 @@ onMount(() => {
 
 <svelte:window bind:scrollY="{scrollPosition}" />
 
-<!-- COLOR SPLOTCHES -->
-<!-- <div class="absolute -z-40 h-96 overflow-hidden" transition:fade> -->
-<!-- <div class="">
+<div class="absolute top-0 right-0 z-[-40] h-[1265px] w-[459px] overflow-hidden">
    <div
-      class="pointer-events-none absolute top-[-200px] right-[-300px] z-40 h-[700px] w-[1000px]	"
-      style="background:radial-gradient(circle at 50% 50%, rgba(227,28,121, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
-">
+      class="z-50"
+      style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, #F5CDFF 0%, rgba(239, 255, 250, 0) 100%);
+background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, #F5CDFF 0%, rgba(239, 255, 250, 0) 100%);
+position: absolute;
+width: 918px;
+height: 1265px;
+top: -300px;
+right: -550px;
+z-index: 50;">
    </div>
+</div>
 
+<div class="absolute top-[-200px] left-0 z-[-40] h-[1265px] w-[459px] overflow-hidden">
    <div
-      class="pointer-events-none absolute top-[-200px] left-[-400px] z-40 h-[700px] w-[1000px] overflow-hidden	"
-      style="background:radial-gradient(circle at 50% 50%, rgba(0, 145, 255, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
-">
+      class=""
+      style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, #ADD8E6 0%, rgba(239, 255, 250, 0) 100%);
+background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, #ADD8E6 0%, rgba(239, 255, 250, 0) 100%);
+position: absolute;
+width: 918px;
+height: 1265px;
+top: -300px;
+left: -400px;
+z-index: 50;">
    </div>
+</div>
 
+<div class="absolute top-[450px] left-0 z-[-40] h-[1265px] w-[459px] overflow-hidden">
    <div
-      class="pointer-events-none absolute top-[800px] left-[-400px] -z-40 h-[700px] w-[1000px] overflow-hidden	"
-      style="background:radial-gradient(circle at 50% 50%, rgba(29, 185, 84, 0.3) 0%, rgba(255, 255, 255, 0) 60%);}
-">
+      class="z-50"
+      style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, #1DB954 0%, rgba(239, 255, 250, 0) 100%);
+background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, #1DB954 0%, rgba(239, 255, 250, 0) 100%);
+position: absolute;
+width: 918px;
+height: 1265px;
+top: 0px;
+left: -550px;
+z-index: 50;">
    </div>
-
-   <div
-      class="pointer-events-none absolute top-[1400px] right-[-400px] -z-40 h-[700px] w-[1000px] overflow-hidden	"
-      style="background:radial-gradient(circle at 50% 50%, rgba(227, 28, 121, 0.15) 0%, rgba(255, 255, 255, 0) 60%);}
-">
-   </div>
-</div> -->
+</div>
 
 <div id="BANNER" class="h-[800px]">
    <div class="bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text pt-16 text-8xl font-extrabold text-transparent">

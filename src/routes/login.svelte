@@ -11,7 +11,6 @@ const login = async () => {
    if (!email || !password) return;
    try {
       let authToken = await signInWithEmailAndPassword(auth, email, password);
-      // Cookies.set("authToken", authToken.user.uid);
       goto("/");
    } catch {
       toast.push("Invalid credentials", {
@@ -31,12 +30,20 @@ const login = async () => {
 
    <div class="mr-auto flex flex-col items-center pt-10 ">
       <p class="font mr-auto pb-2">email</p>
-      <input type="text" bind:value="{email}" class=" h-8 w-96 rounded bg-transparent px-2 outline outline-[#091834]" />
+      <input
+         type="text"
+         bind:value="{email}"
+         on:keypress="{(e) => (e.code == 'Enter' ? login() : null)}"
+         class=" h-8 w-96 rounded bg-transparent px-2 outline outline-[#091834]" />
    </div>
 
    <div class="mr-auto flex flex-col items-center pt-5">
       <p class="mr-auto pb-2">password</p>
-      <input bind:value="{password}" type="password" class="h-8 w-96 rounded bg-transparent px-2 outline outline-[#091834]" />
+      <input
+         bind:value="{password}"
+         on:keypress="{(e) => (e.code == 'Enter' ? login() : null)}"
+         type="password"
+         class="h-8 w-96 rounded bg-transparent px-2 outline outline-[#091834]" />
    </div>
 
    <button on:click="{login}" class=" mt-10 mb-4 w-96 rounded bg-[#091834] py-1 text-white"> log in </button>
