@@ -29,7 +29,7 @@ onMount(() => {
 
 <!-- COLOR SPLOTCHES -->
 <!-- <div class="absolute -z-40 h-96 overflow-hidden" transition:fade> -->
-<div class="">
+<!-- <div class="">
    <div
       class="pointer-events-none absolute top-[-200px] right-[-300px] z-40 h-[700px] w-[1000px]	"
       style="background:radial-gradient(circle at 50% 50%, rgba(227,28,121, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
@@ -53,13 +53,13 @@ onMount(() => {
       style="background:radial-gradient(circle at 50% 50%, rgba(227, 28, 121, 0.15) 0%, rgba(255, 255, 255, 0) 60%);}
 ">
    </div>
-</div>
+</div> -->
 
 <div id="BANNER" class="h-[800px]">
    <div class="bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text pt-16 text-8xl font-extrabold text-transparent">
       <div class="inline-flex">
          {"Interactive, "}
-         <span
+         <span class="pb-5"
             ><Typewriter loop cursor="{true}">
                <p>Modern</p>
                <p>Fast</p>
@@ -139,7 +139,7 @@ onMount(() => {
          Don't Guess
       </p>
       <h1
-         class=" absolute top-[75px] bg-gradient-to-r from-pink-600 to-purple-400 bg-clip-text  text-7xl font-extrabold text-transparent"
+         class="absolute top-[75px] bg-gradient-to-r from-pink-600 to-purple-400 bg-clip-text pb-5  text-7xl font-extrabold text-transparent"
          style="left: {linear({ iStart: 600, iEnd: 1000, oStart: -500, oEnd: 0, i: scrollPosition })}px;">
          The Rhythm
       </h1>
