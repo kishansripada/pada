@@ -4,31 +4,31 @@ import * as Vibrant from "node-vibrant";
 import { fade } from "svelte/transition";
 import { spotifyIsPaused, colors } from "../store.js";
 
-export let albumUrl;
+// export let albumUrl;
 
-$: colors.set(
-   Vibrant.from(albumUrl)
-      .maxColorCount(5)
-      .getSwatches()
-      .then((palette) => Object.entries(palette).filter((color) => color[1]._population > 0))
-      .then((colors) => colors.map((color) => color[1].hex))
-);
+// $: colors.set(
+//    Vibrant.from(albumUrl)
+//       .maxColorCount(5)
+//       .getSwatches()
+//       .then((palette) => Object.entries(palette).filter((color) => color[1]._population > 0))
+//       .then((colors) => colors.map((color) => color[1].hex))
+// );
 
-$: console.log($colors);
-var createdStyleTag = document.createElement("style");
-createdStyleTag.textContent = `@keyframes gradient {
-   0% {
-      background-position: 0% 50%;
-   }
-   50% {
-      background-position: 100% 50%;
-   }
-   100% {
-      background-position: 0% 50%;
-   }
-}`;
+// $: console.log($colors);
+// var createdStyleTag = document.createElement("style");
+// createdStyleTag.textContent = `@keyframes gradient {
+//    0% {
+//       background-position: 0% 50%;
+//    }
+//    50% {
+//       background-position: 100% 50%;
+//    }
+//    100% {
+//       background-position: 0% 50%;
+//    }
+// }`;
 
-document.body.appendChild(createdStyleTag);
+// document.body.appendChild(createdStyleTag);
 
 // $: if ($spotifyIsPaused) {
 //    document.body.removeChild(createdStyleTag);
@@ -81,7 +81,7 @@ document.body.appendChild(createdStyleTag);
    {/await}
 </div>
 
-{#if $colors}
+<!-- {#if $colors}
    {#await $colors then colors}
       <div transition:fade class="">
          <div
@@ -106,7 +106,7 @@ document.body.appendChild(createdStyleTag);
          </div>
       </div>
    {/await}
-{/if}
+{/if} -->
 
 <!-- transition:fade="{{ delay: 0, duration: 300 }}" -->
 <style>
