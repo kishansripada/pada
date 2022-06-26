@@ -1,11 +1,11 @@
-const client_id = "01a3817b86784869a571c4fa82ec3de7"; // Your client id
-const client_secret = "19e1972a694740ff8537940a773c3ac3"; // Your secret
+// const client_id = "01a3817b86784869a571c4fa82ec3de7"; // Your client id
+// const client_secret = "19e1972a694740ff8537940a773c3ac3"; // Your secret
 
 export async function getToken() {
    let body = await fetch("https://accounts.spotify.com/api/token", {
       body: "grant_type=client_credentials",
       headers: {
-         Authorization: "Basic " + btoa(client_id + ":" + client_secret),
+         Authorization: "Basic " + "MDFhMzgxN2I4Njc4NDg2OWE1NzFjNGZhODJlYzNkZTc6MTllMTk3MmE2OTQ3NDBmZjg1Mzc5NDBhNzczYzNhYzM=",
          "Content-Type": "application/x-www-form-urlencoded",
       },
       method: "POST",
