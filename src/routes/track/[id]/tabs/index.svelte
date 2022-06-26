@@ -1,10 +1,10 @@
 <script>
-import { isUploadingTabs, version } from "../store";
+import { isUploadingTabs, version } from "../../../../store.js";
 import { queryStore, gql } from "@urql/svelte";
-import client from "../client.js";
-import Info from "./Info.svelte";
-import Flat from "../lib/Tabs/Flat.svelte";
-import UploadTabs from "../lib/Tabs/UploadTabs.svelte";
+import client from "../../../../client.js";
+import Info from "../../../../lib/Info.svelte";
+import Flat from "../../../../lib/Tabs/Flat.svelte";
+// import UploadTabs from "../lib/Tabs/UploadTabs.svelte";
 import { page } from "$app/stores";
 
 const getApprovedTracksAndChords = gql`
@@ -37,6 +37,6 @@ $: approvedTabs = queryStore({ client, query: getApprovedTracksAndChords, variab
    {/if}
 {:else}
    <!-- {#await $trackDetails then trackDetails}
-      <UploadTabs trackDetails="{trackDetails}" mongoTrack="{mongoTrack}" />
-   {/await} -->
+          <UploadTabs trackDetails="{trackDetails}" mongoTrack="{mongoTrack}" />
+       {/await} -->
 {/if}

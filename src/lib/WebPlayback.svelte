@@ -1,8 +1,8 @@
 <script>
-import { playbackData, loggedIn, spotifyPosition, logIn, chordPosition, spotifyIsPaused } from "../../store.js";
+import { playbackData, loggedIn, spotifyPosition, logIn, chordPosition, spotifyIsPaused } from "../store";
 import { page } from "$app/stores";
-import playIcon from "../../static/play.svg";
-import pauseIcon from "../../static/pause.svg";
+import playIcon from "../static/play.svg";
+import pauseIcon from "../static/pause.svg";
 
 let player;
 let play;

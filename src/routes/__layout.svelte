@@ -5,7 +5,7 @@ import { isPremium, user } from "../store.js";
 import { SvelteToast } from "@zerodevx/svelte-toast";
 import LogIn from "$lib/LogIn.svelte";
 import Nav from "$lib/Nav.svelte";
-import WebPlayback from "$lib/Chords/WebPlayback.svelte";
+import WebPlayback from "$lib/WebPlayback.svelte";
 import Footer from "../lib/Footer.svelte";
 import Firebase from "../fb.js";
 

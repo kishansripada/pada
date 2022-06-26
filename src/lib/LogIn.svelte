@@ -25,6 +25,7 @@ function setCookie(cname, cvalue, exhours) {
 }
 
 onMount(async () => {
+   console.log("hi from login");
    let uri = window.location.search.substring(1);
    let params = new URLSearchParams(uri);
 

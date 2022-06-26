@@ -7,12 +7,10 @@ export async function load({ params, fetch }) {
 
 <script>
 import TrackDetails from "$lib/TrackDetails.svelte";
-import Tabs from "$lib/Tabs.svelte";
-import Chords from "$lib/Chords.svelte";
 import TabsChordsNav from "$lib/TabsChordsNav.svelte";
 import Gradient from "$lib/Gradient.svelte";
 import { browser } from "$app/env";
-import { tabsOrChords, version, playbackData } from "../../store.js";
+import { tabsOrChords, version, playbackData } from "../../../store.js";
 
 export let trackDetails;
 console.log(trackDetails);
@@ -25,16 +23,9 @@ $: playbackData.set(trackDetails);
    <TabsChordsNav />
 </div>
 
-{#if $tabsOrChords == "tabs"}
-   <Tabs />
-{/if}
+<slot />
 
-<!-- {#if $tabsOrChords == "chords" && $mongoTrack}
-   {#await $mongoTrack then mongoTrack}
-      <Chords />
-   {/await}
-{/if} -->
-
-{#if browser}
-   <Gradient albumUrl="{trackDetails.album.images[0].url}" />
-{/if}
+<!-- {#if browser}
+       <Gradient albumUrl="{trackDetails.album.images[0].url}" />
+    {/if}
+     -->

@@ -31,8 +31,9 @@ const logout = () => {
       <div class="flex flex-row items-center ml-10  text-xl ">
          <a href="/" class=" text-[#091834] transition duration-300 ease-in-out hover:-translate-y-1 ">home</a>
 
-         <a href="/track/7gVwgc8b3XnO87TpmXXFA5" class="px-7 text-[#091834] transition duration-300 ease-in-out hover:-translate-y-1">discover</a>
-         <a href="/track/7gVwgc8b3XnO87TpmXXFA5" class=" text-[#091834] transition duration-300 ease-in-out hover:-translate-y-1">about </a>
+         <a href="/track/7gVwgc8b3XnO87TpmXXFA5/tabs" class="px-7 text-[#091834] transition duration-300 ease-in-out hover:-translate-y-1"
+            >discover</a>
+         <a href="/track/7DnAm9FOTWE3cUvso43HhI/tabs" class=" text-[#091834] transition duration-300 ease-in-out hover:-translate-y-1">about </a>
 
          {#if $loggedIn}
             <a
