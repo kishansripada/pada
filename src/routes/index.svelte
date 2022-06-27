@@ -7,6 +7,7 @@ import { browser } from "$app/env";
 import Typewriter from "svelte-typewriter";
 import exampleTab from "../static/exampleTab.png";
 import exampleTab1 from "../static/exampleTab1.png";
+import ColorSplotch from "$lib/ColorSplotch.svelte";
 
 const linear = (options) => {
    let { iStart, iEnd, oStart, oEnd, i } = options;
@@ -27,47 +28,9 @@ onMount(() => {
 
 <svelte:window bind:scrollY="{scrollPosition}" />
 
-<div class="absolute top-0 right-0 z-[-40] h-[1265px] w-[459px] overflow-hidden">
-   <div
-      class="z-50"
-      style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, #F5CDFF 0%, rgba(239, 255, 250, 0) 100%);
-background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, #F5CDFF 0%, rgba(239, 255, 250, 0) 100%);
-position: absolute;
-width: 918px;
-height: 1265px;
-top: -300px;
-right: -550px;
-z-index: 50;">
-   </div>
-</div>
-
-<div class="absolute top-[-200px] left-0 z-[-40] h-[1265px] w-[459px] overflow-hidden">
-   <div
-      class=""
-      style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, #ADD8E6 0%, rgba(239, 255, 250, 0) 100%);
-background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, #ADD8E6 0%, rgba(239, 255, 250, 0) 100%);
-position: absolute;
-width: 918px;
-height: 1265px;
-top: -300px;
-left: -400px;
-z-index: 50;">
-   </div>
-</div>
-
-<div class="absolute top-[450px] left-0 z-[-40] h-[1265px] w-[459px] overflow-hidden">
-   <div
-      class="z-50"
-      style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, #1DB954 0%, rgba(239, 255, 250, 0) 100%);
-background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, #1DB954 0%, rgba(239, 255, 250, 0) 100%);
-position: absolute;
-width: 918px;
-height: 1265px;
-top: 0px;
-left: -550px;
-z-index: 50;">
-   </div>
-</div>
+<ColorSplotch stylePosition="top: -250px; right: 0px;" color="#F5CDFF" />
+<ColorSplotch stylePosition="top: -250px; left: 0px; transform: rotate(180deg)" color="#ADD8E6" />
+<ColorSplotch stylePosition="top: 600px; left: 0px; transform: rotate(180deg)" color="#1DB954" />
 
 <div id="BANNER" class="h-[800px]">
    <div class="bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text pt-16 text-8xl font-extrabold text-transparent">
