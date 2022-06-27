@@ -8,6 +8,13 @@ import Typewriter from "svelte-typewriter";
 import exampleTab from "../static/exampleTab.png";
 import exampleTab1 from "../static/exampleTab1.png";
 import ColorSplotch from "$lib/ColorSplotch.svelte";
+import { goto } from "$app/navigation";
+import { getAuth } from "firebase/auth";
+import { user } from "../store.js";
+
+// $: if ($user && browser) {
+//    goto("/discover");
+// }
 
 const linear = (options) => {
    let { iStart, iEnd, oStart, oEnd, i } = options;
@@ -33,31 +40,25 @@ onMount(() => {
 <ColorSplotch stylePosition="top: 600px; left: 0px; transform: rotate(180deg)" color="#1DB954" />
 
 <div id="BANNER" class="h-[800px]">
-   <div class="bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text pt-16 text-8xl font-extrabold text-transparent">
-      <div class="inline-flex">
-         {"Interactive, "}
-         <span class="pb-5"
-            ><Typewriter loop cursor="{true}">
-               <p>Modern</p>
-               <p>Fast</p>
-               <p>Simple</p>
-               <p>Synced</p>
-            </Typewriter></span>
+   <div class="pt-6 text-center text-9xl font-extrabold">
+      <div class="">interactive.</div>
+
+      <p class="w-full bg-gradient-to-r from-[#7928CA] to-[#FF0080] bg-clip-text  text-transparent">modern.</p>
+
+      <div class=" bg-gradient-to-r from-[#007CF0] to-[#00DFD8] bg-clip-text  text-transparent">
+         <Typewriter loop cursor="{false}">
+            <p>tablatures</p>
+            <p>chords</p>
+         </Typewriter>
       </div>
    </div>
-   <div class="bg-gradient-to-r from-blue-400 to-red-600 bg-clip-text pt-4 text-8xl font-extrabold text-transparent">
-      <Typewriter loop cursor="{true}">
-         <h1>Tablatures</h1>
-         <p>Chords</p>
-      </Typewriter>
-   </div>
 
-   <img
+   <!-- <img
       class=" absolute  top-[600px] -z-50 h-[200px] select-none	"
       style="transform: rotate({linear({ iStart: 0, iEnd: 500, oStart: -20, oEnd: 0, i: scrollPosition })}deg); opacity: {linear({
          iStart: 0,
          iEnd: 900,
-         oStart: 0.7,
+         oStart: 1,
          oEnd: 0,
          i: scrollPosition,
       })}"
@@ -69,15 +70,15 @@ onMount(() => {
       style="transform: rotate({linear({ iStart: 0, iEnd: 500, oStart: -20, oEnd: 0, i: scrollPosition })}deg);  opacity: {linear({
          iStart: 0,
          iEnd: 900,
-         oStart: 0.7,
+         oStart: 1,
          oEnd: 0,
          i: scrollPosition,
       })}"
       src="{exampleTab1}"
-      alt="" />
+      alt="" /> -->
 </div>
 
-<div id="CHORDS SECTION" class="relative h-[500px] ">
+<div id="CHORDS SECTION" class="relative h-[500px] text-[#666666]">
    <div class=" absolute right-0 top-0" style="transform: rotate({linear({ iStart: 200, iEnd: 600, oStart: 20, oEnd: 0, i: scrollPosition })}deg);">
       <div class="ml-auto flex flex-col">
          <h1 class="  bg-gradient-to-r from-green-400 to-black bg-clip-text  text-7xl font-extrabold text-transparent">Chords</h1>

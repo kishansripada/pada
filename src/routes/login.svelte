@@ -24,7 +24,7 @@ const login = async () => {
 };
 </script>
 
-<div class="ml-36 mt-16 flex flex-col">
+<div class="mt-16 flex flex-col  md:ml-[15%]">
    <p class="pb-3 text-4xl font-light">log in</p>
    <p class="">new to BopTabs? <a class="text-blue-600" href="/signup">sign up for an account</a></p>
 
