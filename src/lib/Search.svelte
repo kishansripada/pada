@@ -86,7 +86,6 @@ const debounce = (query) => {
 </script>
 
 <div class="bg-white/10 px-10">
-   <!-- transition:slide -->
    <div class="flex h-24 flex-row items-center">
       <div class="flex w-full flex-row rounded-xl outline  outline-[#091834] ">
          <input
