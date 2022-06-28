@@ -87,12 +87,10 @@ onMount(() => {
 
       <p class="w-full bg-gradient-to-r from-[#7928CA] to-[#FF0080] bg-clip-text  text-transparent">modern.</p>
 
-      <div class=" bg-gradient-to-r from-[#007CF0] to-[#00DFD8] bg-clip-text  text-transparent">
-         <Typewriter loop cursor="{false}">
-            <p>tablatures</p>
-            <p>chords</p>
-         </Typewriter>
-      </div>
+      <Typewriter loop cursor="{false}">
+         <p class="bg-gradient-to-r from-[#007CF0] to-[#00DFD8] bg-clip-text  text-transparent">tablatures</p>
+         <p class="bg-gradient-to-r from-[#007CF0] to-[#00DFD8] bg-clip-text  text-transparent">chords</p>
+      </Typewriter>
    </div>
 
    <div class="absolute top-[475px] px-[10%] text-center text-[20px] font-light text-[#666666]">
