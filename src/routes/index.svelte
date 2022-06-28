@@ -39,7 +39,49 @@ onMount(() => {
 <ColorSplotch stylePosition="top: -250px; left: 0px; transform: rotate(180deg)" color="#ADD8E6" />
 <ColorSplotch stylePosition="top: 600px; left: 0px; transform: rotate(180deg)" color="#1DB954" />
 
-<div id="BANNER" class="h-[800px]">
+<!-- <div class="absolute  z-[-40] h-[500px] w-[500px] overflow-hidden">
+   <div
+      class="z-50"
+      style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, #6a0dad 0%, rgba(239, 255, 250, 0) 100%);
+ background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, #6a0dad 0%, rgba(239, 255, 250, 0) 100%);
+ position: absolute;
+ top: 0px;
+ right: 0px;
+ z-index: 50;">
+   </div>
+</div> -->
+
+<div class=" absolute top-24 h-[500px] w-[1000px] overflow-hidden">
+   <div
+      class=" w-full"
+      style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, #6a0dad 0%, rgba(239, 255, 250, 0) 100%);
+ background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, #6a0dad 0%, rgba(239, 255, 250, 0) 100%);
+ position: absolute;
+ height: 100%;
+ width: 100%;
+ top: 0px;
+ right: 0px;
+ z-index: -50;
+ opacity: 0.3;">
+   </div>
+</div>
+
+<div class=" absolute right-0 top-0 h-[500px] w-[1000px] overflow-hidden">
+   <div
+      class=" w-full"
+      style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, #6495ED 0%, rgba(239, 255, 250, 0) 100%);
+ background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, #6495ED 0%, rgba(239, 255, 250, 0) 100%);
+ position: absolute;
+ height: 100%;
+ width: 100%;
+ top: 0px;
+ right: 0px;
+ z-index: -50;
+ opacity: 0.3;">
+   </div>
+</div>
+
+<div id="BANNER" class="relative h-[800px]">
    <div class="pt-6 text-center text-9xl font-extrabold">
       <div class="">interactive.</div>
 
@@ -53,6 +95,17 @@ onMount(() => {
       </div>
    </div>
 
+   <div class="absolute top-[475px] px-[10%] text-center text-[20px] font-light text-[#666666]">
+      Bop Tabs leverages modern technology to enchance the antiquated way of learning music, making it more accesible and enjoyable to learn.
+      <div class="pt-10">
+         <span class="mr-3 text-3xl"> 👉</span>
+         <a
+            href="/signup"
+            class=" rounded-md bg-black px-3 py-2 text-white outline outline-[#091834] transition duration-300 ease-in-out hover:bg-white hover:text-black">
+            get started
+         </a>
+      </div>
+   </div>
    <!-- <img
       class=" absolute  top-[600px] -z-50 h-[200px] select-none	"
       style="transform: rotate({linear({ iStart: 0, iEnd: 500, oStart: -20, oEnd: 0, i: scrollPosition })}deg); opacity: {linear({

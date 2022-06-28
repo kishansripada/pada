@@ -25,7 +25,7 @@ const login = async () => {
 </script>
 
 <div class="mt-16 flex flex-col  md:ml-[15%]">
-   <p class="pb-3 text-4xl font-light">log in</p>
+   <p class="pb-3 text-4xl">log in</p>
    <p class="">new to BopTabs? <a class="text-blue-600" href="/signup">sign up for an account</a></p>
 
    <div class="mr-auto flex flex-col items-center pt-10 ">
@@ -46,5 +46,5 @@ const login = async () => {
          class="h-8 w-96 rounded bg-transparent px-2 outline outline-[#091834]" />
    </div>
 
-   <button on:click="{login}" class=" mt-10 mb-4 w-96 rounded bg-[#091834] py-1 text-white"> log in </button>
+   <button on:click="{login}" class=" mt-10 mb-4 w-96 rounded bg-[#091834] py-1 text-white"> log in 👉</button>
 </div>

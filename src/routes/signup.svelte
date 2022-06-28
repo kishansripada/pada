@@ -6,7 +6,7 @@ import { toast } from "@zerodevx/svelte-toast";
 
 let name;
 let email;
-let password;
+let password = "";
 let passwordCheck;
 let auth = getAuth();
 console.log(auth);
@@ -67,7 +67,7 @@ const signup = async () => {
       <input bind:value="{passwordCheck}" type="password" class=" h-8 w-96 rounded bg-transparent px-2 outline outline-[#091834]" />
    </div>
 
-   {#if password != passwordCheck}
+   {#if password != passwordCheck || password == ""}
       <p class="pt-1 text-sm text-red-600">passwords don't match!</p>
    {:else}
       <p class="pt-1 text-sm text-red-600 h-6">{" "}</p>
