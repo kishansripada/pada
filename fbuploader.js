@@ -29,14 +29,14 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-const trackRef = doc(db, "tracks", "05WIYJYtnZHUmL1uuYmvY1")
+// const trackRef = doc(db, "tracks", "05WIYJYtnZHUmL1uuYmvY1")
 
-const q = query(collection(trackRef, "tabs"));
-const querySnapshot = await getDocs(q);
-querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data());
-});
+// const q = query(collection(trackRef, "tabs"));
+// const querySnapshot = await getDocs(q);
+// querySnapshot.forEach((doc) => {
+//     // doc.data() is never undefined for query doc snapshots
+//     console.log(doc.id, " => ", doc.data());
+// });
 
 // const unsub = onSnapshot(doc(trackRef, "tabs"), (doc) => {
 //     console.log("Current data: ", doc.data());
@@ -64,37 +64,37 @@ querySnapshot.forEach((doc) => {
 
 
 
-// async function test() {
-//     for (let i = 0; i < tracks.length; i++) {
-//         if (!tracks[i].primaryArtist) continue
+async function test() {
+    for (let i = 0; i < tracks.length; i++) {
+        if (!tracks[i].primaryArtist) continue
 
-//         const trackRef = doc(db, "tracks", tracks[i].spotifyId)
+        const trackRef = doc(db, "tracks", tracks[i].spotifyId)
 
-//         await setDoc(trackRef, {
-//             name: tracks[i].name,
-//             artists: tracks[i].primaryArtist.split(","),
-//         });
-
-
-//         for (let j = 0; j < tracks[i].tabs.length; j++) {
-
-//             const tabRef = await addDoc(collection(trackRef, "tabs"), {
-//                 description: tracks[i].tabs[j].description,
-//                 musicXml: tracks[i].tabs[j].musicXml,
-//                 isApproved: tracks[i].tabs[j].approved,
-//                 authorId: "UthQKblDAQQ7YQ4KevB3SuzxGTM2",
-//                 rating: 0,
-//                 created: new Date()
-//             });
+        await setDoc(trackRef, {
+            name: tracks[i].name,
+            artists: tracks[i].primaryArtist.split(","),
+        });
 
 
-//         }
+        for (let j = 0; j < tracks[i].tabs.length; j++) {
+
+            const tabRef = await addDoc(collection(trackRef, "tabs"), {
+                description: tracks[i].tabs[j].description,
+                musicXml: tracks[i].tabs[j].musicXml,
+                isApproved: tracks[i].tabs[j].approved,
+                authorId: "UthQKblDAQQ7YQ4KevB3SuzxGTM2",
+                rating: 0,
+                created: new Date()
+            });
+
+
+        }
 
 
 
 
-//     }
+    }
 
 
-// }
-// test()
+}
+test()

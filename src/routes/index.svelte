@@ -94,7 +94,7 @@ onMount(() => {
    </div>
 
    <div class="absolute top-[475px] px-[10%] text-center text-[20px] font-light text-[#666666]">
-      Bop Tabs leverages modern technology to enchance the antiquated way of learning music, making it more accessible and enjoyable to learn.
+      bop tabs leverages modern technology to enchance the antiquated way of learning music, making it more accessible and enjoyable to learn.
       <div class="pt-10">
          <span class="mr-3 text-3xl"> 👉</span>
          <a

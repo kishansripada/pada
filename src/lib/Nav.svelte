@@ -1,12 +1,13 @@
 <script>
 import { loggedIn, isSearching, user } from "../store.js";
-import searchIcon from "../static/search.svg";
 import logo from "../static/logo.svg";
-import Search from "../lib/Search.svelte";
-import Cookies from "js-cookie";
 import { toast } from "@zerodevx/svelte-toast";
 import { goto } from "$app/navigation";
 import { signOut, getAuth } from "firebase/auth";
+import Search from "../lib/Search.svelte";
+import { shortcut } from "../shortcut.js";
+
+$: console.log($isSearching);
 
 const logout = () => {
    signOut(getAuth()).then(() => {
@@ -18,47 +19,41 @@ const logout = () => {
          },
       });
    });
-   goto("/");
 };
 </script>
 
-{#if $isSearching}
-   <Search />
-{:else}
-   <div class="flex h-20 flex-row items-center px-[13%] whitespace-nowrap text-[#666666] font-light ">
-      <a class=" shrink-0 " href="/"> <img class="w-40 " src="{logo}" alt="" /></a>
+<div class=" flex h-20 flex-row items-center  whitespace-nowrap px-[13%]    text-[#666666]">
+   <a class=" shrink-0 " href="/"> <img class="w-40 " src="{logo}" alt="" /></a>
 
-      <div class="flex flex-row items-center ml-5  mr-5">
-         <a href="/track/7gVwgc8b3XnO87TpmXXFA5/tabs" class="px-3 transition duration-300 ease-in-out hover:-translate-y-1">discover</a>
-         <a href="/track/5LHHKZOwV8XW4LJP2C64mw/tabs" class="px-3  transition duration-300 ease-in-out hover:-translate-y-1">about </a>
+   <div class="ml-5 mr-5 flex flex-row  items-center">
+      <a href="/track/7gVwgc8b3XnO87TpmXXFA5/tabs" class="px-3 transition duration-300 ease-in-out hover:-translate-y-1">discover</a>
+      <a href="/track/5LHHKZOwV8XW4LJP2C64mw/tabs" class="px-3  transition duration-300 ease-in-out hover:-translate-y-1">about </a>
 
-         {#if $loggedIn}
-            <a href="/mylibrary" class="  duration-300 ease-in-out hover:-translate-y-1  px-3">my library</a>
-         {/if}
-      </div>
-
-      <div class=" ring-black ring-2 rounded-xl flex flex-row ml-auto w-96 min-w-[40px] mr-1 items-center">
-         <p class="text-[25px] pl-2">🔍</p>
-         <div></div>
-         <input style="" class="h-10 focus:outline-none pl-3 w-full bg-transparent " placeholder="search for a track..." type="text" />
-      </div>
-
-      <div class="flex flex-row items-center">
-         <!-- <button on:click="{() => isSearching.set(true)}">
-               <img class="w-6 fill-white text-[#091834] transition duration-300 ease-in-out hover:-translate-y-1" src="{searchIcon}" alt="" />
-            </button> -->
-
-         {#if $user}
-            <a class="px-4 transition duration-300 ease-in-out hover:-translate-y-1" href="/myprofile">my profile 👤</a>
-            <button class="transition duration-300 ease-in-out hover:-translate-y-1 ml-1" on:click="{logout}">logout ⬅️</button>
-         {:else}
-            <a class="px-4 transition duration-300 ease-in-out hover:-translate-y-1" href="/login">log in <span class="text-xl">👋</span></a>
-            <a
-               href="/signup"
-               class="transition duration-300 ease-in-out ring-2 ring-black py-2 px-3 ml-1 rounded-md hover:text-gray-500 text-white bg-black hover:bg-white">
-               sign up
-            </a>
-         {/if}
-      </div>
+      {#if $loggedIn}
+         <a href="/mylibrary" class="  px-3 duration-300 ease-in-out  hover:-translate-y-1">my library</a>
+      {/if}
    </div>
-{/if}
+
+   <button
+      on:click="{() => isSearching.set(true)}"
+      use:shortcut="{{ control: true, code: 'KeyK' }}"
+      class=" ml-auto mr-1 flex w-96  min-w-[40px]  flex-row items-center overflow-hidden rounded-xl px-2 py-[1px] ring-2 ring-black">
+      <p class=" pr-3 text-[25px]">🔍</p>
+      <p class=" opacity-75">search for a track...</p>
+      <p class="ml-auto opacity-75">⌘k</p>
+   </button>
+
+   <div class="flex flex-row items-center">
+      {#if $user}
+         <a class="px-4 transition duration-300 ease-in-out hover:-translate-y-1" href="/myprofile">my profile 👤</a>
+         <button class="ml-1 font-light transition duration-300 ease-in-out hover:-translate-y-1" on:click="{logout}">logout ✌🏼</button>
+      {:else}
+         <a class="px-4 transition duration-300 ease-in-out hover:-translate-y-1" href="/login">log in <span class="text-xl">👋</span></a>
+         <a
+            href="/signup"
+            class="transition duration-300 ease-in-out ring-2 ring-black py-2 px-3 ml-1 rounded-md hover:text-gray-500 text-white bg-black hover:bg-white">
+            sign up
+         </a>
+      {/if}
+   </div>
+</div>
