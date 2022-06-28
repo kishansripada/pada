@@ -43,12 +43,12 @@ const signup = async () => {
 
    <div class="mr-auto flex flex-col items-center pt-10 pb-2">
       <p class="font mr-auto pb-2">name</p>
-      <input type="text" bind:value="{name}" class="h-8 w-96 rounded bg-transparent px-2 outline outline-[#091834]" />
+      <input type="text" bind:value="{name}" class="h-8 w-96 rounded bg-transparent px-2 ring-2 ring-black" />
    </div>
 
    <div class="mr-auto flex flex-col items-center">
       <p class="font mr-auto pb-2">email</p>
-      <input type="text" bind:value="{email}" class="h-8 w-96 rounded bg-transparent px-2 outline outline-[#091834]" />
+      <input type="text" bind:value="{email}" class="h-8 w-96 rounded bg-transparent px-2 ring-2 ring-black" />
    </div>
 
    {#if !isValidEmail}
@@ -59,12 +59,12 @@ const signup = async () => {
 
    <div class="mr-auto flex flex-col items-center pb-2 pt-6">
       <p class="mr-auto pb-2">password</p>
-      <input bind:value="{password}" type="password" class=" h-8 w-96 rounded bg-transparent px-2 outline outline-[#091834]" />
+      <input bind:value="{password}" type="password" class=" h-8 w-96 rounded bg-transparent px-2 ring-2 ring-black" />
    </div>
 
    <div class="mr-auto flex flex-col items-center">
       <p class="mr-auto pb-2">confirm password</p>
-      <input bind:value="{passwordCheck}" type="password" class=" h-8 w-96 rounded bg-transparent px-2 outline outline-[#091834]" />
+      <input bind:value="{passwordCheck}" type="password" class=" h-8 w-96 rounded bg-transparent px-2 ring-2 ring-black" />
    </div>
 
    {#if password != passwordCheck || password == ""}

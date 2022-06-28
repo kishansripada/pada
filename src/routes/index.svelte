@@ -96,42 +96,39 @@ onMount(() => {
    </div>
 
    <div class="absolute top-[475px] px-[10%] text-center text-[20px] font-light text-[#666666]">
-      Bop Tabs leverages modern technology to enchance the antiquated way of learning music, making it more accesible and enjoyable to learn.
+      Bop Tabs leverages modern technology to enchance the antiquated way of learning music, making it more accessible and enjoyable to learn.
       <div class="pt-10">
          <span class="mr-3 text-3xl"> 👉</span>
          <a
             href="/signup"
-            class=" rounded-md bg-black px-3 py-2 text-white outline outline-[#091834] transition duration-300 ease-in-out hover:bg-white hover:text-black">
+            class=" rounded-md bg-black px-3 py-2 text-white ring-2 ring-black transition duration-300 ease-in-out hover:bg-white hover:text-black">
             get started
          </a>
       </div>
    </div>
-   <!-- <img
-      class=" absolute  top-[600px] -z-50 h-[200px] select-none	"
-      style="transform: rotate({linear({ iStart: 0, iEnd: 500, oStart: -20, oEnd: 0, i: scrollPosition })}deg); opacity: {linear({
-         iStart: 0,
-         iEnd: 900,
-         oStart: 1,
-         oEnd: 0,
-         i: scrollPosition,
-      })}"
-      src="{exampleTab}"
-      alt="" />
-
-   <img
-      class=" absolute top-[375px] -z-50 h-[200px]  select-none"
-      style="transform: rotate({linear({ iStart: 0, iEnd: 500, oStart: -20, oEnd: 0, i: scrollPosition })}deg);  opacity: {linear({
-         iStart: 0,
-         iEnd: 900,
-         oStart: 1,
-         oEnd: 0,
-         i: scrollPosition,
-      })}"
-      src="{exampleTab1}"
-      alt="" /> -->
 </div>
+<!-- 
+<img
+   style="transform: rotate(30deg)"
+   class=" absolute top-[500px] left-[-200px] z-[-60] h-[200px]  select-none opacity-5"
+   src="{exampleTab}"
+   alt="" />
 
-<div id="CHORDS SECTION" class="relative h-[500px] text-[#666666]">
+<img style="transform: rotate(30deg)" class=" absolute top-[0px] left-[-200px] z-[-60] h-[200px]  select-none opacity-5" src="{exampleTab}" alt="" />
+
+<img
+   style="transform: rotate(-45deg)"
+   class=" absolute top-[500px] right-[-200px] z-[-60] h-[200px]  select-none opacity-5"
+   src="{exampleTab1}"
+   alt="" />
+
+<img
+   style="transform: rotate(-45deg)"
+   class=" absolute top-[0px] right-[-200px] z-[-60] h-[200px]  select-none opacity-10"
+   src="{exampleTab1}"
+   alt="" /> -->
+
+<!-- <div id="CHORDS SECTION" class="relative h-[500px] text-[#666666]">
    <div class=" absolute right-0 top-0" style="transform: rotate({linear({ iStart: 200, iEnd: 600, oStart: 20, oEnd: 0, i: scrollPosition })}deg);">
       <div class="ml-auto flex flex-col">
          <h1 class="  bg-gradient-to-r from-green-400 to-black bg-clip-text  text-7xl font-extrabold text-transparent">Chords</h1>
@@ -160,9 +157,9 @@ onMount(() => {
          </p>
       {/each}
    </div>
-</div>
+</div> -->
 
-<div id="TABS SECTION" class="relative h-[750px] ">
+<!-- <div id="TABS SECTION" class="relative h-[750px] ">
    <div class="whitespace-nowrap">
       <p
          class=" absolute top-0 bg-gradient-to-r from-pink-600 to-purple-400 bg-clip-text text-7xl font-extrabold text-transparent"
@@ -202,7 +199,7 @@ onMount(() => {
          <Flat xml="{homePageMusicXml}" style="height:300px; width: 700px" />
       </div>
    {/if}
-</div>
+</div> -->
 
 <div class="absolute top-[3000px] right-[100px] w-full">test</div>
 

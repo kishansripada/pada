@@ -37,8 +37,9 @@ const logout = () => {
          {/if}
       </div>
 
-      <div class="outline outline-black rounded-xl flex flex-row ml-auto w-96 min-w-[40px] mr-1 items-center">
+      <div class=" ring-black ring-2 rounded-xl flex flex-row ml-auto w-96 min-w-[40px] mr-1 items-center">
          <p class="text-[25px] pl-2">🔍</p>
+         <div></div>
          <input style="" class="h-10 focus:outline-none pl-3 w-full bg-transparent " placeholder="search for a track..." type="text" />
       </div>
 
@@ -54,7 +55,7 @@ const logout = () => {
             <a class="px-4 transition duration-300 ease-in-out hover:-translate-y-1" href="/login">log in <span class="text-xl">👋</span></a>
             <a
                href="/signup"
-               class="transition duration-300 ease-in-out outline outline-[#091834] py-2 px-3 ml-1 rounded-md hover:text-gray-500 text-white bg-black hover:bg-white">
+               class="transition duration-300 ease-in-out ring-2 ring-black py-2 px-3 ml-1 rounded-md hover:text-gray-500 text-white bg-black hover:bg-white">
                sign up
             </a>
          {/if}

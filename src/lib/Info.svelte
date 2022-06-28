@@ -10,7 +10,7 @@ $: currentVersion = approvedTabsOrChords[$version[$tabsOrChords]];
       <img class="h-24 w-24 rounded-[20px]" src="https://i.scdn.co/image/ab6775700000ee85769926cc29d872eaec8dc953" alt="" />
 
       <div class="flex flex-col pl-3 pt-3">
-         <p class="">{currentVersion.author.name}</p>
+         <!-- <p class="">{currentVersion.author.name}</p> -->
          <p class="mt-auto mb-4">{currentVersion.description}</p>
       </div>
 

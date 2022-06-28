@@ -34,7 +34,7 @@ const login = async () => {
          type="text"
          bind:value="{email}"
          on:keypress="{(e) => (e.code == 'Enter' ? login() : null)}"
-         class=" h-8 w-96 rounded bg-transparent px-2 outline outline-[#091834]" />
+         class=" h-8 w-96 rounded bg-transparent px-2 ring-2 ring-black" />
    </div>
 
    <div class="mr-auto flex flex-col items-center pt-5">
@@ -43,7 +43,7 @@ const login = async () => {
          bind:value="{password}"
          on:keypress="{(e) => (e.code == 'Enter' ? login() : null)}"
          type="password"
-         class="h-8 w-96 rounded bg-transparent px-2 outline outline-[#091834]" />
+         class="h-8 w-96 rounded bg-transparent px-2 ring-2 ring-black" />
    </div>
 
    <button on:click="{login}" class=" mt-10 mb-4 w-96 rounded bg-[#091834] py-1 text-white"> log in 👉</button>

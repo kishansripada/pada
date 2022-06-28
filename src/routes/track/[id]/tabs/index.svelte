@@ -1,38 +1,36 @@
 <script>
 import { isUploadingTabs, version } from "../../../../store.js";
-import { queryStore, gql } from "@urql/svelte";
-import client from "../../../../client.js";
 import Info from "../../../../lib/Info.svelte";
 import Flat from "../../../../lib/Tabs/Flat.svelte";
 // import UploadTabs from "../lib/Tabs/UploadTabs.svelte";
 import { page } from "$app/stores";
+import app from "../../../../fb.js";
+import { collection, query, getFirestore, getDocs, doc, where } from "firebase/firestore";
 
-const getApprovedTracksAndChords = gql`
-   query ($spotifyId: String!) {
-      getApprovedTracksAndChords(spotifyId: $spotifyId) {
-         musicXml
-         description
-         author {
-            name
-            email
-         }
-      }
-   }
-`;
+const db = getFirestore(app);
 
-let approvedTabs;
-$: approvedTabs = queryStore({ client, query: getApprovedTracksAndChords, variables: { spotifyId: $page.params.id } });
+$: trackRef = doc(db, "tracks", $page.params.id);
+
+$: q = query(collection(trackRef, "tabs"), where("isApproved", "==", true));
+
+$: approvedTabs = getDocs(q).then((querySnapshot) => {
+   let tabs = [];
+   querySnapshot.forEach((doc) => tabs.push(doc.data()));
+   return tabs;
+});
+
+$: console.log(approvedTabs);
 </script>
 
-{#if $approvedTabs?.data?.getApprovedTracksAndChords[0]}
+{#await approvedTabs then approvedTabs}
    <div class="py-3">
-      <Info approvedTabsOrChords="{$approvedTabs.data?.getApprovedTracksAndChords}" />
+      <Info approvedTabsOrChords="{approvedTabs}" />
    </div>
-   <Flat style="height:500px" xml="{$approvedTabs.data.getApprovedTracksAndChords[$version.tabs].musicXml}" />
-{/if}
+   <Flat style="height:500px" xml="{approvedTabs[$version.tabs].musicXml}" />
+{/await}
 
-{#if $isUploadingTabs}
-   <!-- {#await $trackDetails then trackDetails}
+<!-- {#if $isUploadingTabs} -->
+<!-- {#await $trackDetails then trackDetails}
           <UploadTabs trackDetails="{trackDetails}" mongoTrack="{mongoTrack}" />
-       {/await} -->
-{/if}
+       {/await}  -->
+<!-- {/if} -->
