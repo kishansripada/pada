@@ -10,7 +10,7 @@ export const load = () => {
 
 <script>
 // export let test;
-console.log($$props);
+// console.log($$props);
 import { version, spotifyPosition, getGroups, chordPosition } from "../../store";
 import { page } from "$app/stores";
 

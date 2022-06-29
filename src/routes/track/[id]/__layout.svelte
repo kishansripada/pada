@@ -1,7 +1,7 @@
 <script context="module">
 export async function load({ params, fetch }) {
    const trackDetails = await fetch(`/api/spotify/trackdetails/${params.id}`).then((r) => r.json());
-   return { props: { trackDetails } };
+   return { props: { trackDetails }, stuff: { trackDetails } };
 }
 </script>
 
@@ -45,4 +45,4 @@ $: playbackData.set(trackDetails);
    <TabsChordsNav />
 </div>
 
-<slot />
+<slot trackDetails="{trackDetails}" />

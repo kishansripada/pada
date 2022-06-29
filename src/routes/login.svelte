@@ -24,6 +24,9 @@ const login = async () => {
 };
 </script>
 
+<svelte:head>
+   <title>Login — Bop Tabs</title>
+</svelte:head>
 <div class="mt-16 flex flex-col  md:ml-[15%]">
    <p class="pb-3 text-4xl">log in</p>
    <p class="">new to BopTabs? <a class="text-blue-600" href="/signup">sign up for an account</a></p>

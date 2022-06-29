@@ -1,6 +1,23 @@
 <script>
-import { isWritingChords, tabsOrChords, isUploadingTabs } from "../store";
+import { isWritingChords, tabsOrChords, user } from "../store";
+import { page } from "$app/stores";
+import { browser } from "$app/env";
+import { goto } from "$app/navigation";
+
 export let trackDetails;
+
+const upload = () => {
+   if (!browser) return;
+   if ($page.url.pathname.split("/")[4] != "upload") {
+      if (!$user) {
+         goto("/login");
+      } else {
+         goto(`${window.location.href}/upload`);
+      }
+   } else {
+      goto(`${window.location.href.split("/").slice(0, -1).join("/")}`);
+   }
+};
 
 const formattedTime = () => {
    let time = trackDetails.features.duration_ms / 1000;
@@ -63,17 +80,17 @@ const formattedKey = () => {
       <p class="pt-2">⏱ {Math.round(trackDetails.features.tempo)} bpm</p>
       <p class="pt-2">&#128293; {trackDetails.popularity}</p>
 
-      {#if $tabsOrChords == "tabs"}
+      {#if $tabsOrChords == "tabs" && browser}
          <button
             class="border-white-300 mt-auto rounded-xl border border-solid py-1 px-3 text-[#091834] transition duration-200 hover:bg-[#091834] hover:text-white"
-            on:click="{() => isUploadingTabs.update((state) => !state)}"
-            >{$isUploadingTabs ? "cancel 🚫" : "upload tabs 🔼"}
+            on:click="{upload}"
+            >{$page.url.pathname.split("/")[4] == "upload" ? "cancel 🚫" : "upload tabs 🔼"}
          </button>
       {:else}
          <button
             class="border-white-300 mt-auto rounded-xl border border-solid py-1 px-3 text-[#091834] hover:bg-[#091834] hover:text-white transition duration-200"
             on:click="{() => isWritingChords.update((state) => !state)}"
-            >{$isWritingChords ? "cancel 🚫" : "write chords ✍"}
+            >{$page.url.pathname.split("/")[4] == "write" ? "cancel 🚫" : "write chords ✍️"}
          </button>
       {/if}
    </div>

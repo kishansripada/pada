@@ -4,6 +4,7 @@ import { slide } from "svelte/transition";
 import { isSearching } from "../store.js";
 import { shortcut } from "../shortcut.js";
 import { onMount } from "svelte";
+import { search as spotifySearch } from "../spotify.js";
 import algoliasearch from "algoliasearch";
 let searchInput;
 let query;
@@ -27,7 +28,7 @@ const search = async () => {
    spotifySearchResults = [];
    if (algoliaresults.hits.length < 6) {
       let access_token = (await token).token;
-      let spotifyResults = await fetch(`/api/spotify/search/${query}?token=${access_token}`).then((r) => r.json());
+      let spotifyResults = await spotifySearch(query, ["track"], 6, access_token).then((r) => r.tracks.items);
 
       // remove songs from Spotify that are in mongo results
       spotifyResults = spotifyResults.filter((track) => {
@@ -69,7 +70,7 @@ const debounce = (query) => {
       {#await algoliaresults then algoliaresults}
          {#each algoliaresults.hits as hit}
             <a href="/track/{hit.path.split('/')[1]}/tabs" class="h-full grow flex flex-row items-center hover:bg-gray-100">
-               <p class="pl-4">{hit.name}</p>
+               <p class="pl-5">{hit.name}</p>
                <p class="pl-2  text-xs">{hit.artists.join(", ")}</p>
             </a>
             <hr />
@@ -79,7 +80,7 @@ const debounce = (query) => {
          {#await spotifySearchResults then spotifySearchResults}
             {#each spotifySearchResults as track}
                <a href="/track/{track.id}/tabs" class="h-full grow flex flex-row items-center hover:bg-gray-100 bg-red-200/20">
-                  <p class="pl-4">{track.name}</p>
+                  <p class="pl-5">{track.name}</p>
                   <p class="pl-2  text-xs">{track.artists.map((artist) => artist.name).join(", ")}</p>
                </a>
                <hr />

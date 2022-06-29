@@ -13,7 +13,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 const auth = getAuth();
 onAuthStateChanged(auth, (userAuth) => {
    if (userAuth) {
-      console.log(userAuth);
+      // console.log(userAuth);
       user.set(userAuth);
    } else {
       user.set(null);

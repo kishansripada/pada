@@ -37,6 +37,9 @@ const signup = async () => {
 };
 </script>
 
+<svelte:head>
+   <title>Sign Up — Bop Tabs</title>
+</svelte:head>
 <div class="ml-36 mt-16 flex flex-col">
    <p class="pb-3 text-4xl font-light">sign up</p>
    <p class="">already have an account? <a class="text-blue-600" href="/login">log in</a></p>

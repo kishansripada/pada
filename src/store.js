@@ -13,7 +13,6 @@ export const isPremium = writable(false);
 export const spotifyPosition = writable(null);
 export const isWritingChords = writable(false);
 export const chordPosition = writable({ bar: 0 });
-export const isUploadingTabs = writable(false)
 export const isSearching = writable(false)
 export const spotifyIsPaused = writable(true)
 export const user = writable(null);

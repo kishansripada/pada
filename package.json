@@ -30,7 +30,6 @@
       "color.js": "^1.2.0",
       "firebase": "^9.8.4",
       "js-cookie": "^3.0.1",
-      "realm-web": "^1.7.0",
       "svelte-typewriter": "^3.0.0-alpha.11"
    }
 }

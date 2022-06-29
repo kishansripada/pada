@@ -7,8 +7,6 @@ import { signOut, getAuth } from "firebase/auth";
 import Search from "../lib/Search.svelte";
 import { shortcut } from "../shortcut.js";
 
-$: console.log($isSearching);
-
 const logout = () => {
    signOut(getAuth()).then(() => {
       toast.push("Logged out", {
@@ -37,7 +35,7 @@ const logout = () => {
    <button
       on:click="{() => isSearching.set(true)}"
       use:shortcut="{{ control: true, code: 'KeyK' }}"
-      class=" ml-auto mr-1 flex w-96  min-w-[40px]  flex-row items-center overflow-hidden rounded-xl px-2 py-[1px] ring-2 ring-black">
+      class=" ml-auto mr-1 flex w-96  min-w-[40px]  flex-row items-center overflow-hidden rounded-xl py-[1px] pl-2 pr-3 ring-2 ring-black">
       <p class=" pr-3 text-[25px]">🔍</p>
       <p class=" opacity-75">search for a track...</p>
       <p class="ml-auto opacity-75">⌘k</p>

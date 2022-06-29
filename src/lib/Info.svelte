@@ -1,7 +1,7 @@
 <script>
 import { version, tabsOrChords } from "../store";
 export let approvedTabsOrChords;
-$: console.log(currentVersion);
+// $: console.log(currentVersion);
 $: currentVersion = approvedTabsOrChords[$version[$tabsOrChords]];
 </script>
 

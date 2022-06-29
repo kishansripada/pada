@@ -33,6 +33,10 @@ onMount(() => {
 });
 </script>
 
+<svelte:head>
+   <title>Bop Tabs — Interactive, Modern, Tablatures & Chords</title>
+</svelte:head>
+
 <svelte:window bind:scrollY="{scrollPosition}" />
 
 <ColorSplotch stylePosition="top: -250px; right: 0px;" color="#F5CDFF" />
