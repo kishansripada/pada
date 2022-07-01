@@ -1,24 +1,17 @@
 <script>
 import "../app.css";
 import { browser } from "$app/env";
-import { isPremium, user, isSearching } from "../store.js";
+import { isPremium, isSearching, faunaSession } from "../store.js";
 import { SvelteToast } from "@zerodevx/svelte-toast";
 import LogIn from "$lib/LogIn.svelte";
 import Nav from "$lib/Nav.svelte";
 import WebPlayback from "$lib/WebPlayback.svelte";
 import Footer from "../lib/Footer.svelte";
-import Firebase from "../fb.js";
 import Search from "../lib/Search.svelte";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-const auth = getAuth();
-onAuthStateChanged(auth, (userAuth) => {
-   if (userAuth) {
-      // console.log(userAuth);
-      user.set(userAuth);
-   } else {
-      user.set(null);
-   }
-});
+import Cookies from "js-cookie";
+$: if (browser) {
+   faunaSession.set(JSON.parse(Cookies.get("fauna-session") || null) || null);
+}
 </script>
 
 <!-- <div class="fixed bottom-[10px] left-0 w-full overflow-hidden whitespace-nowrap text-xl">

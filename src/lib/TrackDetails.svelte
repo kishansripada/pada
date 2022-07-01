@@ -1,5 +1,5 @@
 <script>
-import { isWritingChords, tabsOrChords, user } from "../store";
+import { isWritingChords, tabsOrChords, faunaSession } from "../store";
 import { page } from "$app/stores";
 import { browser } from "$app/env";
 import { goto } from "$app/navigation";
@@ -9,7 +9,7 @@ export let trackDetails;
 const upload = () => {
    if (!browser) return;
    if ($page.url.pathname.split("/")[4] != "upload") {
-      if (!$user) {
+      if (!$faunaSession) {
          goto("/login");
       } else {
          goto(`${window.location.href}/upload`);

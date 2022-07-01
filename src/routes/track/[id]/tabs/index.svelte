@@ -8,35 +8,50 @@ export async function load({ stuff }) {
 import { version } from "../../../../store.js";
 import Info from "../../../../lib/Info.svelte";
 import Flat from "../../../../lib/Tabs/Flat.svelte";
-// import UploadTabs from "../lib/Tabs/UploadTabs.svelte";
 import { page } from "$app/stores";
-import app from "../../../../fb.js";
-import { collection, query, getFirestore, getDocs, doc, where } from "firebase/firestore";
+import client from "../../../../client.js";
+import { queryStore, gql } from "@urql/svelte";
 export let trackDetails;
-const db = getFirestore(app);
 
-$: trackRef = doc(db, "tracks", $page.params.id);
+const getApprovedTracksAndChords = gql`
+   query ($spotifyId: String!) {
+      getApprovedTracksAndChords(spotifyId: $spotifyId) {
+         musicXml
+         description
+         author {
+            name
+            email
+         }
+      }
+   }
+`;
 
-$: q = query(collection(trackRef, "tabs"), where("isApproved", "==", true));
+let approvedTabs;
+$: approvedTabs = queryStore({ client, query: getApprovedTracksAndChords, variables: { spotifyId: $page.params.id } });
 
-$: approvedTabs = getDocs(q).then((querySnapshot) => {
-   let tabs = [];
-   querySnapshot.forEach((doc) => tabs.push(doc.data()));
-   return tabs;
-});
-
-// $: console.log(approvedTabs);
+$: console.log($approvedTabs);
 </script>
 
 <svelte:head>
    <title>{trackDetails.name} — Tabs — Bop Tabs</title>
 </svelte:head>
 
-{#await approvedTabs then approvedTabs}
-   {#if approvedTabs.length}
+{#if $approvedTabs.fetching}
+   <p>Loading Tabs...</p>
+{:else if $approvedTabs?.data?.getApprovedTracksAndChords[0]}
+   <div class="py-3">
+      <Info approvedTabsOrChords="{$approvedTabs.data?.getApprovedTracksAndChords}" />
+   </div>
+   <Flat style="height:500px" xml="{$approvedTabs.data.getApprovedTracksAndChords[$version.tabs].musicXml}" />
+{:else}
+   <div>No Tabs!</div>
+{/if}
+
+<!-- {#if !approvedTabs.fetching}
+   {#if approvedTabs.data?.getApprovedTracksAndChords}
       <div class="py-3">
-         <Info approvedTabsOrChords="{approvedTabs}" />
+        <Info approvedTabsOrChords="{approvedTabs}" />
       </div>
-      <Flat style="height:500px" xml="{approvedTabs[$version.tabs].musicXml}" />
+      <Flat style="height:500px" xml="{approvedTabs.data.getApprovedTracksAndChords[$version.tabs].musicXml}" />
    {/if}
-{/await}
+{/if}  -->

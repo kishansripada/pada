@@ -1,27 +1,47 @@
 <script>
-import Firebase from "../fb.js";
-import { getAuth, signInWithEmailAndPassword } from "@firebase/auth";
 import { goto } from "$app/navigation";
 import { toast } from "@zerodevx/svelte-toast";
-const auth = getAuth();
+import { mutationStore, gql } from "@urql/svelte";
+import client from "../client.js";
+import { faunaSession } from "../store.js";
+import Cookies from "js-cookie";
+
+let resp;
 let email;
 let password;
 
+const loginMutation = gql`
+   mutation ($email: String!, $password: String!) {
+      login(email: $email, password: $password) {
+         secret
+         ttl
+         email
+         ownerId
+      }
+   }
+`;
+
 const login = async () => {
    if (!email || !password) return;
-   try {
-      let authToken = await signInWithEmailAndPassword(auth, email, password);
-      goto("/");
-   } catch {
-      toast.push("Invalid credentials", {
-         theme: {
-            "--toastBackground": "#D2042D",
-            "--toastBarBackground": "#D2042D",
-            "--toastBorderRadius": "1rem",
-         },
-      });
-   }
+   resp = mutationStore({ client, query: loginMutation, variables: { email, password } });
 };
+
+$: if ($resp?.data?.login) {
+   Cookies.set("fauna-session", JSON.stringify($resp?.data?.login), { expires: new Date($resp?.data?.login?.ttl) });
+   faunaSession.set($resp.data.login);
+   goto("/");
+}
+
+$: if ($resp?.error) {
+   toast.push("Invalid credentials", {
+      theme: {
+         "--toastBackground": "#D2042D",
+         "--toastBarBackground": "#D2042D",
+         "--toastBorderRadius": "1rem",
+      },
+   });
+}
+$: console.log($resp);
 </script>
 
 <svelte:head>
@@ -37,7 +57,7 @@ const login = async () => {
          type="text"
          bind:value="{email}"
          on:keypress="{(e) => (e.code == 'Enter' ? login() : null)}"
-         class=" h-8 w-96 rounded bg-transparent px-2 ring-2 ring-black" />
+         class=" h-8 w-96 rounded bg-transparent px-2 ring-2 ring-black focus:outline-none" />
    </div>
 
    <div class="mr-auto flex flex-col items-center pt-5">
@@ -46,7 +66,7 @@ const login = async () => {
          bind:value="{password}"
          on:keypress="{(e) => (e.code == 'Enter' ? login() : null)}"
          type="password"
-         class="h-8 w-96 rounded bg-transparent px-2 ring-2 ring-black" />
+         class="h-8 w-96 rounded bg-transparent px-2 ring-2 ring-black focus:outline-none" />
    </div>
 
    <button on:click="{login}" class=" mt-10 mb-4 w-96 rounded bg-[#091834] py-1 text-white"> log in 👉</button>

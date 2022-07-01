@@ -26,9 +26,10 @@
    "dependencies": {
       "@fontsource/fira-mono": "^4.5.0",
       "@lukeed/uuid": "^2.0.0",
+      "@urql/svelte": "^2.0.2",
       "algoliasearch": "^4.13.1",
       "color.js": "^1.2.0",
-      "firebase": "^9.8.4",
+      "graphql": "^16.5.0",
       "js-cookie": "^3.0.1",
       "svelte-typewriter": "^3.0.0-alpha.11"
    }

@@ -9,52 +9,14 @@ export let trackDetails;
 import { page } from "$app/stores";
 import { goto } from "$app/navigation";
 import { toast } from "@zerodevx/svelte-toast";
-import { collection, query, getFirestore, doc, setDoc, addDoc } from "firebase/firestore";
 import { user } from "../../../../store.js";
-import app from "../../../../fb.js";
-
-const db = getFirestore(app);
 
 let files;
 let description;
 const postFiles = async () => {
    if (!files || !description) return;
    let xml = await files[0].text();
-   const trackRef = doc(db, "tracks", trackDetails.id);
-
-   await setDoc(trackRef, {
-      name: trackDetails.name,
-      artists: trackDetails.artists.map((artists) => artists.name),
-   });
-
-   addDoc(collection(trackRef, "tabs"), {
-      description: description,
-      musicXml: xml,
-      isApproved: false,
-      authorId: $user.uid,
-      rating: 0,
-      created: new Date(),
-   })
-      .then(() => {
-         toast.push("thank you! your tab is under review", {
-            theme: {
-               "--toastBackground": "#006400",
-               "--toastBarBackground": "#006400",
-               "--toastBorderRadius": "1rem",
-            },
-         });
-         goto(`${window.location.href.split("/").slice(0, -1).join("/")}`);
-      })
-      .catch((e) => {
-         toast.push("There was an error submitting your tab", {
-            theme: {
-               "--toastBackground": "#D2042D",
-               "--toastBarBackground": "#D2042D",
-               "--toastBorderRadius": "1rem",
-            },
-         });
-         goto(`${window.location.href.split("/").slice(0, -1).join("/")}`);
-      });
+   console.log(xml, trackDetails);
 };
 </script>
 

@@ -1,21 +1,21 @@
 <script>
-import { loggedIn, isSearching, user } from "../store.js";
+import { loggedIn, isSearching, faunaSession } from "../store.js";
 import logo from "../static/logo.svg";
 import { toast } from "@zerodevx/svelte-toast";
 import { goto } from "$app/navigation";
-import { signOut, getAuth } from "firebase/auth";
 import Search from "../lib/Search.svelte";
 import { shortcut } from "../shortcut.js";
+import Cookies from "js-cookie";
 
 const logout = () => {
-   signOut(getAuth()).then(() => {
-      toast.push("Logged out", {
-         theme: {
-            "--toastBackground": "#006400",
-            "--toastBarBackground": "#006400",
-            "--toastBorderRadius": "1rem",
-         },
-      });
+   Cookies.remove("fauna-session");
+   faunaSession.set(null);
+   toast.push("Logged out", {
+      theme: {
+         "--toastBackground": "#006400",
+         "--toastBarBackground": "#006400",
+         "--toastBorderRadius": "1rem",
+      },
    });
 };
 </script>
@@ -42,8 +42,8 @@ const logout = () => {
    </button>
 
    <div class="flex flex-row items-center">
-      {#if $user}
-         <a class="px-4 transition duration-300 ease-in-out hover:-translate-y-1" href="/myprofile">my profile 👤</a>
+      {#if $faunaSession}
+         <a class="px-4 transition duration-300 ease-in-out hover:-translate-y-1" href="/myprofile/profilesettings">my profile 👤</a>
          <button class="ml-1 font-light transition duration-300 ease-in-out hover:-translate-y-1" on:click="{logout}">logout ✌🏼</button>
       {:else}
          <a class="px-4 transition duration-300 ease-in-out hover:-translate-y-1" href="/login">log in <span class="text-xl">👋</span></a>

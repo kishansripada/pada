@@ -9,7 +9,6 @@ import exampleTab from "../static/exampleTab.png";
 import exampleTab1 from "../static/exampleTab1.png";
 import ColorSplotch from "$lib/ColorSplotch.svelte";
 import { goto } from "$app/navigation";
-import { getAuth } from "firebase/auth";
 import { user } from "../store.js";
 
 // $: if ($user && browser) {

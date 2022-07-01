@@ -21,6 +21,18 @@ let algoliaresults = index.search("", {
 });
 
 const search = async () => {
+   // index
+   //    .saveObjects([
+   //       {
+   //          firstname: "Warren",
+   //          lastname: "Speach",
+   //          objectID: "7ytR5pFWmSjzHJIeQkgog4",
+   //       },
+   //    ])
+   //    .then(({ objectIDs }) => {
+   //       console.log(objectIDs);
+   //    });
+
    algoliaresults = await index.search(query, {
       attributesToRetrieve: ["path", "name", "artists"],
       hitsPerPage: 6,
