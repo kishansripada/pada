@@ -91,7 +91,7 @@ const debounce = (query) => {
       {#if spotifySearchResults}
          {#await spotifySearchResults then spotifySearchResults}
             {#each spotifySearchResults as track}
-               <a href="/track/{track.id}/tabs" class="h-full grow flex flex-row items-center hover:bg-gray-100 bg-red-200/20">
+               <a sveltekit:prefetch href="/track/{track.id}/tabs" class="h-full grow flex flex-row items-center hover:bg-gray-100 bg-red-200/20">
                   <p class="pl-5">{track.name}</p>
                   <p class="pl-2  text-xs">{track.artists.map((artist) => artist.name).join(", ")}</p>
                </a>

@@ -20,12 +20,14 @@ const logout = () => {
 };
 </script>
 
-<div class=" flex h-20 flex-row items-center  whitespace-nowrap px-[13%]    text-[#666666]">
+<div class=" flex h-[70px] flex-row items-center  whitespace-nowrap  bg-white/95  px-[13%] text-[#666666] backdrop-blur-[2px]">
    <a class=" shrink-0 " href="/"> <img class="w-40 " src="{logo}" alt="" /></a>
 
    <div class="ml-5 mr-5 flex flex-row  items-center">
       <a href="/track/7gVwgc8b3XnO87TpmXXFA5/tabs" class="px-3 transition duration-300 ease-in-out hover:-translate-y-1">discover</a>
-      <a href="/track/5LHHKZOwV8XW4LJP2C64mw/tabs" class="px-3  transition duration-300 ease-in-out hover:-translate-y-1">about </a>
+      <a sveltekit:prefetch href="/track/5LHHKZOwV8XW4LJP2C64mw/tabs" class="px-3  transition duration-300 ease-in-out hover:-translate-y-1"
+         >about
+      </a>
 
       {#if $loggedIn}
          <a href="/mylibrary" class="  px-3 duration-300 ease-in-out  hover:-translate-y-1">my library</a>
@@ -55,3 +57,4 @@ const logout = () => {
       {/if}
    </div>
 </div>
+<hr />

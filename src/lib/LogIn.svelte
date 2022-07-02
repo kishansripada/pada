@@ -46,16 +46,16 @@ onMount(async () => {
 
 {#if $loggedIn}
    <button>
-      <img class="fixed right-2 bottom-2 w-24 rounded-full" alt="" src="{JSON.parse(localStorage.user).images[0].url}" on:click="{$logIn}" />
+      <img class="fixed right-2 bottom-2 z-[60] w-24 rounded-full" alt="" src="{JSON.parse(localStorage.user).images[0].url}" on:click="{$logIn}" />
    </button>
    <img
-      class="fixed right-2 bottom-1 z-50 w-8 rotate-6"
+      class="fixed right-2 bottom-1 z-[60] w-8 rotate-6"
       src="https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-download-logo-30.png"
       alt="" />
 {/if}
 
 {#if !$loggedIn}
-   <button class="z-50">
+   <button class="z-[60]">
       <img
          class="fixed right-2 bottom-2  w-72"
          alt=""

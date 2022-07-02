@@ -35,6 +35,9 @@ $: playbackData.set(trackDetails);
          <ColorSplotch stylePosition="top: -500px; right: 0px; opacity: 0.5;" color="{colors[0]}" />
          <ColorSplotch stylePosition="top: -500px; left: 0px; transform: rotate(180deg);opacity: 0.5" color="{colors[1]}" />
          <ColorSplotch stylePosition="top: -500px; left: 200px; transform: rotate(-90deg);opacity: 0.5" color="{colors[2]}" />
+
+         <!-- <ColorSplotch stylePosition="top: -100px; left: 0px; transform: rotate(180deg);opacity: 0.5" color="{colors[0]}" />
+         <ColorSplotch stylePosition="top: -100px; right: 0px; opacity: 0.5;" color="{colors[1]}" /> -->
       </div>
    {/await}
 {/if}

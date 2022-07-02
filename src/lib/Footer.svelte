@@ -1,4 +1,4 @@
-<!-- <div class="bg-white/25 py-10">
+<div class="bg-gradient-to-r from-[#007CF0]/50 to-[#00DFD8]/50 py-10">
    <div class="container flex flex-row items-center ">
       <img
          src="https://avatars.githubusercontent.com/u/23283093?v=4"
@@ -8,11 +8,11 @@
          loading="lazy" />
 
       <p class="pl-3">
-         Designed by
+         designed by
          <a href="https://instagram.com/kishansripada" class="font-medium text-gray-900 transition-colors duration-1000 hover:text-white"
             >@kishansripada</a>
       </p>
-      <p class="ml-auto">View on GitHub</p>
+      <p class="ml-auto">view on GitHub</p>
       <a href="https://github.com/kishansripada/BopTabsSvelte" class="pl-3">
          <img
             src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
@@ -22,4 +22,4 @@
             loading="lazy" />
       </a>
    </div>
-</div> -->
+</div>

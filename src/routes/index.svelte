@@ -201,15 +201,5 @@ onMount(() => {
       </div>
    {/if}
 </div> -->
-
-<div class="absolute top-[3000px] right-[100px] w-full">test</div>
-
-<div class="flex flex-row pt-48 ">
-   <div class="mr-auto flex flex-col">
-      <h1 class="  bg-gradient-to-r from-blue-400 to-green-500 bg-clip-text  text-7xl font-extrabold text-transparent">AI Generated</h1>
-      <h1 class=" bg-gradient-to-r from-blue-400 to-green-500 bg-clip-text text-7xl font-extrabold text-transparent">Chords</h1>
-   </div>
-</div>
-
 <style>
 </style>

@@ -11,5 +11,10 @@ module.exports = {
          padding: "2rem",
       },
    },
-   plugins: [],
+   plugins: [
+      function ({ addVariant }) {
+         addVariant('child', '& > *');
+         addVariant('child-hover', '& > *:hover');
+      }
+   ],
 };

@@ -18,28 +18,31 @@ $: if (browser) {
    Without Me (with Juice WRLD) — Blueberry Faygo — Kiss Me More (feat. SZA) — Murder On My Mind — Emotionally Scarred — ROCKSTAR (feat. Roddy Ricch)
 </div> -->
 
-<div class="font-inter">
-   {#if $isSearching}
-      <Search />
-   {/if}
-
-   <SvelteToast />
+<div class="flex h-screen flex-col font-inter">
    <div class="sticky top-0 z-40">
       <Nav />
    </div>
 
-   {#if $isPremium && browser}
-      <WebPlayback />
-   {/if}
+   <div class="flex-grow">
+      {#if $isSearching}
+         <Search />
+      {/if}
 
-   {#if browser}
-      <LogIn />
-   {/if}
+      <SvelteToast />
 
-   <div class="overflow-hidden ">
-      <main class="container ">
-         <slot />
-      </main>
+      {#if $isPremium && browser}
+         <WebPlayback />
+      {/if}
+
+      {#if browser}
+         <LogIn />
+      {/if}
+
+      <div class="overflow-hidden ">
+         <main class="container ">
+            <slot />
+         </main>
+      </div>
    </div>
 
    <div class="pt-10">
