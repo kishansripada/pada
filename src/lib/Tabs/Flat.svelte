@@ -25,7 +25,7 @@ $: if (embed && browser) {
    <script src="https://prod.flat-cdn.com/embed-js/v1.4.1/embed.min.js" on:load="{loadFlat}"></script>
 </svelte:head>
 
-<div>
+<div class="z-[-50]">
    {#if browser}
       <div style="{style}" bind:this="{container}"></div>
    {/if}
