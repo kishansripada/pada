@@ -24,7 +24,7 @@ const logout = () => {
    <a class=" shrink-0 " href="/"> <img class="w-40 " src="{logo}" alt="" /></a>
 
    <div class="ml-5 mr-5 flex flex-row  items-center">
-      <a href="/track/7gVwgc8b3XnO87TpmXXFA5/tabs" class="px-3 transition duration-300 ease-in-out hover:-translate-y-1">discover</a>
+      <a href="/discover" class="px-3 transition duration-300 ease-in-out hover:-translate-y-1">discover</a>
       <a sveltekit:prefetch href="/track/5LHHKZOwV8XW4LJP2C64mw/tabs" class="px-3  transition duration-300 ease-in-out hover:-translate-y-1"
          >about
       </a>
@@ -43,7 +43,7 @@ const logout = () => {
       <p class="ml-auto opacity-75">⌘k</p>
    </button>
 
-   <div class="flex flex-row items-center">
+   <div class="flex flex-row items-center ">
       {#if $faunaSession}
          <a class="px-4 transition duration-300 ease-in-out hover:-translate-y-1" href="/myprofile/profilesettings">my profile 👤</a>
          <button class="ml-1 font-light transition duration-300 ease-in-out hover:-translate-y-1" on:click="{logout}">logout ✌🏼</button>
@@ -58,3 +58,6 @@ const logout = () => {
    </div>
 </div>
 <hr />
+
+<style>
+</style>

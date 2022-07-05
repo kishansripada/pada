@@ -1,4 +1,4 @@
-<div class="bg-gradient-to-r from-[#007CF0]/50 to-[#00DFD8]/50 py-10">
+<div class="bg-gradient-to-r from-[#9E1946]/50 to-[#A390E4]/50 py-10">
    <div class="container flex flex-row items-center ">
       <img
          src="https://avatars.githubusercontent.com/u/23283093?v=4"

@@ -40,19 +40,7 @@ onMount(() => {
 
 <ColorSplotch stylePosition="top: -250px; right: 0px;" color="#F5CDFF" />
 <ColorSplotch stylePosition="top: -250px; left: 0px; transform: rotate(180deg)" color="#ADD8E6" />
-<ColorSplotch stylePosition="top: 600px; left: 0px; transform: rotate(180deg)" color="#1DB954" />
-
-<!-- <div class="absolute  z-[-40] h-[500px] w-[500px] overflow-hidden">
-   <div
-      class="z-50"
-      style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, #6a0dad 0%, rgba(239, 255, 250, 0) 100%);
- background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, #6a0dad 0%, rgba(239, 255, 250, 0) 100%);
- position: absolute;
- top: 0px;
- right: 0px;
- z-index: 50;">
-   </div>
-</div> -->
+<!-- <ColorSplotch stylePosition="top: 600px; left: 0px; transform: rotate(180deg)" color="#1DB954" /> -->
 
 <div class=" absolute top-24 h-[500px] w-[1000px] overflow-hidden">
    <div
@@ -85,10 +73,10 @@ onMount(() => {
 </div>
 
 <div id="BANNER" class="relative h-[800px]">
-   <div class="pt-6 text-center text-9xl font-extrabold">
+   <div class="flex flex-col items-center pt-6 text-center text-9xl font-extrabold">
       <div class="">interactive.</div>
 
-      <p class="w-full bg-gradient-to-r from-[#7928CA] to-[#FF0080] bg-clip-text  text-transparent">modern.</p>
+      <p class="bg-gradient-to-r from-[#7928CA] to-[#FF0080] bg-clip-text  text-transparent">modern.</p>
 
       <Typewriter loop cursor="{false}">
          <p class="bg-gradient-to-r from-[#007CF0] to-[#00DFD8] bg-clip-text  text-transparent">tablatures</p>
@@ -108,87 +96,68 @@ onMount(() => {
       </div>
    </div>
 </div>
-<!-- 
+
 <img
-   style="transform: rotate(30deg)"
-   class=" absolute top-[500px] left-[-200px] z-[-60] h-[200px]  select-none opacity-5"
+   style="transform: rotate({linear({ iStart: 0, iEnd: 600, oStart: 300, oEnd: 360, i: scrollPosition })}deg); opacity: {linear({
+      iStart: 200,
+      iEnd: 600,
+      oStart: 0,
+      oEnd: 1,
+      i: scrollPosition,
+   })}; 
+   top: {linear({ iStart: 200, iEnd: 600, oStart: 360, oEnd: 900, i: scrollPosition })}px; 
+   left: {linear({
+      iStart: 200,
+      iEnd: 600,
+      oStart: 360,
+      oEnd: 600,
+      i: scrollPosition,
+   })}px"
+   class=" absolute top-[500px] left-[-200px] z-[-60] h-[130px]  select-none opacity-5"
    src="{exampleTab}"
    alt="" />
 
-<img style="transform: rotate(30deg)" class=" absolute top-[0px] left-[-200px] z-[-60] h-[200px]  select-none opacity-5" src="{exampleTab}" alt="" />
-
 <img
-   style="transform: rotate(-45deg)"
-   class=" absolute top-[500px] right-[-200px] z-[-60] h-[200px]  select-none opacity-5"
+   style="transform: rotate({linear({ iStart: 12, iEnd: 600, oStart: 300, oEnd: 360, i: scrollPosition })}deg); opacity: {linear({
+      iStart: 200,
+      iEnd: 600,
+      oStart: 0,
+      oEnd: 1,
+      i: scrollPosition,
+   })}; 
+   top: {linear({ iStart: 0, iEnd: 600, oStart: 360, oEnd: 1050, i: scrollPosition })}px; 
+   left: {linear({
+      iStart: 0,
+      iEnd: 600,
+      oStart: 0,
+      oEnd: 600,
+      i: scrollPosition,
+   })}px"
+   class=" absolute top-[500px] left-[-200px] z-[-60] h-[130px]  select-none opacity-5"
    src="{exampleTab1}"
    alt="" />
 
-<img
-   style="transform: rotate(-45deg)"
-   class=" absolute top-[0px] right-[-200px] z-[-60] h-[200px]  select-none opacity-10"
-   src="{exampleTab1}"
-   alt="" /> -->
-
-<!-- <div id="CHORDS SECTION" class="relative h-[500px] text-[#666666]">
-   <div class=" absolute right-0 top-0" style="transform: rotate({linear({ iStart: 200, iEnd: 600, oStart: 20, oEnd: 0, i: scrollPosition })}deg);">
-      <div class="ml-auto flex flex-col">
-         <h1 class="  bg-gradient-to-r from-green-400 to-black bg-clip-text  text-7xl font-extrabold text-transparent">Chords</h1>
-         <h1 class="  bg-gradient-to-r from-green-400 to-black bg-clip-text  text-7xl font-extrabold text-transparent">Synced With</h1>
-         <h1 class=" bg-gradient-to-r from-green-400 to-black bg-clip-text text-7xl font-extrabold text-transparent">Spotify</h1>
-      </div>
-   </div>
-
-   <div
-      class="absolute top-[250px] flex w-[425px] text-xl "
-      style="right: {linear({ iStart: 300, iEnd: 600, oStart: -200, oEnd: 0, i: scrollPosition })}px;">
-      <div class=" ">
-         <p>
-            Bop Tabs connects to your <span class="  bg-gradient-to-r from-green-400 to-black bg-clip-text font-bold text-transparent">Spotify</span> account
-            so you can listen along to songs in real time with chords
-         </p>
-      </div>
-   </div>
-
-   <div class="absolute top-[50px] left-0 grid w-[576px] basis-1/4 grid-cols-8 gap-2">
-      {#each Array(5).fill(["E", "", "", "", "D", "", "C", ""]).flat() as chord, j}
-         <p
-            class="grid h-12 w-full place-items-center rounded bg-white/5 text-xl text-[#091834] outline hover:bg-black/25 "
-            class:bg-slate-400="{j == currentBar}">
-            {chord}
-         </p>
-      {/each}
-   </div>
-</div> -->
-
-<!-- <div id="TABS SECTION" class="relative h-[750px] ">
+<div id="TABS SECTION" class="relative h-[750px] ">
    <div class="whitespace-nowrap">
       <p
          class=" absolute top-0 bg-gradient-to-r from-pink-600 to-purple-400 bg-clip-text text-7xl font-extrabold text-transparent"
-         style="left: {linear({ iStart: 600, iEnd: 1000, oStart: 500, oEnd: 0, i: scrollPosition })}px;">
+         style="left: 0px;">
          Don't Guess
       </p>
       <h1
          class="absolute top-[75px] bg-gradient-to-r from-pink-600 to-purple-400 bg-clip-text pb-5  text-7xl font-extrabold text-transparent"
-         style="left: {linear({ iStart: 600, iEnd: 1000, oStart: -500, oEnd: 0, i: scrollPosition })}px;">
+         style="left:0px;">
          The Rhythm
       </h1>
       <h1
          class=" absolute bg-gradient-to-r from-pink-600 to-purple-400 bg-clip-text text-7xl font-extrabold text-transparent"
          style="
-         top: {linear({ iStart: 900, iEnd: 1100, oStart: -500, oEnd: 150, i: scrollPosition })}px;
-         font-size:{linear({ iStart: 1070, iEnd: 1100, oStart: 90, oEnd: 72, i: scrollPosition })}px;
-         opacity: {linear({
-            iStart: 900,
-            iEnd: 1100,
-            oStart: 0,
-            oEnd: 1,
-            i: scrollPosition,
-         })};">
+         top: 150px;">
          Feel It.
       </h1>
    </div>
 
-   <div class="absolute top-[250px] w-96 text-xl">
+   <!-- <div class="absolute top-[250px] w-96 text-xl">
       <p>
          Bop Tabs never displays static tabs. Listen to all your dynamic, <span
             class="  bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text font-bold text-transparent">interactive</span> tablatures to get a sense of
@@ -199,7 +168,8 @@ onMount(() => {
       <div class="absolute right-[0] top-[50px] -z-50">
          <Flat xml="{homePageMusicXml}" style="height:300px; width: 700px" />
       </div>
-   {/if}
-</div> -->
+   {/if} -->
+</div>
+
 <style>
 </style>

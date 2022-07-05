@@ -1,6 +1,4 @@
 import { getToken, getOtherUser } from "../../../../spotify.js";
-// console.log(token);
-
 export async function get({ params }) {
     let token = await getToken().then((token) => token.access_token);
 

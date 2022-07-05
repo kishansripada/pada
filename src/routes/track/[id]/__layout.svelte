@@ -1,7 +1,30 @@
 <script context="module">
-export async function load({ params, fetch }) {
-   const trackDetails = await fetch(`/api/spotify/trackdetails/${params.id}`).then((r) => r.json());
-   return { props: { trackDetails }, stuff: { trackDetails } };
+import { getToken, getTrack, getArtists, getTrackFeatures } from "../../../spotify.js";
+
+export async function load({ params }) {
+   let token = await getToken().then((token) => token.access_token);
+
+   let trackAndArtists = getTrack(params.id, token).then((track) => {
+      let artists = getArtists(
+         track.artists.map((artist) => artist.id),
+         token
+      );
+      return Promise.all([track, artists]);
+   });
+
+   let features = getTrackFeatures(params.id, token);
+
+   return Promise.all([features, trackAndArtists]).then(([features, trackAndArtists]) => {
+      let trackDetails = {
+         ...trackAndArtists[0],
+         features,
+         artists: trackAndArtists[1],
+      };
+      return {
+         props: { trackDetails },
+         stuff: { trackDetails },
+      };
+   });
 }
 </script>
 
@@ -9,7 +32,7 @@ export async function load({ params, fetch }) {
 import TrackDetails from "$lib/TrackDetails.svelte";
 import TabsChordsNav from "$lib/TabsChordsNav.svelte";
 import { browser } from "$app/env";
-import { tabsOrChords, version, playbackData } from "../../../store.js";
+import { playbackData } from "../../../store.js";
 export let trackDetails;
 import { onMount } from "svelte";
 import ColorSplotch from "$lib/ColorSplotch.svelte";

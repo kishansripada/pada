@@ -55,5 +55,10 @@ $: (selected = 0), trackId;
    </div>
    <Flat style="height:500px" xml="{$approvedTabs.data.getApprovedTracksAndChords[selected].musicXml}" />
 {:else}
-   <div>No Tabs!</div>
+   <div class="flex flex-row justify-center pt-8">
+      <div class="flex flex-col items-center">
+         <p>there aren't any tabs for this song 😞</p>
+         <a class="text-blue-500" href="{$page.url.pathname}/upload">submit one</a>
+      </div>
+   </div>
 {/if}

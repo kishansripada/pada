@@ -10,12 +10,12 @@ const upload = () => {
    if (!browser) return;
    if ($page.url.pathname.split("/")[4] != "upload") {
       if (!$faunaSession) {
-         goto("/login");
+         goto("/login", { noscroll: true });
       } else {
-         goto(`${window.location.href}/upload`);
+         goto(`${window.location.href}/upload`, { noscroll: true });
       }
    } else {
-      goto(`${window.location.href.split("/").slice(0, -1).join("/")}`);
+      goto(`${window.location.href.split("/").slice(0, -1).join("/")}`, { noscroll: true });
    }
 };
 

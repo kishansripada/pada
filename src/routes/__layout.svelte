@@ -51,4 +51,8 @@ $: if (browser) {
 </div>
 
 <style>
+::selection {
+   color: red;
+   background: yellow;
+}
 </style>

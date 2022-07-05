@@ -48,7 +48,7 @@ $: console.log($resp);
 <svelte:head>
    <title>Sign Up — Bop Tabs</title>
 </svelte:head>
-<div class="ml-36 mt-16 flex flex-col ">
+<div class="ml-36 mt-6 flex flex-col ">
    <p class="pb-3 text-4xl">sign up</p>
    <p class="">already have an account? <a class="text-blue-600" href="/login">log in</a></p>
 
@@ -62,11 +62,7 @@ $: console.log($resp);
       <input type="text" bind:value="{email}" class="h-8 w-96 rounded bg-transparent px-2 ring-2 ring-black focus:outline-none" />
    </div>
 
-   {#if !isValidEmail}
-      <p class="pt-1 text-sm text-red-600">please enter a valid email!</p>
-   {:else}
-      <p class="pt-1 text-sm text-red-600 h-6">{" "}</p>
-   {/if}
+   <p class:invisible="{isValidEmail}" class="pt-1 text-sm text-red-600">please enter a valid email!</p>
 
    <div class="mr-auto flex flex-col items-center pb-2 pt-6">
       <p class="mr-auto pb-2">password</p>
@@ -78,19 +74,11 @@ $: console.log($resp);
       <input bind:value="{passwordCheck}" type="password" class=" h-8 w-96 rounded bg-transparent px-2 ring-2 ring-black focus:outline-none" />
    </div>
 
-   {#if password != passwordCheck || password == ""}
-      <p class="pt-1 text-sm text-red-600">passwords don't match!</p>
-   {:else}
-      <p class="pt-1 text-sm text-red-600 h-6">{" "}</p>
-   {/if}
+   <p class:invisible="{!(password != passwordCheck || password == '')}" class=" pt-1 text-sm text-red-600">passwords don't match!</p>
 
-   {#if !isValidPassword}
-      <div class="text-wrap w-96 pt-1 text-sm text-red-600">
-         your password must include a one uppercase character, lowercase character, special character, digit and be at least eight characters long
-      </div>
-   {:else}
-      <p class="pt-1 text-sm text-red-600 h-[72px]">{" "}</p>
-   {/if}
+   <div class:invisible="{isValidPassword}" class="text-wrap w-96 pt-1 text-sm text-red-600">
+      your password must include a one uppercase character, lowercase character, special character, digit and be at least eight characters long
+   </div>
 
-   <button on:click="{signup}" class=" mt-10 mb-4 w-96 rounded bg-[#091834] py-1 text-white"> sign up </button>
+   <button on:click="{signup}" class=" mt-5 mb-4 w-96 rounded bg-[#091834] py-1 text-white"> sign up </button>
 </div>
