@@ -3,6 +3,8 @@ import { loggedIn, isSearching, faunaSession } from "../store.js";
 import logo from "../static/logo.svg";
 import { toast } from "@zerodevx/svelte-toast";
 import { goto } from "$app/navigation";
+import { page } from "$app/stores";
+
 import Search from "../lib/Search.svelte";
 import { shortcut } from "../shortcut.js";
 import Cookies from "js-cookie";
@@ -48,7 +50,8 @@ const logout = () => {
          <a class="px-4 transition duration-300 ease-in-out hover:-translate-y-1" href="/myprofile/profilesettings">my profile 👤</a>
          <button class="ml-1 font-light transition duration-300 ease-in-out hover:-translate-y-1" on:click="{logout}">logout ✌🏼</button>
       {:else}
-         <a class="px-4 transition duration-300 ease-in-out hover:-translate-y-1" href="/login">log in <span class="text-xl">👋</span></a>
+         <a class="px-4 transition duration-300 ease-in-out hover:-translate-y-1" href="/login?referrer={$page.url.href}"
+            >log in <span class="text-xl spinning">👋</span></a>
          <a
             href="/signup"
             class="transition duration-300 ease-in-out ring-2 ring-black py-2 px-3 ml-1 rounded-md hover:text-gray-500 text-white bg-black hover:bg-white">
@@ -60,4 +63,16 @@ const logout = () => {
 <hr />
 
 <style>
+.spinning {
+   animation: spin 3s ease 0s infinite normal none;
+}
+@keyframes spin {
+   from {
+      transform: rotate(0);
+   }
+
+   to {
+      transform: rotate(360deg);
+   }
+}
 </style>

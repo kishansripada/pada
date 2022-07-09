@@ -32,12 +32,17 @@ let addTabResponse;
 const postFiles = async () => {
    if (!files || !description) return;
    let musicXml = await files[0].text();
-   // add tab to fauna
-   addTabResponse = mutationStore({ client, query: addTab, variables: { spotifyId: $page.params.id, authorId: ownerId, description, musicXml } });
-
    // add track to fauna and algolia via private endpoint
    await fetch(`/api/addtrack/${$page.params.id}`);
+
+   // add tab to fauna
+   addTabResponse = mutationStore({
+      client,
+      query: addTab,
+      variables: { spotifyId: $page.params.id, authorId: ownerId, description, musicXml },
+   });
 };
+
 $: console.log($addTabResponse);
 
 $: if ($addTabResponse?.data?.addTab) {

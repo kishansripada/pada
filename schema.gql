@@ -56,10 +56,13 @@ type Mutation {
 }
 
 type Query {
-  findUserByEmail(email: String): User
+    findUserByEmail(email: String): User
+    tracks: [Track!]!
+    getTracksForDiscover: [Track!]! @resolver(name: "getTracksForDiscover")
     getApprovedTracksAndChords(spotifyId: String!): [Tab] @resolver(name: "getApprovedTracksAndChords")
-
+    trackExists(spotifyIds: [String!]!): [Boolean!]! @resolver(name: "trackExists")
 }
+
 # Embeded type for returned token response
 type Token @embedded {
     ttl: Time!

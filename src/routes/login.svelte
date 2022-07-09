@@ -5,6 +5,7 @@ import { mutationStore, gql } from "@urql/svelte";
 import client from "../client.js";
 import { faunaSession } from "../store.js";
 import Cookies from "js-cookie";
+import { page } from "$app/stores";
 
 let resp;
 let email;
@@ -26,10 +27,11 @@ const login = async () => {
    resp = mutationStore({ client, query: loginMutation, variables: { email, password } });
 };
 
+console.log($page.url.searchParams.get("referrer"));
 $: if ($resp?.data?.login) {
    Cookies.set("fauna-session", JSON.stringify($resp?.data?.login), { expires: new Date($resp?.data?.login?.ttl) });
    faunaSession.set($resp.data.login);
-   goto("/");
+   goto($page.url.searchParams.get("referrer") ? $page.url.searchParams.get("referrer") : "/");
 }
 
 $: if ($resp?.error) {
@@ -41,7 +43,6 @@ $: if ($resp?.error) {
       },
    });
 }
-$: console.log($resp);
 </script>
 
 <svelte:head>

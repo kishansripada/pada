@@ -12,6 +12,16 @@ import { page } from "$app/stores";
 import client from "../../../../client.js";
 import { queryStore, gql } from "@urql/svelte";
 export let trackDetails;
+import { faunaSession } from "../.././../../store.js";
+import { browser } from "$app/env";
+import { goto } from "$app/navigation";
+const upload = () => {
+   if (!$faunaSession) {
+      goto(`/login?referrer=${$page.url.href}`, { noscroll: true });
+   } else {
+      goto(`${$page.url.href}/upload`, { noscroll: true });
+   }
+};
 
 const getApprovedTracksAndChords = gql`
    query ($spotifyId: String!) {
@@ -58,7 +68,7 @@ $: (selected = 0), trackId;
    <div class="flex flex-row justify-center pt-8">
       <div class="flex flex-col items-center">
          <p>there aren't any tabs for this song 😞</p>
-         <a class="text-blue-500" href="{$page.url.pathname}/upload">submit one</a>
+         <button on:click="{upload}" class="text-blue-500" href="{$page.url.pathname}/upload">submit one</button>
       </div>
    </div>
 {/if}

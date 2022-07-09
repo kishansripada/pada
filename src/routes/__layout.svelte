@@ -52,7 +52,6 @@ $: if (browser) {
 
 <style>
 ::selection {
-   color: red;
-   background: yellow;
+   background: #cbc3e3;
 }
 </style>

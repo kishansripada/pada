@@ -2,23 +2,125 @@
 import { getPlaylist } from "../spotify.js";
 import { browser } from "$app/env";
 import TrackDetails from "../lib/TrackDetails.svelte";
+import { page } from "$app/stores";
+import client from "../client.js";
+import { queryStore, gql } from "@urql/svelte";
+import { onMount } from "svelte";
+import Flat from "../lib/Tabs/Flat.svelte";
+import ColorSplotch from "$lib/ColorSplotch.svelte";
 
-let top50;
-$: if (browser) {
-   top50 = fetch(`/api/spotify/gettoken`)
-      .then((r) => r.json())
-      .then((token) => getPlaylist("37i9dQZEVXbLRQDuF5jeBp", token.token));
-}
+const trackExistsQuery = gql`
+   query ($spotifyIds: [String!]!) {
+      trackExists(spotifyIds: $spotifyIds)
+   }
+`;
+console.log(ColorSplotch);
+
+const tabbedTracksQuery = gql`
+   query {
+      tracks {
+         data {
+            name
+            spotifyId
+         }
+      }
+   }
+`;
+
+let tabbedTracks = queryStore({ client, query: tabbedTracksQuery });
+$: console.log($tabbedTracks);
+
+let tracksWithTabs;
+let spotifyTracks;
+onMount(async () => {
+   let token = await fetch(`/api/spotify/gettoken`).then((r) => r.json());
+   spotifyTracks = await getPlaylist("37i9dQZEVXbLRQDuF5jeBp", token.token);
+   console.log(spotifyTracks);
+   let spotifyIds = spotifyTracks.tracks.items.map((track) => track.track.id);
+   tracksWithTabs = queryStore({ client, query: trackExistsQuery, variables: { spotifyIds } });
+});
 </script>
 
-<div>
-   {#if top50}
-      {#await top50 then top50}
-         {#each top50.tracks.items as track}
-            <p>
-               {track.track.name}
-            </p>
+<ColorSplotch stylePosition="top: -250px; right: 0px;" color="#F5CDFF" />
+<ColorSplotch stylePosition="top: -250px; left: 0px; transform: rotate(180deg)" color="#ADD8E6" />
+
+{#if $tabbedTracks?.fetching == false}
+   <div class="absolute left-0 top-[75px] z-[60]  w-full overflow-hidden text-xl font-light" style="">
+      <p class="whitespace-nowrap text-xs">{Array(21).fill("discover tabbed tracks").join("⸺")}</p>
+      <div class="animate relative flex transform flex-row whitespace-nowrap ">
+         {#each $tabbedTracks.data.tracks.data as track}
+            <a href="/track/{track.spotifyId}/tabs" class="hover:underline ">{track.name}</a>
+            {"⸺ "}
          {/each}
-      {/await}
-   {/if}
-</div>
+      </div>
+      <p class="whitespace-nowrap text-xs">{Array(21).fill("skcart debbat revocsid").join("⸺")}</p>
+      <hr />
+   </div>
+{/if}
+
+<!-- {#if $tabbedTracks?.fetching == false}
+   <div class="absolute right-0 top-[0px] z-[60]  w-full rotate-90 overflow-hidden text-xl font-light">
+      <p class="whitespace-nowrap text-xs">{Array(21).fill("discover tabbed tracks").join("⸺")}</p>
+      <div class="animate relative flex transform flex-row whitespace-nowrap">
+         {#each $tabbedTracks.data.tracks.data as track}
+            <a href="/track/{track.spotifyId}/tabs" class="hover:underline ">{track.name}</a>
+            {"⸺ "}
+         {/each}
+      </div>
+      <p class="whitespace-nowrap text-xs">{Array(21).fill("skcart debbat revocsid").join("⸺")}</p>
+      <hr />
+   </div>
+{/if} -->
+{#await spotifyTracks then spotifyTracks}
+   <div class="absolute left-0 z-[60] mt-24  w-full  overflow-hidden rounded-xl">
+      <div class="flex flex-row justify-center text-xl font-light align-baseline items-center">
+         <div class="h-[2px] bg-black w-full"></div>
+         <p class="whitespace-nowrap px-2">top twelve songs in the us <span class="text-xs">and if they're tabbed</span></p>
+         <div class="h-[2px]  bg-black w-full"></div>
+      </div>
+
+      <div class="flex flex-row">
+         {#if $tracksWithTabs?.fetching == false}
+            {#each spotifyTracks.tracks.items.slice(0, 12) as track, index}
+               <a href="/track/{track.track.id}/tabs" class="flex flex-col  items-center px-1 rounded-xl h-full">
+                  <div class="relative text-center">
+                     <div style="top: 50%; left: 50%; transform: translate(-50%, -50%);" class="text-[50px] absolute peer-hover:opacity-0">
+                        {$tracksWithTabs.data.trackExists[index] ? "✔️" : "❌"}
+                     </div>
+
+                     <img class="min-w-24 rounded-xl mr-3 peer" src="{track.track.album.images[0].url}" alt="" />
+                  </div>
+
+                  <!-- <p class="text-center text-sm pt-2">{track.track.name}</p> -->
+               </a>
+               <hr />
+            {/each}
+         {:else}
+            <p>Loading ...</p>
+         {/if}
+      </div>
+      <div class="flex flex-row justify-center text-xl font-light align-baseline items-center rotate-180">
+         <div class="h-[2px] bg-black w-full"></div>
+         <p class="whitespace-nowrap px-2">top twelve songs in the us <span class="text-xs">and if they're tabbed</span></p>
+         <div class="h-[2px]  bg-black w-full"></div>
+      </div>
+   </div>
+{/await}
+
+<style>
+.animate {
+   animation-duration: 2000s;
+   animation-name: infiniteScroll;
+   animation-iteration-count: infinite;
+   animation-timing-function: linear;
+}
+@keyframes infiniteScroll {
+   from {
+      left: 0px;
+   }
+
+   to {
+      left: -100000px;
+   }
+}
+</style>

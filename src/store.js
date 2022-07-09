@@ -18,7 +18,7 @@ export const spotifyIsPaused = writable(true)
 export const user = writable(null);
 export const faunaSession = writable(null);
 
-export const logIn = readable(function logIn() {
+export const logIn = readable(function logIn(state) {
    // console.log(window.location.origin);
    let scope = ["streaming", "user-read-email", "user-read-private", "user-library-read"].join(" ");
    let params = {
@@ -26,7 +26,7 @@ export const logIn = readable(function logIn() {
       client_id: "01a3817b86784869a571c4fa82ec3de7",
       scope: scope,
       redirect_uri: window.location.origin,
-      // state: "state",
+      state: state,
    };
 
    let querystring = Object.keys(params)

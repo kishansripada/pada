@@ -2,6 +2,8 @@
 import { loggedIn, logIn, isPremium } from "../store";
 import { onMount } from "svelte";
 import { getAuthToken, getUser } from "../spotify";
+import { page } from "$app/stores";
+import { goto } from "$app/navigation";
 
 $: cookies = document.cookie.split("; ").reduce((prev, current) => {
    const [name, ...value] = current.split("=");
@@ -39,14 +41,18 @@ onMount(async () => {
 
       localStorage.user = JSON.stringify(user);
 
-      window.location.href = window.location.origin;
+      goto(params.get("state"));
    }
 });
 </script>
 
 {#if $loggedIn}
    <button>
-      <img class="fixed right-2 bottom-2 z-[60] w-24 rounded-full" alt="" src="{JSON.parse(localStorage.user).images[0].url}" on:click="{$logIn}" />
+      <img
+         class="fixed right-2 bottom-2 z-[60] w-24 rounded-full"
+         alt=""
+         src="{JSON.parse(localStorage.user).images[0].url}"
+         on:click="{$logIn($page.url.href)}" />
    </button>
    <img
       class="fixed right-2 bottom-1 z-[60] w-8 rotate-6"
@@ -57,9 +63,9 @@ onMount(async () => {
 {#if !$loggedIn}
    <button class="z-[60]">
       <img
-         class="fixed right-2 bottom-2  w-72"
+         class="fixed right-2 bottom-2  z-[60] w-72"
          alt=""
          src="https://raw.githubusercontent.com/kishansripada/BopTabs/master/src/assets/connectSpotify.svg"
-         on:click="{$logIn}" />
+         on:click="{$logIn($page.url.href)}" />
    </button>
 {/if}

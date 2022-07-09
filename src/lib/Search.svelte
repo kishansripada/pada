@@ -9,6 +9,8 @@ import algoliasearch from "algoliasearch";
 let searchInput;
 let query;
 let spotifySearchResults;
+let poweredBy;
+
 onMount(() => searchInput.focus());
 
 let token = fetch(`/api/spotify/gettoken`).then((r) => r.json());
@@ -52,7 +54,7 @@ const debounce = (query) => {
 <div
    on:click="{() => isSearching.set(false)}"
    use:shortcut="{{ code: 'Escape' }}"
-   class="fixed top-0 left-0 z-50 flex h-screen w-screen items-center justify-center bg-black/20 backdrop-blur-[2px]">
+   class="fixed top-0 left-0 z-[70] flex h-screen w-screen items-center justify-center bg-black/20 backdrop-blur-[2px]">
    <div class="flex h-[400px] w-[700px] flex-col rounded-xl bg-white" on:click|stopPropagation>
       <div class="flex flex-row rounded-xl px-4 py-2">
          <p class="text-3xl">🔍</p>
@@ -86,5 +88,6 @@ const debounce = (query) => {
             {/each}
          {/await}
       {/if}
+      <div bind:this="{poweredBy}"></div>
    </div>
 </div>
