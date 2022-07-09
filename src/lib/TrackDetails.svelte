@@ -7,16 +7,14 @@ import { goto } from "$app/navigation";
 export let trackDetails;
 
 const upload = () => {
-   if (!browser) return;
-   if ($page.url.pathname.split("/")[4] != "upload") {
-      if (!$faunaSession) {
-         goto("/login", { noscroll: true });
-      } else {
-         goto(`${window.location.href}/upload`, { noscroll: true });
-      }
-   } else {
-      goto(`${window.location.href.split("/").slice(0, -1).join("/")}`, { noscroll: true });
-   }
+   console.log($page.routeId == "track/[id]/chords/[...chordId]");
+   if ($page.routeId == "track/[id]/tabs/[...tabId]") goto(`${$page.url.pathname}/upload`, { noscroll: true });
+   if ($page.routeId == "track/[id]/chords/[...chordId]") goto(`${$page.url.pathname}/write`, { noscroll: true });
+
+   if (!faunaSession) goto(`/login?referrer=${$page.url.href}`, { noscroll: true });
+
+   if ($page.routeId == "track/[id]/tabs/upload") goto(`${$page.url.pathname.split("/").slice(0, -1).join("/")}`, { noscroll: true });
+   if ($page.routeId == "track/[id]/chords/write") goto(`${$page.url.pathname.split("/").slice(0, -1).join("/")}`, { noscroll: true });
 };
 
 const formattedTime = () => {
@@ -80,18 +78,14 @@ const formattedKey = () => {
       <p class="pt-2">⏱ {Math.round(trackDetails.features.tempo)} bpm</p>
       <p class="pt-2">&#128293; {trackDetails.popularity}</p>
 
-      {#if $tabsOrChords == "tabs" && browser}
-         <button
-            class="border-white-300 mt-auto rounded-xl border border-solid py-1 px-3 text-[#091834] transition duration-200 hover:bg-[#091834] hover:text-white"
-            on:click="{upload}"
-            >{$page.url.pathname.split("/")[4] == "upload" ? "cancel 🚫" : "upload tabs 🔼"}
-         </button>
-      {:else}
-         <button
-            class="border-white-300 mt-auto rounded-xl border border-solid py-1 px-3 text-[#091834] hover:bg-[#091834] hover:text-white transition duration-200"
-            on:click="{() => isWritingChords.update((state) => !state)}"
-            >{$page.url.pathname.split("/")[4] == "write" ? "cancel 🚫" : "write chords ✍️"}
-         </button>
-      {/if}
+      <button
+         class="border-white-300 mt-auto rounded-xl border border-solid py-1 px-3 text-[#091834] transition duration-200 hover:bg-[#091834] hover:text-white"
+         on:click="{upload}"
+         >{$page.routeId == "track/[id]/chords/[...chordId]"
+            ? "write chords ✍️"
+            : $page.routeId == "track/[id]/tabs/[...tabId]"
+            ? "upload tabs"
+            : "cancel 🚫"}
+      </button>
    </div>
 </div>

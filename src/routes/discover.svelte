@@ -41,8 +41,8 @@ onMount(async () => {
 });
 </script>
 
-<ColorSplotch stylePosition="top: -250px; right: 0px;" color="#F5CDFF" />
-<ColorSplotch stylePosition="top: -250px; left: 0px; transform: rotate(180deg)" color="#ADD8E6" />
+<ColorSplotch stylePosition="top: -450px; right: 0px;" color="#F5CDFF" />
+<ColorSplotch stylePosition="top: -450px; left: 0px; transform: rotate(180deg)" color="#ADD8E6" />
 
 {#if $tabbedTracks?.fetching == false}
    <div class="absolute left-0 top-[75px] z-[60]  w-full overflow-hidden text-xl font-light" style="">
@@ -53,64 +53,70 @@ onMount(async () => {
             {"⸺ "}
          {/each}
       </div>
-      <p class="whitespace-nowrap text-xs">{Array(21).fill("skcart debbat revocsid").join("⸺")}</p>
-      <hr />
+      <p class="rotate-180 whitespace-nowrap text-xs">{Array(21).fill("discover tabbed tracks").join("⸺")}</p>
    </div>
 {/if}
 
-<!-- {#if $tabbedTracks?.fetching == false}
-   <div class="absolute right-0 top-[0px] z-[60]  w-full rotate-90 overflow-hidden text-xl font-light">
-      <p class="whitespace-nowrap text-xs">{Array(21).fill("discover tabbed tracks").join("⸺")}</p>
-      <div class="animate relative flex transform flex-row whitespace-nowrap">
+<div class="flex h-[600px] flex-col justify-center">
+   {#await spotifyTracks then spotifyTracks}
+      <div class=" left-0 z-[50]   w-full  overflow-hidden rounded-xl">
+         <div class="flex flex-row justify-center text-xl font-light align-baseline items-center">
+            <div class="h-[2px] bg-black w-full"></div>
+            <p class="whitespace-nowrap px-2">top twelve songs in the us <span class="text-xs">and if they're tabbed</span></p>
+            <div class="h-[2px]  bg-black w-full"></div>
+         </div>
+
+         <div class="flex flex-row">
+            {#if $tracksWithTabs?.fetching == false}
+               {#each spotifyTracks.tracks.items.slice(0, 12) as track, index}
+                  <a href="/track/{track.track.id}/tabs" class="flex flex-col  items-center px-1 rounded-xl h-full">
+                     <div class="relative text-center">
+                        <div style="top: 50%; left: 50%; transform: translate(-50%, -50%);" class="text-[50px] absolute peer-hover:opacity-0">
+                           {$tracksWithTabs.data.trackExists[index] ? "✔️" : "❌"}
+                        </div>
+
+                        <img class="min-w-24 rounded-xl mr-3 peer" src="{track.track.album.images[0].url}" alt="" />
+                     </div>
+                  </a>
+                  <hr />
+               {/each}
+            {:else}
+               <p>Loading ...</p>
+            {/if}
+         </div>
+         <div class="flex flex-row justify-center text-xl font-light align-baseline items-center rotate-180">
+            <div class="h-[2px] bg-black w-full"></div>
+            <p class="whitespace-nowrap px-2">top twelve songs in the us <span class="text-xs">and if they're tabbed</span></p>
+            <div class="h-[2px]  bg-black w-full"></div>
+         </div>
+      </div>
+   {/await}
+</div>
+
+{#if $tabbedTracks?.fetching == false}
+   <div class="absolute bottom-[115px] left-0 z-[60]  w-full overflow-hidden text-xl font-light" style="">
+      <p class="whitespace-nowrap text-xs">{Array(21).fill("discover chorded tracks").join("⸺")}</p>
+      <div class="animateRight relative flex transform flex-row whitespace-nowrap ">
          {#each $tabbedTracks.data.tracks.data as track}
             <a href="/track/{track.spotifyId}/tabs" class="hover:underline ">{track.name}</a>
             {"⸺ "}
          {/each}
       </div>
-      <p class="whitespace-nowrap text-xs">{Array(21).fill("skcart debbat revocsid").join("⸺")}</p>
+      <p class="rotate-180 whitespace-nowrap text-xs">{Array(21).fill("discover chorded tracks").join("⸺")}</p>
       <hr />
    </div>
-{/if} -->
-{#await spotifyTracks then spotifyTracks}
-   <div class="absolute left-0 z-[60] mt-24  w-full  overflow-hidden rounded-xl">
-      <div class="flex flex-row justify-center text-xl font-light align-baseline items-center">
-         <div class="h-[2px] bg-black w-full"></div>
-         <p class="whitespace-nowrap px-2">top twelve songs in the us <span class="text-xs">and if they're tabbed</span></p>
-         <div class="h-[2px]  bg-black w-full"></div>
-      </div>
-
-      <div class="flex flex-row">
-         {#if $tracksWithTabs?.fetching == false}
-            {#each spotifyTracks.tracks.items.slice(0, 12) as track, index}
-               <a href="/track/{track.track.id}/tabs" class="flex flex-col  items-center px-1 rounded-xl h-full">
-                  <div class="relative text-center">
-                     <div style="top: 50%; left: 50%; transform: translate(-50%, -50%);" class="text-[50px] absolute peer-hover:opacity-0">
-                        {$tracksWithTabs.data.trackExists[index] ? "✔️" : "❌"}
-                     </div>
-
-                     <img class="min-w-24 rounded-xl mr-3 peer" src="{track.track.album.images[0].url}" alt="" />
-                  </div>
-
-                  <!-- <p class="text-center text-sm pt-2">{track.track.name}</p> -->
-               </a>
-               <hr />
-            {/each}
-         {:else}
-            <p>Loading ...</p>
-         {/if}
-      </div>
-      <div class="flex flex-row justify-center text-xl font-light align-baseline items-center rotate-180">
-         <div class="h-[2px] bg-black w-full"></div>
-         <p class="whitespace-nowrap px-2">top twelve songs in the us <span class="text-xs">and if they're tabbed</span></p>
-         <div class="h-[2px]  bg-black w-full"></div>
-      </div>
-   </div>
-{/await}
+{/if}
 
 <style>
 .animate {
    animation-duration: 2000s;
    animation-name: infiniteScroll;
+   animation-iteration-count: infinite;
+   animation-timing-function: linear;
+}
+.animateRight {
+   animation-duration: 2000s;
+   animation-name: infiniteScrollRight;
    animation-iteration-count: infinite;
    animation-timing-function: linear;
 }
@@ -121,6 +127,16 @@ onMount(async () => {
 
    to {
       left: -100000px;
+   }
+}
+
+@keyframes infiniteScrollRight {
+   from {
+      left: -10000px;
+   }
+
+   to {
+      left: 0px;
    }
 }
 </style>

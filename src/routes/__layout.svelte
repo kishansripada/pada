@@ -45,13 +45,13 @@ $: if (browser) {
       </div>
    </div>
 
-   <div class="pt-10">
+   <div class="">
       <Footer />
    </div>
 </div>
 
 <style>
 ::selection {
-   background: #cbc3e3;
+   background: #c228d3;
 }
 </style>

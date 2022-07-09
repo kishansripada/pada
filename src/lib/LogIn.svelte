@@ -47,23 +47,23 @@ onMount(async () => {
 </script>
 
 {#if $loggedIn}
-   <button>
+   <button class="z-[80]">
       <img
-         class="fixed right-2 bottom-2 z-[60] w-24 rounded-full"
+         class="fixed right-2 bottom-2 z-[80] w-20 rounded-full"
          alt=""
          src="{JSON.parse(localStorage.user).images[0].url}"
          on:click="{$logIn($page.url.href)}" />
    </button>
    <img
-      class="fixed right-2 bottom-1 z-[60] w-8 rotate-6"
+      class="fixed right-2 bottom-1 z-[80] w-8 rotate-6"
       src="https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-download-logo-30.png"
       alt="" />
 {/if}
 
 {#if !$loggedIn}
-   <button class="z-[60]">
+   <button class="z-[80]">
       <img
-         class="fixed right-2 bottom-2  z-[60] w-72"
+         class="fixed right-2 bottom-2  z-[80] w-72"
          alt=""
          src="https://raw.githubusercontent.com/kishansripada/BopTabs/master/src/assets/connectSpotify.svg"
          on:click="{$logIn($page.url.href)}" />
