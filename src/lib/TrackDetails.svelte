@@ -1,5 +1,5 @@
 <script>
-import { isWritingChords, tabsOrChords, faunaSession } from "../store";
+import { faunaSession } from "../store";
 import { page } from "$app/stores";
 import { browser } from "$app/env";
 import { goto } from "$app/navigation";

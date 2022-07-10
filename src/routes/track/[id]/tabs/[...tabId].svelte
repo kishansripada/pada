@@ -5,7 +5,6 @@ export async function load({ stuff }) {
 </script>
 
 <script>
-import { version } from "../../../../store.js";
 import Info from "../../../../lib/Info.svelte";
 import Flat from "../../../../lib/Tabs/Flat.svelte";
 import { page } from "$app/stores";

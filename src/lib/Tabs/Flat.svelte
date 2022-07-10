@@ -1,5 +1,4 @@
 <script>
-import { version } from "../../store";
 import { browser } from "$app/env";
 
 export let xml;

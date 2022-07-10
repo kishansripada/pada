@@ -49,9 +49,9 @@ async function playPause() {
    if (!$loggedIn) logIn();
    // check to make sure play and player and initialized
    //   if there isn't a track queued, don't do anything
-   console.log({ play });
-   console.log({ player });
-   console.log({ $playbackData });
+   // console.log({ play });
+   // console.log({ player });
+   // console.log({ $playbackData });
 
    if (!play || !player || !$playbackData) return;
    //   get the current track id from store
@@ -62,7 +62,13 @@ async function playPause() {
    // play/pause the current song
    spotifyIsPaused.set(state ? !state.paused : true);
 
-   if (state?.track_window?.current_track?.id == id || ($page.routeId !== "track/[id]/tabs/[...tabId]" && $page.routeId !== "track/[id]/chords")) {
+   if (
+      state?.track_window?.current_track?.id == id ||
+      ($page.routeId !== "track/[id]/tabs/[...tabId]" &&
+         $page.routeId !== "track/[id]/chords/[...chordId]" &&
+         $page.routeId !== "track/[id]/chords/write" &&
+         $page.routeId !== "track/[id]/tabs/upload")
+   ) {
       //    paused = !state.paused;
 
       spotifyIsPaused.set(state ? !state.paused : true);
@@ -97,25 +103,26 @@ async function handleChangeMsPosition(event) {
    <script src="https://sdk.scdn.co/spotify-player.js"></script>
 </svelte:head>
 
-<div class="fixed bottom-0 z-[70] flex h-24 w-full  flex-row items-center bg-black/70  backdrop-blur-md">
-   <div class="mr-auto flex flex-row">
-      <img class=" w-24" src="{$playbackData.album.images[0].url}" alt="" />
-      <div class="flex flex-col p-4 pl-3 text-white">
-         <p>{$playbackData.name}</p>
-         <p class="text-sm">{$playbackData.artists.map((artist) => artist.name).join(", ")}</p>
-      </div>
-   </div>
+{#if $playbackData}
+   {#await $playbackData then playbackData}
+      <div class="fixed bottom-0 z-[70] flex h-24 w-full  flex-row items-center bg-black/70  backdrop-blur-md">
+         <div class="mr-auto flex flex-row">
+            <img class=" w-24" src="{playbackData.album.images[0].url}" alt="" />
+            <div class="flex flex-col p-4 pl-3 text-white">
+               <p>{playbackData.name}</p>
+               <p class="text-sm">{playbackData.artists.map((artist) => artist.name).join(", ")}</p>
+            </div>
+         </div>
 
-   <div class="flex flex-col items-center justify-self-center">
-      <button class="text-4xl" on:click="{playPause}">{$spotifyIsPaused ? "▶️" : "⏸"}</button>
-      <div class=" pb-2" on:click="{handleChangeMsPosition}">
-         <div class=" h-2 rounded-full bg-gray-500" style="width: 500px"></div>
-         {#if $playbackData}
-            {#await $playbackData then playbackData}
+         <div class="flex flex-col items-center justify-self-center">
+            <button class="text-4xl" on:click="{playPause}">{$spotifyIsPaused ? "▶️" : "⏸"}</button>
+            <div class=" pb-2" on:click="{handleChangeMsPosition}">
+               <div class=" h-2 rounded-full bg-gray-500" style="width: 500px"></div>
+
                <div class=" h-2 rounded-full bg-gray-700" style="width: {($spotifyPosition / playbackData.duration_ms) * 500}px"></div>
-            {/await}
-         {/if}
+            </div>
+         </div>
+         <div class="ml-auto"></div>
       </div>
-   </div>
-   <div class="ml-auto"></div>
-</div>
+   {/await}
+{/if}

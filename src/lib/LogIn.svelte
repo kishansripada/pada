@@ -4,45 +4,29 @@ import { onMount } from "svelte";
 import { getAuthToken, getUser } from "../spotify";
 import { page } from "$app/stores";
 import { goto } from "$app/navigation";
+import Cookies from "js-cookie";
 
-$: cookies = document.cookie.split("; ").reduce((prev, current) => {
-   const [name, ...value] = current.split("=");
-   prev[name] = value.join("=");
-   return prev;
-}, {});
-
-$: loggedIn.set(cookies["auth_token"] || false);
-$: isPremium.set(cookies["isPremium"] || false);
-
-// $: console.log({ $isPremium });
-// $: console.log({ $loggedIn });
-
-function setCookie(cname, cvalue, exhours) {
-   const d = new Date();
-   d.setTime(d.getTime() + exhours * 60 * 60 * 1000);
-   let expires = "expires=" + d.toUTCString();
-   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
+$: loggedIn.set(Cookies.get("auth_token") || false);
+$: isPremium.set(Cookies.get("isPremium") || false);
 
 onMount(async () => {
-   let uri = window.location.search.substring(1);
-   let params = new URLSearchParams(uri);
+   if (!$page.url.searchParams.get("code")) return;
 
-   if (params.get("code")) {
-      let code = params.get("code");
-      // console.log(code);
-      let token = await getAuthToken(code);
-      // console.log(token);
+   let token = await getAuthToken($page.url.searchParams.get("code"));
 
-      setCookie("auth_token", token.access_token, 1);
+   let d = new Date();
+   d.setSeconds(d.getSeconds() + 3600);
 
-      let user = await getUser(token.access_token);
-      setCookie("isPremium", user.product == "premium", 1);
+   Cookies.set("auth_token", token.access_token, { expires: d });
 
-      localStorage.user = JSON.stringify(user);
+   let user = await getUser(token.access_token);
+   Cookies.set("isPremium", user.product == "premium", { expires: d });
 
-      goto(params.get("state"));
-   }
+   localStorage.user = JSON.stringify(user);
+   loggedIn.set(token.access_token);
+   isPremium.set(user.product == "premium");
+
+   goto($page.url.searchParams.get("state"), { noscroll: true });
 });
 </script>
 
