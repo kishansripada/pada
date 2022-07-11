@@ -3,8 +3,6 @@ import { playbackData, loggedIn, spotifyPosition, logIn, chordPosition, spotifyI
 import { page } from "$app/stores";
 import { shortcut } from "../shortcut.js";
 
-$: console.log($playbackData);
-
 let player;
 let play;
 

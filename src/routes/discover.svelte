@@ -3,18 +3,29 @@ import { getPlaylist } from "../spotify.js";
 import { browser } from "$app/env";
 import TrackDetails from "../lib/TrackDetails.svelte";
 import { page } from "$app/stores";
+import { supabase } from "../supabase.js";
 import client from "../client.js";
 import { queryStore, gql } from "@urql/svelte";
 import { onMount } from "svelte";
-import Flat from "../lib/Tabs/Flat.svelte";
 import ColorSplotch from "$lib/ColorSplotch.svelte";
+
+let tabTracks;
+(async function getTabbedTracks() {
+   tabTracks = await supabase
+      .from("tracks")
+      .select("name, tabs ( approvalStatus ), spotifyId")
+      .filter("tabs.approvalStatus", "eq", "approved")
+      .range(0, 50)
+      .then((r) => r.data);
+
+   console.log(tabTracks);
+})();
 
 const trackExistsQuery = gql`
    query ($spotifyIds: [String!]!) {
       trackExists(spotifyIds: $spotifyIds)
    }
 `;
-console.log(ColorSplotch);
 
 const tabbedTracksQuery = gql`
    query {
@@ -28,14 +39,13 @@ const tabbedTracksQuery = gql`
 `;
 
 let tabbedTracks = queryStore({ client, query: tabbedTracksQuery });
-$: console.log($tabbedTracks);
 
 let tracksWithTabs;
 let spotifyTracks;
 onMount(async () => {
    let token = await fetch(`/api/spotify/gettoken`).then((r) => r.json());
    spotifyTracks = await getPlaylist("37i9dQZEVXbLRQDuF5jeBp", token.token);
-   console.log(spotifyTracks);
+
    let spotifyIds = spotifyTracks.tracks.items.map((track) => track.track.id);
    tracksWithTabs = queryStore({ client, query: trackExistsQuery, variables: { spotifyIds } });
 });

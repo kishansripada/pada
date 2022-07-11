@@ -9,13 +9,13 @@ import Info from "../../../../lib/Info.svelte";
 import Flat from "../../../../lib/Tabs/Flat.svelte";
 import { page } from "$app/stores";
 export let trackDetails;
-import { faunaSession } from "../.././../../store.js";
+import { user } from "../.././../../store.js";
 import { goto } from "$app/navigation";
 import { supabase } from "../../../../supabase.js";
 
 // $: console.log(tabs);
 const upload = () => {
-   if (!$faunaSession) {
+   if (!$user) {
       goto(`/login?referrer=${$page.url.href}`, { noscroll: true });
    } else {
       goto(`${$page.url.href}/upload`, { noscroll: true });

@@ -68,7 +68,6 @@ const beatClicked = (i) => {
    // nothing pressed
    selectedBeats = [i];
 };
-
 function on_key_down(event) {
    if ($isSearching) return;
    if (event.repeat) return;
@@ -86,11 +85,19 @@ function on_key_down(event) {
 
    if (event.key == "ArrowRight" && Math.max(...selectedBeats) < analysis.beats.length - 1) {
       event.preventDefault();
+      //   if (isShiftDown) {
+      //      selectedBeats = [Math.max(...selectedBeats) + 1, ...selectedBeats];
+      //      return;
+      //   }
       selectedBeats = [Math.max(...selectedBeats) + 1];
    }
 
    if (event.key == "ArrowLeft" && Math.min(...selectedBeats) > 0) {
       event.preventDefault();
+      //   if (isShiftDown) {
+      //      selectedBeats = [Math.min(...selectedBeats) - 1, ...selectedBeats];
+      //      return;
+      //   }
       selectedBeats = [Math.min(...selectedBeats) - 1];
    }
 
@@ -112,8 +119,9 @@ function on_key_up(event) {
 }
 
 // when chord is clicked send the beat number to the store
-const changeSpotifyPosition = (bar) => {
+const changeSpotifyPosition = (bar, i) => {
    chordPosition.set({ bar: bar });
+   currentBar = i;
 };
 
 $: currentBar = analysis.beats.findIndex((beat) => {
@@ -243,12 +251,13 @@ const upload = async () => {
    {#each analysis.beats as beat, i}
       <div
          class:mr-2="{(i + 1) % 4 == 0 && (i + 1) % 16 != 0}"
-         on:click="{() => (isCommandDown ? changeSpotifyPosition(beat.start) : beatClicked(i))}">
+         on:click="{() => (isCommandDown ? changeSpotifyPosition(beat.start, i) : beatClicked(i))}">
          <div
             id="{i}"
             class:bg-orange-400="{i == currentBar}"
+            class:bg-slate-400="{i != currentBar}"
             class:cursor-pointer="{isCommandDown}"
-            class="grid h-12 w-full place-items-center rounded bg-white/5  bg-slate-400  text-white ring-black focus:outline-none"
+            class="grid h-12 w-full place-items-center rounded bg-white/5   text-white ring-black focus:outline-none"
             class:ring-2="{selectedBeats.includes(i)}">
             <p class="select-none">{Object.values(beatValues[i]).join("")}</p>
          </div>
