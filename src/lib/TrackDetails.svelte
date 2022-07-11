@@ -1,5 +1,5 @@
 <script>
-import { faunaSession } from "../store";
+import { user } from "../store";
 import { page } from "$app/stores";
 import { browser } from "$app/env";
 import { goto } from "$app/navigation";
@@ -11,7 +11,7 @@ const upload = () => {
    if ($page.routeId == "track/[id]/tabs/[...tabId]") goto(`${$page.url.pathname}/upload`, { noscroll: true });
    if ($page.routeId == "track/[id]/chords/[...chordId]") goto(`${$page.url.pathname}/write`, { noscroll: true });
 
-   if (!faunaSession) goto(`/login?referrer=${$page.url.href}`, { noscroll: true });
+   if (!$user) goto(`/login?referrer=${$page.url.href}`, { noscroll: true });
 
    if ($page.routeId == "track/[id]/tabs/upload") goto(`${$page.url.pathname.split("/").slice(0, -1).join("/")}`, { noscroll: true });
    if ($page.routeId == "track/[id]/chords/write") goto(`${$page.url.pathname.split("/").slice(0, -1).join("/")}`, { noscroll: true });

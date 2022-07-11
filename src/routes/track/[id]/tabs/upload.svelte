@@ -5,66 +5,59 @@ export async function load({ stuff }) {
 </script>
 
 <script>
-import { clientWithCookieSession } from "../../../../client.js";
-// export let trackDetails;
+export let trackDetails;
 import { page } from "$app/stores";
-import { mutationStore, gql } from "@urql/svelte";
-import Cookie from "js-cookie";
 import { goto } from "$app/navigation";
-
+import { supabase } from "../../../../supabase.js";
 import { toast } from "@zerodevx/svelte-toast";
-
-const cookies = Cookie.get("fauna-session");
-const { email, secret, ownerId } = cookies ? JSON.parse(cookies) : {};
-let client = clientWithCookieSession(secret);
-
-const addTab = gql`
-   mutation ($spotifyId: String!, $authorId: ID!, $description: String!, $musicXml: String!) {
-      addTab(spotifyId: $spotifyId, authorId: $authorId, description: $description, musicXml: $musicXml) {
-         musicXml
-      }
-   }
-`;
 
 let files;
 let description;
-let addTabResponse;
 const postFiles = async () => {
    if (!files || !description) return;
    let musicXml = await files[0].text();
-   // add track to fauna and algolia via private endpoint
-   await fetch(`/api/addtrack/${$page.params.id}`);
 
-   // add tab to fauna
-   addTabResponse = mutationStore({
-      client,
-      query: addTab,
-      variables: { spotifyId: $page.params.id, authorId: ownerId, description, musicXml },
-   });
+   try {
+      const { trackData, trackError } = await supabase
+         .from("tracks")
+         .insert([{ name: trackDetails.name, artists: trackDetails.artists.map((artist) => artist.name), spotifyId: trackDetails.id }]);
+   } catch (trackError) {
+      if (trackError?.code == "23505") {
+         console.log("track in database!");
+      }
+   }
+
+   const { tabData, tabError } = await supabase.from("tabs").insert([
+      {
+         musicXml,
+         description,
+         authorId: supabase.auth.user()?.id,
+         spotifyId: trackDetails.id,
+         approvalStatus: "pending",
+      },
+   ]);
+
+   if (!tabError) {
+      toast.push("submitted successfully!", {
+         theme: {
+            "--toastBackground": "#006400",
+            "--toastBarBackground": "#006400",
+            "--toastBorderRadius": "1rem",
+         },
+      });
+
+      goto(`/track/${trackDetails.id}/tabs`);
+   }
+   if (tabError) {
+      toast.push("there was an error submitting your tab", {
+         theme: {
+            "--toastBackground": "#D2042D",
+            "--toastBarBackground": "#D2042D",
+            "--toastBorderRadius": "1rem",
+         },
+      });
+   }
 };
-
-$: console.log($addTabResponse);
-
-$: if ($addTabResponse?.data?.addTab) {
-   toast.push("submitted successfully!", {
-      theme: {
-         "--toastBackground": "#006400",
-         "--toastBarBackground": "#006400",
-         "--toastBorderRadius": "1rem",
-      },
-   });
-   // goto(`${$page.url.pathname.split("/").slice(0, -1).join("/")}`);
-}
-
-$: if ($addTabResponse?.error) {
-   toast.push("there was an error submitting your tab", {
-      theme: {
-         "--toastBackground": "#D2042D",
-         "--toastBarBackground": "#D2042D",
-         "--toastBorderRadius": "1rem",
-      },
-   });
-}
 </script>
 
 <div class="flex flex-row justify-center">

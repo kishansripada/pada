@@ -1,5 +1,4 @@
 <script>
-import { homePageMusicXml } from "../homePageMusicXml.js";
 import Flat from "../lib/Tabs/Flat.svelte";
 import { onMount } from "svelte";
 import { fade } from "svelte/transition";

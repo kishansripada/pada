@@ -26,6 +26,7 @@
    "dependencies": {
       "@fontsource/fira-mono": "^4.5.0",
       "@lukeed/uuid": "^2.0.0",
+      "@supabase/supabase-js": "^1.35.4",
       "@urql/svelte": "^2.0.2",
       "algoliasearch": "^4.13.1",
       "color.js": "^1.2.0",

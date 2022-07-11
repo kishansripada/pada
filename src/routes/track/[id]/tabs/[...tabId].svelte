@@ -8,12 +8,12 @@ export async function load({ stuff }) {
 import Info from "../../../../lib/Info.svelte";
 import Flat from "../../../../lib/Tabs/Flat.svelte";
 import { page } from "$app/stores";
-import client from "../../../../client.js";
-import { queryStore, gql } from "@urql/svelte";
 export let trackDetails;
 import { faunaSession } from "../.././../../store.js";
-import { browser } from "$app/env";
 import { goto } from "$app/navigation";
+import { supabase } from "../../../../supabase.js";
+
+// $: console.log(tabs);
 const upload = () => {
    if (!$faunaSession) {
       goto(`/login?referrer=${$page.url.href}`, { noscroll: true });
@@ -22,28 +22,15 @@ const upload = () => {
    }
 };
 
-const getApprovedTracksAndChords = gql`
-   query ($spotifyId: String!) {
-      getApprovedTracksAndChords(spotifyId: $spotifyId) {
-         _id
-         musicXml
-         description
-         author {
-            name
-            email
-         }
-      }
-   }
-`;
-
-let approvedTabs;
 // get the current track id from the URL
 $: trackId = $page.params.id;
 
-// get the approved track of the currect trackId (reactively)
-$: approvedTabs = queryStore({ client, query: getApprovedTracksAndChords, variables: { spotifyId: trackId } });
-
-$: console.log($approvedTabs);
+$: tabs = supabase
+   .from("tabs")
+   .select("*")
+   .eq("spotifyId", trackId)
+   .eq("approvalStatus", "approved")
+   .then((r) => r.data);
 
 // every track will default to the first tab
 let selected = 0;
@@ -56,18 +43,20 @@ $: (selected = 0), trackId;
    <title>{trackDetails.name} — Tabs | Bop Tabs</title>
 </svelte:head>
 
-{#if $approvedTabs.fetching}
-   <p>Loading Tabs...</p>
-{:else if $approvedTabs?.data?.getApprovedTracksAndChords[0]}
-   <div class="py-3">
-      <Info bind:selected approvedTabsOrChords="{$approvedTabs.data?.getApprovedTracksAndChords}" />
-   </div>
-   <Flat style="height:500px" xml="{$approvedTabs.data.getApprovedTracksAndChords[selected].musicXml}" />
-{:else}
-   <div class="flex flex-row justify-center pt-8">
-      <div class="flex flex-col items-center">
-         <p>there aren't any tabs for this song 😞</p>
-         <button on:click="{upload}" class="text-blue-500" href="{$page.url.pathname}/upload">submit one</button>
+{#await tabs}
+   <p>Loading...</p>
+{:then tabs}
+   {#if tabs.length}
+      <div class="py-3">
+         <Info bind:selected approvedTabsOrChords="{tabs}" />
       </div>
-   </div>
-{/if}
+      <Flat style="height:500px" xml="{tabs[selected].musicXml}" />
+   {:else}
+      <div class="flex flex-row justify-center pt-8">
+         <div class="flex flex-col items-center">
+            <p>there aren't any tabs for this song 😞</p>
+            <button on:click="{upload}" class="text-blue-500" href="{$page.url.pathname}/upload">submit one</button>
+         </div>
+      </div>
+   {/if}
+{/await}

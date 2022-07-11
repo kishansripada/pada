@@ -1,17 +1,16 @@
 <script>
-import { loggedIn, isSearching, faunaSession } from "../store.js";
+import { loggedIn, isSearching, faunaSession, user } from "../store.js";
 import logo from "../static/logo.svg";
 import { toast } from "@zerodevx/svelte-toast";
 import { goto } from "$app/navigation";
 import { page } from "$app/stores";
-
 import Search from "../lib/Search.svelte";
 import { shortcut } from "../shortcut.js";
-import Cookies from "js-cookie";
 
-const logout = () => {
-   Cookies.remove("fauna-session");
-   faunaSession.set(null);
+import { supabase } from "../supabase.js";
+const logout = async () => {
+   user.set(false);
+   const { error } = await supabase.auth.signOut();
    toast.push("Logged out", {
       theme: {
          "--toastBackground": "#006400",
@@ -19,6 +18,7 @@ const logout = () => {
          "--toastBorderRadius": "1rem",
       },
    });
+   if (error) console.log(error);
 };
 </script>
 
@@ -46,7 +46,7 @@ const logout = () => {
    </button>
 
    <div class="flex flex-row items-center ">
-      {#if $faunaSession}
+      {#if $user}
          <a class="px-4 transition duration-300 ease-in-out hover:-translate-y-1" href="/myprofile/profilesettings">my profile 👤</a>
          <button class="ml-1 font-light transition duration-300 ease-in-out hover:-translate-y-1" on:click="{logout}">logout ✌🏼</button>
       {:else}

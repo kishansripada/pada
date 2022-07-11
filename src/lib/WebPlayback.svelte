@@ -1,13 +1,13 @@
 <script>
 import { playbackData, loggedIn, spotifyPosition, logIn, chordPosition, spotifyIsPaused } from "../store";
 import { page } from "$app/stores";
+import { shortcut } from "../shortcut.js";
 
 $: console.log($playbackData);
-import playIcon from "../static/play.svg";
-import pauseIcon from "../static/pause.svg";
+
 let player;
 let play;
-// define player, play
+
 window.onSpotifyWebPlaybackSDKReady = () => {
    player = new window.Spotify.Player({
       name: "Bop Tabs",
@@ -39,7 +39,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
    player.connect();
 };
 // when click on chord change position to that bar
-$: if (player) {
+$: if (player && play) {
    player.isLoaded.then(() => {
       player.seek($chordPosition.bar * 1000);
    });
@@ -90,6 +90,7 @@ let interval = window.setInterval(async () => {
       spotifyPosition.set(state.position);
    }
 }, 50);
+
 async function handleChangeMsPosition(event) {
    if (!play || !player) return;
    let length = $playbackData.duration_ms;
@@ -115,7 +116,7 @@ async function handleChangeMsPosition(event) {
          </div>
 
          <div class="flex flex-col items-center justify-self-center">
-            <button class="text-4xl" on:click="{playPause}">{$spotifyIsPaused ? "▶️" : "⏸"}</button>
+            <button use:shortcut="{{ code: 'Space' }}" class="text-4xl" on:click="{playPause}">{$spotifyIsPaused ? "▶️" : "⏸"}</button>
             <div class=" pb-2" on:click="{handleChangeMsPosition}">
                <div class=" h-2 rounded-full bg-gray-500" style="width: 500px"></div>
 

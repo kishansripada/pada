@@ -1,27 +1,26 @@
 <script context="module">
 import { getToken, getTrackAnalysis } from "../../../../spotify.js";
 
-export async function load({ params }) {
+export async function load({ params, stuff }) {
    let token = await getToken().then((token) => token.access_token);
    let analysis = await getTrackAnalysis(params.id, token);
 
    return {
-      props: { analysis },
+      props: { analysis, trackDetails: stuff.trackDetails },
    };
 }
 </script>
 
 <script>
+export let analysis;
+export let trackDetails;
+
 import { spotifyPosition, chordPosition, isSearching } from "../../../../store.js";
 import { page } from "$app/stores";
 import { shortcut } from "../../../../shortcut.js";
-import { clientWithCookieSession } from "../../../../client.js";
-// export let trackDetails;
-import { mutationStore, gql } from "@urql/svelte";
-import Cookie from "js-cookie";
+import { supabase } from "../../../../supabase.js";
 import { goto } from "$app/navigation";
 import { toast } from "@zerodevx/svelte-toast";
-import A from "../tabs/[...tabId].svelte";
 
 function range(start, end) {
    var len = (Math.abs(end - start) + 0 * 2) / 1 + 1;
@@ -36,7 +35,7 @@ function range(start, end) {
       });
 }
 
-export let analysis;
+let description;
 let selectedBeats = [0];
 let copied = [{ root: null, type: null, extension: null }];
 let beatValues = Array.from({ length: analysis.beats.length }, () => ({ root: null, type: null, extension: null }));
@@ -75,29 +74,22 @@ function on_key_down(event) {
    if (event.repeat) return;
    if (event.key == "Shift") isShiftDown = true;
    if (event.key == "Meta") isCommandDown = true;
-   //    if (event.key == "Escape") selectedBeats = [];
 
-   if (event.key == "ArrowUp") {
+   if (event.key == "ArrowUp" && Math.min(...selectedBeats) >= 16) {
       event.preventDefault();
       selectedBeats = selectedBeats.map((index) => index - 16);
    }
-   if (event.key == "ArrowDown") {
+   if (event.key == "ArrowDown" && Math.max(...selectedBeats) < analysis.beats.length - 16) {
       event.preventDefault();
       selectedBeats = selectedBeats.map((index) => index + 16);
    }
-   if (event.key == "ArrowRight" && selectedBeats.length == 1) {
-      event.preventDefault();
-      selectedBeats = selectedBeats.map((index) => index + 1);
-   }
-   if (event.key == "ArrowRight" && selectedBeats.length > 1) {
+
+   if (event.key == "ArrowRight" && Math.max(...selectedBeats) < analysis.beats.length - 1) {
       event.preventDefault();
       selectedBeats = [Math.max(...selectedBeats) + 1];
    }
-   if (event.key == "ArrowLeft" && selectedBeats.length == 1) {
-      event.preventDefault();
-      selectedBeats = selectedBeats.map((index) => index - 1);
-   }
-   if (event.key == "ArrowLeft" && selectedBeats.length > 1) {
+
+   if (event.key == "ArrowLeft" && Math.min(...selectedBeats) > 0) {
       event.preventDefault();
       selectedBeats = [Math.min(...selectedBeats) - 1];
    }
@@ -128,13 +120,13 @@ $: currentBar = analysis.beats.findIndex((beat) => {
    return $spotifyPosition / 1000 < beat.start + beat.duration;
 });
 
-const upload = () => {
+const upload = async () => {
    //   save space in fauna by converting null chords to null value without properties
    let cleanValues = beatValues.map((beatValue) => {
       return Object.values(beatValue).every((x) => x === null) ? null : beatValue;
    });
 
-   let uploadChart = analysis.beats.map((beat, index) => {
+   let chords = analysis.beats.map((beat, index) => {
       delete beat.confidence;
 
       return {
@@ -143,19 +135,46 @@ const upload = () => {
       };
    });
 
-   const cookies = Cookie.get("fauna-session");
-   const { email, secret, ownerId } = cookies ? JSON.parse(cookies) : {};
-   let client = clientWithCookieSession(secret);
-
-   const addChord = gql`
-      mutation ($spotifyId: String!, $authorId: ID!, $description: String!, $musicXml: String!) {
-         addTab(spotifyId: $spotifyId, authorId: $authorId, description: $description, musicXml: $musicXml) {
-            musicXml
-         }
+   try {
+      const { trackData, trackError } = await supabase
+         .from("tracks")
+         .insert([{ name: trackDetails.name, artists: trackDetails.artists.map((artist) => artist.name), spotifyId: trackDetails.id }]);
+   } catch (trackError) {
+      if (trackError?.code == "23505") {
+         console.log("track in database!");
       }
-   `;
+   }
 
-   console.log(uploadChart);
+   const { chordData, chordError } = await supabase.from("chords").insert([
+      {
+         chords,
+         description,
+         authorId: supabase.auth.user()?.id,
+         spotifyId: trackDetails.id,
+         approvalStatus: "pending",
+      },
+   ]);
+
+   if (!chordError) {
+      toast.push("submitted successfully!", {
+         theme: {
+            "--toastBackground": "#006400",
+            "--toastBarBackground": "#006400",
+            "--toastBorderRadius": "1rem",
+         },
+      });
+
+      goto(`/track/${trackDetails.id}/chords`);
+   }
+   if (chordError) {
+      toast.push("there was an error submitting your chords", {
+         theme: {
+            "--toastBackground": "#D2042D",
+            "--toastBarBackground": "#D2042D",
+            "--toastBorderRadius": "1rem",
+         },
+      });
+   }
 };
 </script>
 
@@ -236,5 +255,12 @@ const upload = () => {
       </div>
    {/each}
 </div>
+
+<textarea
+   class="resize-none rounded bg-transparent px-2 py-1 ring-2 ring-black placeholder:text-black/50 focus:outline-none"
+   placeholder="Description..."
+   cols="30"
+   rows="3"
+   bind:value="{description}"></textarea>
 
 <button on:click="{upload}" class="rounded bg-purple-600 px-4 py-2 text-white"> upload </button>

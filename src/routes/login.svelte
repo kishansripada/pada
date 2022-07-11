@@ -1,48 +1,31 @@
 <script>
 import { goto } from "$app/navigation";
 import { toast } from "@zerodevx/svelte-toast";
-import { mutationStore, gql } from "@urql/svelte";
-import client from "../client.js";
-import { faunaSession } from "../store.js";
-import Cookies from "js-cookie";
+import { supabase } from "../supabase.js";
 import { page } from "$app/stores";
 
-let resp;
 let email;
 let password;
 
-const loginMutation = gql`
-   mutation ($email: String!, $password: String!) {
-      login(email: $email, password: $password) {
-         secret
-         ttl
-         email
-         ownerId
-      }
-   }
-`;
-
 const login = async () => {
    if (!email || !password) return;
-   resp = mutationStore({ client, query: loginMutation, variables: { email, password } });
-};
-
-console.log($page.url.searchParams.get("referrer"));
-$: if ($resp?.data?.login) {
-   Cookies.set("fauna-session", JSON.stringify($resp?.data?.login), { expires: new Date($resp?.data?.login?.ttl) });
-   faunaSession.set($resp.data.login);
-   goto($page.url.searchParams.get("referrer") ? $page.url.searchParams.get("referrer") : "/");
-}
-
-$: if ($resp?.error) {
-   toast.push("Invalid credentials", {
-      theme: {
-         "--toastBackground": "#D2042D",
-         "--toastBarBackground": "#D2042D",
-         "--toastBorderRadius": "1rem",
-      },
+   let { user, error } = await supabase.auth.signIn({
+      email,
+      password,
    });
-}
+   if (error) {
+      toast.push("Invalid credentials", {
+         theme: {
+            "--toastBackground": "#D2042D",
+            "--toastBarBackground": "#D2042D",
+            "--toastBorderRadius": "1rem",
+         },
+      });
+   }
+   if (user) {
+      goto($page.url.searchParams.get("referrer") ? $page.url.searchParams.get("referrer") : "/");
+   }
+};
 </script>
 
 <svelte:head>

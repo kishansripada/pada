@@ -1,22 +1,13 @@
 <script lang="js">
-import { mutationStore, gql } from "@urql/svelte";
-import client from "../client";
+import { supabase } from "../supabase.js";
 import { goto } from "$app/navigation";
 import { toast } from "@zerodevx/svelte-toast";
-const registerMutation = gql`
-   mutation ($name: String!, $email: String!, $password: String!) {
-      registerUser(name: $name, email: $email, password: $password) {
-         email
-         _id
-      }
-   }
-`;
 
 let name;
 let email;
 let password = "";
 let passwordCheck;
-let resp;
+
 $: isValidEmail =
    email &&
    !!email.match(
@@ -26,23 +17,33 @@ $: isValidPassword = password && !!password.match(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0
 
 const signup = async () => {
    if (!isValidEmail || !isValidPassword || password != passwordCheck) return;
-   resp = mutationStore({ client, query: registerMutation, variables: { name, email, password } });
-};
-
-$: if ($resp?.data?.registerUser) {
-   goto("/login");
-}
-
-$: if ($resp?.error) {
-   toast.push("That email is taken", {
-      theme: {
-         "--toastBackground": "#D2042D",
-         "--toastBarBackground": "#D2042D",
-         "--toastBorderRadius": "1rem",
-      },
+   let { user, error } = await supabase.auth.signUp({
+      email,
+      password,
    });
-}
-$: console.log($resp);
+
+   if (error) {
+      toast.push("That email is taken", {
+         theme: {
+            "--toastBackground": "#D2042D",
+            "--toastBarBackground": "#D2042D",
+            "--toastBorderRadius": "1rem",
+         },
+      });
+      return;
+   }
+   if (user) {
+      console.log(user);
+      toast.push("Check your email to finish signing up", {
+         theme: {
+            "--toastBackground": "#006400",
+            "--toastBarBackground": "#006400",
+            "--toastBorderRadius": "1rem",
+         },
+      });
+      goto("/login");
+   }
+};
 </script>
 
 <svelte:head>
