@@ -2,4 +2,4 @@
 
 An interactive chord and guitar tablature library connected to Spotify. 
 
-Powered by: SvelteKit, Tailwind, Spotify API and Fauna
+Powered by: SvelteKit, Tailwind, Spotify API and Supabase
