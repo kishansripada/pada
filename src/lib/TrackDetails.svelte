@@ -3,7 +3,7 @@ import { user } from "../store";
 import { page } from "$app/stores";
 import { browser } from "$app/env";
 import { goto } from "$app/navigation";
-
+import { minorKeys, majorKeys } from "../musicTheory.js";
 export let trackDetails;
 
 const upload = () => {
@@ -32,24 +32,9 @@ const formattedTime = () => {
 };
 
 const formattedKey = () => {
-   let keys = {
-      0: "C",
-      1: "C#",
-      2: "D",
-      3: "D#",
-      4: "E",
-      5: "F",
-      6: "F#",
-      7: "G",
-      8: "G#",
-      9: "A",
-      10: "A#",
-      11: "B",
-   };
-
    let mode = trackDetails.features.mode == 0 ? " Minor" : trackDetails.features.mode == 1 ? " Major" : "";
 
-   return keys[trackDetails.features.key] + " " + mode;
+   return (trackDetails.features.mode == 0 ? minorKeys : trackDetails.features.mode == 1 ? majorKeys : "")[trackDetails.features.key] + " " + mode;
 };
 </script>
 

@@ -21,6 +21,7 @@ import { shortcut } from "../../../../shortcut.js";
 import { supabase } from "../../../../supabase.js";
 import { goto } from "$app/navigation";
 import { toast } from "@zerodevx/svelte-toast";
+import { majorKeyNotes } from "../../../../musicTheory.js";
 
 function range(start, end) {
    var len = (Math.abs(end - start) + 0 * 2) / 1 + 1;
@@ -105,7 +106,7 @@ function on_key_down(event) {
       event.preventDefault();
       beatValues = beatValues.map((beatValue, i) => {
          if (selectedBeats.includes(i)) {
-            return { tonality: null, type: null, extension: null };
+            return { root: null, type: null, extension: null };
          } else {
             return beatValue;
          }
@@ -188,42 +189,54 @@ const upload = async () => {
 
 <svelte:window on:keydown="{on_key_down}" on:keyup="{on_key_up}" />
 
-<div class=" mb-8 flex h-36 w-full flex-row rounded bg-slate-300">
-   <div class="mr-auto flex flex-col">
-      <p class="mb-auto mr-auto text-5xl">{Math.min(...selectedBeats)}</p>
+<div class=" mb-8 mt-4 flex h-36  flex-row rounded-xl shadow-xl">
+   <div class=" flex w-1/3 flex-col">
+      <p class="m-3 mb-auto mr-auto text-5xl">{Math.min(...selectedBeats)}</p>
       <button
          on:click="{() => (beatValues = Array.from({ length: analysis.beats.length }, () => ({ root: null, type: null, extension: null })))}"
-         class="mt-auto rounded-xl bg-white px-8 py-2">
+         class="m-2 mt-auto mr-auto rounded px-4 py-2 ring-1 ring-black">
          clear 🗑
       </button>
    </div>
 
-   <div class="flex flex-col items-center justify-center">
+   <div class=" flex w-1/3 flex-col items-center justify-center">
       <div class="flex flex-row items-center justify-center ">
          <div class="flex flex-col items-center">
-            <select class="mx-2 h-10 w-24 rounded  focus:outline-none" name="root" id="" bind:value="{beatValues[selectedBeats[0]].root}">
-               {#each [null, "C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"] as chord}
-                  <option value="{chord}">{chord || ""}</option>
+            <select
+               class="mx-2 h-10 w-24 rounded ring-1 ring-black focus:outline-none"
+               name="root"
+               id=""
+               bind:value="{beatValues[selectedBeats[0]].root}">
+               {#each [null, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as chord}
+                  <option value="{chord}">{majorKeyNotes[0][chord] || ""}</option>
                {/each}
             </select>
-            <p class="pt-2">root 🦷</p>
+            <p class="pt-2">root</p>
          </div>
          <div class="flex flex-col items-center">
-            <select class="mx-2 h-10 w-24 rounded focus:outline-none" name="extension" id="" bind:value="{beatValues[selectedBeats[0]].type}">
+            <select
+               class="mx-2 h-10 w-24 rounded ring-1 ring-black focus:outline-none"
+               name="extension"
+               id=""
+               bind:value="{beatValues[selectedBeats[0]].type}">
                {#each [null, "maj", "m", "aug", "dim", "sus2", "sus4", "6", "m6", "7", "maj7", "maj7(#5)", "m7", "m(maj7)", "dim7", "7sus2", "7sus4", "5"] as type}
                   <option value="{type}">{type || ""}</option>
                {/each}
             </select>
-            <p class="pt-2">type 🧐</p>
+            <p class="pt-2">type</p>
          </div>
 
-         <div class="flex flex-col items-center">
-            <select class="mx-2 h-10 w-24 rounded focus:outline-none" name="extension" id="" bind:value="{beatValues[selectedBeats[0]].extension}">
+         <div class="flex w-1/3 flex-col  items-center">
+            <select
+               class="mx-2 h-10 w-24 rounded ring-1 ring-black focus:outline-none"
+               name="extension"
+               id=""
+               bind:value="{beatValues[selectedBeats[0]].extension}">
                {#each [null, "add9", "9", "add11", "11", "add13", "13"] as extension}
                   <option value="{extension}">{extension || ""}</option>
                {/each}
             </select>
-            <p class="pt-2">extension 😎</p>
+            <p class="pt-2">extension</p>
          </div>
       </div>
       <!-- <p
@@ -254,22 +267,25 @@ const upload = async () => {
          on:click="{() => (isCommandDown ? changeSpotifyPosition(beat.start, i) : beatClicked(i))}">
          <div
             id="{i}"
-            class:bg-orange-400="{i == currentBar}"
-            class:bg-slate-400="{i != currentBar}"
+            class:bg-purple-300="{i == currentBar}"
             class:cursor-pointer="{isCommandDown}"
-            class="grid h-12 w-full place-items-center rounded bg-white/5   text-white ring-black focus:outline-none"
-            class:ring-2="{selectedBeats.includes(i)}">
-            <p class="select-none">{Object.values(beatValues[i]).join("")}</p>
+            class="grid h-12 w-full place-items-center rounded bg-white/5  text-black  ring-black  focus:outline-none"
+            class:ring-1="{!selectedBeats.includes(i)}"
+            class:ring-2="{selectedBeats.includes(i)}"
+            class:bg-gray-200="{selectedBeats.includes(i)}">
+            <p class="select-none">{majorKeyNotes[0][beatValues[i].root] || ""}{beatValues[i].type || ""}{beatValues[i].extension || ""}</p>
          </div>
       </div>
    {/each}
 </div>
 
-<textarea
-   class="resize-none rounded bg-transparent px-2 py-1 ring-2 ring-black placeholder:text-black/50 focus:outline-none"
-   placeholder="Description..."
-   cols="30"
-   rows="3"
-   bind:value="{description}"></textarea>
+<div class="mb-8 flex flex-row">
+   <textarea
+      class="mt-6 mr-6 h-10 w-full resize-none rounded bg-transparent px-2 py-2 ring-2 ring-black placeholder:text-black/50 focus:outline-none"
+      placeholder="description... (optional)"
+      cols="100"
+      rows="1"
+      bind:value="{description}"></textarea>
 
-<button on:click="{upload}" class="rounded bg-purple-600 px-4 py-2 text-white"> upload </button>
+   <button on:click="{upload}" class="ml-auto mt-auto rounded bg-purple-600 px-4 py-2 text-white"> upload </button>
+</div>

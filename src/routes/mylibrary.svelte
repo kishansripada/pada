@@ -1,54 +1,39 @@
 <!-- <script>
-import { App, Credentials } from "realm-web";
-import { writable } from "svelte/store";
 import { onMount } from "svelte";
 import { loggedIn } from "../store.js";
 import { goto } from "$app/navigation";
+import { supabase } from "../supabase";
+import { getUserSavedTracks } from "../spotify.js";
 
 let tabbedSavedTracks = [];
-/////////////create mongo db client
-const app = new App({ id: "boptabs-wwrqq" });
-const credentials = Credentials.anonymous();
-let user = app.logIn(credentials);
-/////////////create mongo db client
-// let token = fetch(`/api/spotify/gettoken`).then((r) => r.json());
 
-onMount(() => {
-   if (!$loggedIn) {
-      goto(`/`);
-      return;
-   }
+onMount(async () => {
+   if (!$loggedIn) return goto("/");
+
    if (localStorage.tabbedSavedTracks) {
       tabbedSavedTracks = JSON.parse(localStorage.tabbedSavedTracks);
       console.log(tabbedSavedTracks);
    } else {
-      getUserSavedTracks($loggedIn);
+      let spotifySavedTracks = await getUserSavedTracks($loggedIn);
+      console.log(chunks);
+      let ids = spotifySavedTracks.map((track) => track.track.id);
+      // let chunks = [...Array(Math.ceil(ids.length / 200))].map((_, i) => ids.slice(i * 200, i * 200 + 200));
+      // chunks = await Promise.all(
+      //    chunks.map((chunk) => {
+      //       return supabase
+      //          .from("tracks")
+      //          .select(" spotifyId")
+      //          .in("spotifyId", chunk)
+      //          .then((r) => r.data);
+      //    })
+      // );
+
+      console.log(chunks);
    }
 });
-
-const getUserSavedTracks = async (access_token) => {
-   let spotifySavedTracks = await fetch(`/api/spotify/getUserSavedTracks/${access_token}`).then((r) => r.json());
-
-   user = await user;
-   let mongoSearchResults = await user.functions.matchSavedTracks(spotifySavedTracks.map((track) => track.track.id));
-
-   // filter spotify saved tracks to only include those that are on mongodb then attach mongodb data to spotify tracks
-   tabbedSavedTracks = spotifySavedTracks
-      .filter((track) => {
-         return mongoSearchResults.map((track) => track.spotifyId).includes(track.track.id);
-      })
-      .map((spotifyTrack) => {
-         return {
-            ...spotifyTrack,
-            ...mongoSearchResults.find((mongoTrack) => mongoTrack.spotifyId == spotifyTrack.track.id),
-         };
-      });
-
-   localStorage.tabbedSavedTracks = JSON.stringify(tabbedSavedTracks);
-};
 </script>
 
-<div class="grid grid-cols-3 gap-3 text-[#091834]">
+<!-- <div class="grid grid-cols-3 gap-3 text-[#091834]">
    {#each tabbedSavedTracks as track}
       <a href="{`/track/${track.track.id}`}">
          <div class="  flex h-20 w-full flex-row rounded-xl bg-white/10  hover:bg-white/20">
@@ -61,3 +46,4 @@ const getUserSavedTracks = async (access_token) => {
       </a>
    {/each}
 </div> -->
+-->

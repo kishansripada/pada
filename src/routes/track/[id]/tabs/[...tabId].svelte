@@ -5,10 +5,10 @@ export async function load({ stuff }) {
 </script>
 
 <script>
+export let trackDetails;
 import Info from "../../../../lib/Info.svelte";
 import Flat from "../../../../lib/Tabs/Flat.svelte";
 import { page } from "$app/stores";
-export let trackDetails;
 import { user } from "../.././../../store.js";
 import { goto } from "$app/navigation";
 import { supabase } from "../../../../supabase.js";
@@ -47,12 +47,14 @@ $: (selected = 0), trackId;
    <p>Loading...</p>
 {:then tabs}
    {#if tabs.length}
-      <div class="py-3">
-         <Info bind:selected approvedTabsOrChords="{tabs}" />
+      <div class="mb-8">
+         <div class="py-3">
+            <Info bind:selected approvedTabsOrChords="{tabs}" />
+         </div>
+         <Flat style="height:500px" xml="{tabs[selected].musicXml}" />
       </div>
-      <Flat style="height:500px" xml="{tabs[selected].musicXml}" />
    {:else}
-      <div class="flex flex-row justify-center pt-8">
+      <div class="flex flex-row justify-center pt-8 mb-8">
          <div class="flex flex-col items-center">
             <p>there aren't any tabs for this song 😞</p>
             <button on:click="{upload}" class="text-blue-500" href="{$page.url.pathname}/upload">submit one</button>
