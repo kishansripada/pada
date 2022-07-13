@@ -11,9 +11,8 @@ let loading = false;
 onMount(async () => {
    if (!$loggedIn) return goto("/");
 
-   if (localStorage.tabbedSavedTracks) {
-      tabbedSavedTracks = JSON.parse(localStorage.tabbedSavedTracks);
-      console.log(tabbedSavedTracks);
+   if (sessionStorage.getItem("tabbedSavedTracks")) {
+      tabbedSavedTracks = JSON.parse(sessionStorage.getItem("tabbedSavedTracks"));
    } else {
       loading = true;
       let spotifySavedTracks = await getUserSavedTracks($loggedIn);
@@ -32,7 +31,7 @@ onMount(async () => {
       chunks = chunks.flat().map((track) => track.spotifyId);
 
       let tabbedSpotifyTracks = spotifySavedTracks.filter((track) => chunks.includes(track.track.id));
-      localStorage.tabbedSavedTracks = JSON.stringify(tabbedSpotifyTracks);
+      sessionStorage.setItem("tabbedSavedTracks", JSON.stringify(tabbedSpotifyTracks));
       tabbedSavedTracks = tabbedSpotifyTracks;
       loading = false;
    }
@@ -42,16 +41,10 @@ onMount(async () => {
 {#if loading}
    Loading... this may take a while
 {:else if tabbedSavedTracks.length}
-   <div class="grid grid-cols-3 gap-3 text-[#091834]">
+   <div class="grid grid-cols-8 gap-3 text-[#091834]">
       {#each tabbedSavedTracks as track}
          <a href="{`/track/${track.track.id}/tabs`}">
-            <div class="  flex h-20 w-full flex-row rounded-xl bg-white/10  hover:bg-white/20">
-               <img class="h-20 rounded-xl" src="{track.track.album.images[0].url}" alt="" />
-               <div class="flex flex-col pl-2 pt-1">
-                  <p>{track.track.name}</p>
-                  <p class="text-xs">{track.track.artists.map((artist) => artist.name).join(", ")}</p>
-               </div>
-            </div>
+            <img class="h-36 rounded-xl" src="{track.track.album.images[0].url}" alt="" />
          </a>
       {/each}
    </div>
