@@ -41,10 +41,10 @@ onMount(async () => {
 {#if loading}
    Loading... this may take a while
 {:else if tabbedSavedTracks.length}
-   <div class="grid grid-cols-8 gap-3 text-[#091834]">
+   <div class="grid grid-cols-8 gap-3 text-[#091834] mt-6">
       {#each tabbedSavedTracks as track}
-         <a href="{`/track/${track.track.id}/tabs`}">
-            <img class="h-36 rounded-xl" src="{track.track.album.images[0].url}" alt="" />
+         <a href="{`/track/${track.track.id}/tabs`}" class="hover:scale-[1.1] transition ease-in-out duration-300">
+            <img class="h-36 w-36 rounded-xl" src="{track.track.album.images[0].url}" alt="" />
          </a>
       {/each}
    </div>
