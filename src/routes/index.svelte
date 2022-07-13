@@ -34,13 +34,13 @@ onMount(() => {
    <meta name="keywords" content=" Chords, guitar chords, chords, tab, ukulele, tab, tablature, tablatures, sync easy" />
    <meta name="twitter:card" content="summary" />
    <meta name="twitter:title" content="Bop Tabs — Interactive, Modern, Tablatures & Chords" />
-   <meta name="twitter:image" content="https://i.imgur.com/5GIwI0F.png" />
+   <meta name="twitter:image" content="https://i.imgur.com/xGowEtj.png" />
    <meta property="og:type" content="song" />
    <meta property="og:title" content="Bop Tabs — Interactive, Modern, Tablatures & Chords" />
    <meta
       property="og:description"
       content="learn to play guitar chords & tabs synced to your spotify account, add capo, transpose key, chord diagrams and more" />
-   <meta property="og:image" content="https://i.imgur.com/5GIwI0F.png" />
+   <meta property="og:image" content="https://i.imgur.com/xGowEtj.png" />
    <!-- <meta property="og:url" content="PERMALINK" /> -->
    <meta property="og:site_name" content="Bop Tabs — Interactive, Modern, Tablatures & Chords" />
 </svelte:head>
