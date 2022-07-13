@@ -10,9 +10,6 @@ import Footer from "../lib/Footer.svelte";
 import Search from "../lib/Search.svelte";
 import Cookies from "js-cookie";
 import { supabase } from "../supabase.js";
-$: if (browser) {
-   faunaSession.set(JSON.parse(Cookies.get("fauna-session") || null) || null);
-}
 
 user.set(supabase.auth.user());
 

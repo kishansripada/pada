@@ -38,14 +38,16 @@ const formattedKey = () => {
 };
 </script>
 
-<div class="flex h-64 flex-row rounded-[20px] bg-white/10 shadow-2xl">
-   <img class=" w-64 rounded-[20px]" src="{trackDetails.album.images[0].url}" alt="" />
+<div class="flex h-64 flex-row  rounded-[20px] bg-white/10 shadow-2xl">
+   <img class="ml-4 mt-4 h-56 w-56" src="{trackDetails.album.images[0].url}" alt="" />
 
-   <div class="flex flex-col pl-7 pt-3 text-[#091834] ">
-      <p class=" pb-2 text-4xl ">{trackDetails.name.length > 40 ? trackDetails.name.substring(0, 40) + "..." : trackDetails.name}</p>
-      <p class="">{trackDetails.album.name}</p>
+   <div class="ml-6 mt-0 flex flex-col text-black">
+      <div class="mb-auto mt-6">
+         <p class=" mb-2 text-4xl ">{trackDetails.name.length > 40 ? trackDetails.name.substring(0, 40) + "..." : trackDetails.name}</p>
+         <p class="">{trackDetails.album.name}</p>
+      </div>
 
-      <div class="mt-auto mb-3 flex flex-nowrap">
+      <div class="mt-auto flex flex-nowrap pb-4">
          {#each trackDetails.artists as artist}
             <div class="flex w-32  flex-col items-center pr-6">
                <img class="h-24  w-24  rounded-[20px] shadow-2xl" src="{artist.images?.[0]?.url}" alt="" />

@@ -1,6 +1,6 @@
 <script>
-import { loggedIn, isSearching, faunaSession, user } from "../store.js";
-import logo from "../static/logo.svg";
+import { loggedIn, isSearching, user } from "../store.js";
+import newLogo from "../static/newLogo.svg";
 import { toast } from "@zerodevx/svelte-toast";
 import { goto } from "$app/navigation";
 import { page } from "$app/stores";
@@ -23,7 +23,7 @@ const logout = async () => {
 </script>
 
 <div class=" flex h-[70px] flex-row items-center  whitespace-nowrap  bg-white/95  px-[13%] text-[#666666] backdrop-blur-[2px]">
-   <a class=" shrink-0 " href="/"> <img class="w-40 " src="{logo}" alt="" /></a>
+   <a class="shrink-0 " href="/"> <img class="w-36 " src="{newLogo}" alt="" /></a>
 
    <div class="ml-5 mr-5 flex flex-row  items-center">
       <a href="/discover" class="px-3 transition duration-300 ease-in-out hover:-translate-y-1">discover</a>

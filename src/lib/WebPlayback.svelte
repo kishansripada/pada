@@ -1,10 +1,35 @@
 <script>
-import { playbackData, loggedIn, spotifyPosition, logIn, chordPosition, spotifyIsPaused, currentlyPlaying } from "../store";
+import { playbackData, loggedIn, spotifyPosition, logIn, chordPosition, spotifyIsPaused, currentlyPlaying, isSearching } from "../store";
 import { page } from "$app/stores";
 import { shortcut } from "../shortcut.js";
-
+import playIcon from "../static/play.svg";
+import pauseIcon from "../static/pause.svg";
 let player;
 let play;
+$: console.log($isSearching);
+
+const formattedTime = (duration_ms) => {
+   let time = duration_ms / 1000;
+   var hrs = ~~(time / 3600);
+   var mins = ~~((time % 3600) / 60);
+   var secs = ~~time % 60;
+   var ret = "";
+   if (hrs > 0) {
+      ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+   }
+   ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+   ret += "" + secs;
+   return ret;
+};
+
+function on_key_down(event) {
+   if ($isSearching) return;
+   if (event.repeat) return;
+   if (event.code == "Space") {
+      event.preventDefault();
+      playPause();
+   }
+}
 
 window.onSpotifyWebPlaybackSDKReady = () => {
    player = new window.Spotify.Player({
@@ -109,14 +134,14 @@ async function handleChangeMsPosition(event) {
 <svelte:head>
    <script src="https://sdk.scdn.co/spotify-player.js"></script>
 </svelte:head>
-
+<svelte:window on:keydown="{on_key_down}" />
 {#if $playbackData}
    {#await $playbackData then playbackData}
-      <div class="fixed bottom-0 z-[70] flex h-24 w-full  flex-row items-center bg-black/70  backdrop-blur-md">
+      <div class="fixed bottom-0 z-[70] flex h-24 w-full  flex-row items-center bg-white/80  backdrop-blur-md">
          {#if $currentlyPlaying}
             <a class=" flex flex-row items-center pl-3  w-1/3" href="/track/{$currentlyPlaying.id}/tabs">
                <img class=" w-16 h-16 rounded-xl" src="{$currentlyPlaying.album.images[0].url}" alt="" />
-               <div class="flex flex-col p-4 pl-3 text-white h-[36px] whitespace-nowrap justify-center">
+               <div class="flex flex-col p-4 pl-3 text-black h-[36px] whitespace-nowrap justify-center">
                   <p class="text-sm">{$currentlyPlaying.name}</p>
                   <p class="text-xs">{$currentlyPlaying.artists.map((artist) => artist.name).join(", ")}</p>
                </div>
@@ -124,20 +149,36 @@ async function handleChangeMsPosition(event) {
          {:else}
             <a class=" flex flex-row items-center pl-3  w-1/3" href="/track/{playbackData.id}/tabs">
                <img class=" w-16 h-16 rounded-xl" src="{playbackData.album.images[0].url}" alt="" />
-               <div class="flex flex-col p-4 pl-3 text-white h-[36px] whitespace-nowrap justify-center">
+               <div class="flex flex-col p-4 pl-3 text-black h-[36px] whitespace-nowrap justify-center">
                   <p class="text-sm">{playbackData.name}</p>
                   <p class="text-xs">{playbackData.artists.map((artist) => artist.name).join(", ")}</p>
                </div>
             </a>
          {/if}
+
          <div class="flex flex-col items-center w-1/3">
-            <button use:shortcut="{{ code: 'Space' }}" class="text-3xl" on:click="{playPause}">{$spotifyIsPaused ? "▶️" : "⏸"}</button>
-            <div class=" pb-2" on:click="{handleChangeMsPosition}">
-               <div class="h-2 rounded-full bg-gray-300" style="width: 500px"></div>
-               <div class="absolute top-[58px] h-2 rounded-full bg-gray-700" style="width: {($spotifyPosition / playbackData.duration_ms) * 500}px">
+            <button class="text-3xl focus: outline-none " on:click="{playPause}">
+               <img class="w-10" src="{$spotifyIsPaused ? playIcon : pauseIcon}" alt="" />
+            </button>
+
+            <div class="flex flex-row items-center mb-6">
+               <p class="text-gray-600 pr-3 text-sm">{formattedTime($spotifyPosition)}</p>
+               <div class="flex flex-col justify-center relative" on:click="{handleChangeMsPosition}">
+                  <div class="h-2 rounded-full bg-gray-200" style="width: 500px"></div>
+
+                  {#if $currentlyPlaying}
+                     <div class="absolute h-2 rounded-full bg-purple-500" style="width: {($spotifyPosition / $currentlyPlaying.duration_ms) * 500}px">
+                     </div>
+                  {/if}
+                  <div
+                     class="absolute left-0  w-1 rounded-full bg-purple-500 h-5"
+                     style="left: {$currentlyPlaying ? ($spotifyPosition / $currentlyPlaying.duration_ms) * 500 - 4 : 0}px">
+                  </div>
                </div>
+               <p class="text-gray-600 pl-3 text-sm">{$currentlyPlaying ? formattedTime($currentlyPlaying.duration_ms) : "0.00"}</p>
             </div>
          </div>
+
          <div class="ml-auto w-1/3"></div>
       </div>
    {/await}

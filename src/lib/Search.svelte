@@ -6,6 +6,8 @@ import { shortcut } from "../shortcut.js";
 import { onMount } from "svelte";
 import { search as spotifySearch } from "../spotify.js";
 import algoliasearch from "algoliasearch";
+import { supabase } from "../supabase.js";
+
 let searchInput;
 let query;
 let spotifySearchResults;

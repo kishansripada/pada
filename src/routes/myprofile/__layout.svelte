@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 import { goto } from "$app/navigation";
 import { browser } from "$app/env";
 import { page } from "$app/stores";
@@ -7,7 +7,7 @@ import { user } from "../../store.js";
 $: if (!$user && browser) {
    goto("/login");
 }
-</script>
+</script> -->
 
 <!-- {#if !$userData.fetching}
    <h4>{$userData.data.findUserByEmail.name}</h4>

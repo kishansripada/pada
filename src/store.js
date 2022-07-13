@@ -15,7 +15,7 @@ export const logIn = readable(function logIn(state) {
    let scope = ["streaming", "user-read-email", "user-read-private", "user-library-read"].join(" ");
    let params = {
       response_type: "code",
-      client_id: "01a3817b86784869a571c4fa82ec3de7",
+      client_id: "29110b23f6d14d67856438c2504dd2c4",
       scope: scope,
       redirect_uri: window.location.origin,
       state: state,

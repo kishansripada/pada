@@ -130,7 +130,7 @@ $: currentBar = analysis.beats.findIndex((beat) => {
 });
 
 const upload = async () => {
-   //   save space in fauna by converting null chords to null value without properties
+   //   save space in supa by converting null chords to null value without properties
    let cleanValues = beatValues.map((beatValue) => {
       return Object.values(beatValue).every((x) => x === null) ? null : beatValue;
    });

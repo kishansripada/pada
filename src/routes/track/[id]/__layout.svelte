@@ -29,13 +29,13 @@ export async function load({ params }) {
 </script>
 
 <script>
+export let trackDetails;
 import TrackDetails from "$lib/TrackDetails.svelte";
 import TabsChordsNav from "$lib/TabsChordsNav.svelte";
+import ColorSplotch from "$lib/ColorSplotch.svelte";
 import { browser } from "$app/env";
 import { playbackData } from "../../../store.js";
-export let trackDetails;
 import { onMount } from "svelte";
-import ColorSplotch from "$lib/ColorSplotch.svelte";
 import { prominent } from "color.js";
 import { fade } from "svelte/transition";
 
