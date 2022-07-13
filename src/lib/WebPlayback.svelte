@@ -158,7 +158,7 @@ async function handleChangeMsPosition(event) {
 
          <div class="flex flex-col items-center w-1/3">
             <button class="text-3xl focus: outline-none " on:click="{playPause}">
-               <img class="w-10" src="{$spotifyIsPaused ? playIcon : pauseIcon}" alt="" />
+               <img class="w-12" src="{$spotifyIsPaused ? playIcon : pauseIcon}" alt="" />
             </button>
 
             <div class="flex flex-row items-center mb-6">

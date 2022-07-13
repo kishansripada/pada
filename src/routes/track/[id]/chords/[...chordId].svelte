@@ -17,6 +17,8 @@ import { browser } from "$app/env";
 import { prominent } from "color.js";
 import { fade } from "svelte/transition";
 import { majorKeyNotes } from "../../../../musicTheory.js";
+import plus from "../../../../static/plus.svg";
+import minus from "../../../../static/minus.svg";
 
 let transpose = 0;
 
@@ -52,8 +54,17 @@ let selected = 0;
 
 // if the trackId changes, then reset the current selected track to the first
 $: (selected = 0), trackId;
+let autoScroll = false;
 
-let autoScroll = true;
+if (browser && !localStorage.autoScroll) {
+   localStorage.autoScroll = false;
+} else if (browser) {
+   autoScroll = JSON.parse(localStorage.autoScroll);
+}
+
+$: if (browser) {
+   localStorage.autoScroll = autoScroll;
+}
 
 const scrollIntoView = (currentBar) => {
    if (!autoScroll || !browser) return;
@@ -67,7 +78,6 @@ const scrollIntoView = (currentBar) => {
 };
 
 $: scrollIntoView(currentBar);
-
 // when chord is clicked send the beat number to the store
 const changeSpotifyPosition = (bar, i) => {
    chordPosition.set({ bar: bar });
@@ -85,11 +95,6 @@ $: (async () => {
    $spotifyPosition;
 </script>
 
-<div class="flex flex-row items-center py-9">
-   <input type="checkbox" value="" class="w-16" bind:checked="{autoScroll}" />
-   <label for="remember" class="text-[#091834]">Auto Scroll</label>
-</div>
-
 {#await chords}
    <p>Loading...</p>
 {:then chords}
@@ -97,18 +102,53 @@ $: (async () => {
       <div class="py-3">
          <Info bind:selected approvedTabsOrChords="{chords}" />
       </div>
-      <div class="flex flex-row">
-         <div class="flex flex-col">
-            <div class="flex flex-row">
-               <div class="w-6 h-6 cursor-pointer" on:click="{() => (transpose < 11 ? transpose++ : null)}">-</div>
-               <p>capo: {transpose * -1}</p>
-               <div class="w-6 h-6 cursor-pointer " on:click="{() => (transpose > -11 ? transpose-- : null)}">+</div>
+      <div class="flex flex-row mb-4 ">
+         <div class="flex flex-row justify-between items-center mr-16">
+            <button class="px-1 py-1 text-white cursor-pointer rounded-lg bg-purple-500" on:click="{() => (transpose < 11 ? transpose++ : null)}">
+               <svg class="h-8 w-8 fill-white" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"></path>
+               </svg>
+            </button>
+
+            <div class="flex flex-col items-center mx-4 w-10">
+               <p class="text-5xl text-purple-500">{transpose * -1}</p>
+               <p class="text-gray-600">capo</p>
             </div>
-            <div class="flex flex-row">
-               <div class="w-6 h-6 cursor-pointer" on:click="{() => (transpose > -11 ? transpose-- : null)}">-</div>
-               <p>transpose: {transpose}</p>
-               <div class="w-6 h-6 cursor-pointer" on:click="{() => (transpose < 11 ? transpose++ : null)}">+</div>
+
+            <button class="px-1 py-1 text-white cursor-pointer rounded-lg bg-purple-500" on:click="{() => (transpose > -11 ? transpose-- : null)}">
+               <svg class="h-8 w-8 fill-white" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                  ><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+         </div>
+
+         <div class="flex flex-row justify-between items-center">
+            <button class="px-1 py-1 text-white cursor-pointer rounded-lg bg-purple-500" on:click="{() => (transpose > -11 ? transpose-- : null)}">
+               <svg class="h-8 w-8 fill-white" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"></path>
+               </svg>
+            </button>
+
+            <div class="flex flex-col items-center mx-4 w-16">
+               <p class="text-5xl text-purple-500">{transpose}</p>
+               <p class="text-gray-600">transpose</p>
             </div>
+
+            <button class="px-1 py-1 text-white cursor-pointer rounded-lg bg-purple-500" on:click="{() => (transpose < 11 ? transpose++ : null)}">
+               <svg class="h-8 w-8 fill-white" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                  ><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
+            </button>
+         </div>
+         <div class="flex flex-col justify-end items-center ml-auto">
+            <div>
+               <label for="default-toggle" class="relative inline-flex cursor-pointer items-center">
+                  <input type="checkbox" value="" id="default-toggle" class="peer sr-only" bind:checked="{autoScroll}" />
+                  <div
+                     class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:top-[2px] after:left-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-purple-500 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none  ">
+                  </div>
+               </label>
+            </div>
+
+            <p class="text-gray-600 items-center justify-center">auto scroll</p>
          </div>
       </div>
       <div class="grid basis-1/4 grid-cols-16 gap-0 mb-8">

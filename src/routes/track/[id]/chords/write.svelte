@@ -272,7 +272,7 @@ const upload = async () => {
             class="grid h-12 w-full place-items-center rounded bg-white/5  text-black  ring-black  focus:outline-none"
             class:ring-1="{!selectedBeats.includes(i)}"
             class:ring-2="{selectedBeats.includes(i)}"
-            class:bg-gray-200="{selectedBeats.includes(i)}">
+            class:bg-gray-200="{selectedBeats.includes(i) && i != currentBar}">
             <p class="select-none">{majorKeyNotes[0][beatValues[i].root] || ""}{beatValues[i].type || ""}{beatValues[i].extension || ""}</p>
          </div>
       </div>
