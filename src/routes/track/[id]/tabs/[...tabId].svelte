@@ -40,7 +40,28 @@ $: (selected = 0), trackId;
 </script>
 
 <svelte:head>
-   <title>{trackDetails.name} — Tabs | Bop Tabs</title>
+   <title>{trackDetails.name} — Chords | Bop Tabs</title>
+   <meta
+      name="description"
+      content="learn to play {trackDetails.name} by {trackDetails.artists[0]
+         .name} tabs synced to your spotify account, add capo, transpose key, chord diagrams and more" />
+   <meta
+      name="keywords"
+      content="{trackDetails.name}, {trackDetails.artists
+         .map((artist) => artist.name)
+         .join(', ')}, Chords, guitar chords, chords, tab, ukulele, tab, tablature, tablatures" />
+   <meta name="twitter:card" content="summary" />
+   <meta name="twitter:title" content="{trackDetails.name} — Tabs | Bop Tabs" />
+   <meta name="twitter:image" content="{trackDetails.album.images[0].url}" />
+   <meta property="og:type" content="song" />
+   <meta property="og:title" content="{trackDetails.name} — Tabs | Bop Tabs" />
+   <meta
+      property="og:description"
+      content="learn to play {trackDetails.name} by {trackDetails.artists[0]
+         .name} tabs synced to your spotify account, add capo, transpose key, chord diagrams and more" />
+   <meta property="og:image" content="{trackDetails.album.images[0].url}" />
+   <!-- <meta property="og:url" content="PERMALINK" /> -->
+   <meta property="og:site_name" content="Bop Tabs" />
 </svelte:head>
 
 {#await tabs}
