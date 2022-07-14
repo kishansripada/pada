@@ -8,13 +8,69 @@ import exampleTab from "../static/exampleTab.png";
 import exampleTab1 from "../static/exampleTab1.png";
 import ColorSplotch from "$lib/ColorSplotch.svelte";
 import { goto } from "$app/navigation";
+import { majorKeyNotes } from "../musicTheory.js";
+import A from "./track/[id]/chords/[...chordId].svelte";
 
-const linear = (options) => {
-   let { iStart, iEnd, oStart, oEnd, i } = options;
-   if (i < iStart) return oStart;
-   if (i > iEnd) return oEnd;
-   return ((i - iStart) / (iEnd - iStart)) * (oEnd - oStart) + oStart;
+const contructChord = (beat) => {
+   if (beat.root == null) return "";
+   let root = majorKeyNotes[0][beat.root];
+   let type = beat.type == "maj" ? "" : !beat.type ? "" : beat.type;
+   let extension = beat.extension || "";
+   if (!beat.over) return root + type + extension;
+   let over = majorKeyNotes[0][beat.over];
+   return root + type + extension + "/" + over;
 };
+let selectedBeat = 0;
+
+let beatValues = Array.from({ length: 5 }, () => [
+   {
+      root: 2,
+      type: "maj",
+      over: null,
+   },
+   {
+      root: null,
+      type: null,
+      over: null,
+   },
+   {
+      root: 2,
+      type: "maj",
+      over: 6,
+   },
+   {
+      root: null,
+      type: null,
+      over: null,
+   },
+   {
+      root: 7,
+      type: "maj",
+      over: null,
+   },
+   {
+      root: null,
+      type: null,
+      over: null,
+   },
+   {
+      root: 9,
+      type: "maj",
+      over: null,
+   },
+   {
+      root: null,
+      type: null,
+      over: null,
+   },
+]).flat();
+
+// const linear = (options) => {
+//    let { iStart, iEnd, oStart, oEnd, i } = options;
+//    if (i < iStart) return oStart;
+//    if (i > iEnd) return oEnd;
+//    return ((i - iStart) / (iEnd - iStart)) * (oEnd - oStart) + oStart;
+// };
 
 let scrollPosition = 0;
 // $: console.log(scrollPosition);
@@ -27,22 +83,22 @@ onMount(() => {
 </script>
 
 <svelte:head>
-   <title>Bop Tabs — Interactive, Modern, Tablatures & Chords</title>
+   <title>Bop Tabs — Interactive, Beautiful, Tablatures & Chords</title>
    <meta
       name="description"
       content="learn to play guitar chords & tabs synced to your spotify account, add capo, transpose key, chord diagrams and more" />
    <meta name="keywords" content=" Chords, guitar chords, chords, tab, ukulele, tab, tablature, tablatures, sync easy" />
    <meta name="twitter:card" content="summary" />
-   <meta name="twitter:title" content="Bop Tabs — Interactive, Modern, Tablatures & Chords" />
+   <meta name="twitter:title" content="Bop Tabs — Interactive, Beautiful, Tablatures & Chords" />
    <meta name="twitter:image" content="https://i.imgur.com/xGowEtj.png" />
    <meta property="og:type" content="song" />
-   <meta property="og:title" content="Bop Tabs — Interactive, Modern, Tablatures & Chords" />
+   <meta property="og:title" content="Bop Tabs — Interactive, Beautiful, Tablatures & Chords" />
    <meta
       property="og:description"
       content="learn to play guitar chords & tabs synced to your spotify account, add capo, transpose key, chord diagrams and more" />
    <meta property="og:image" content="https://i.imgur.com/xGowEtj.png" />
    <!-- <meta property="og:url" content="PERMALINK" /> -->
-   <meta property="og:site_name" content="Bop Tabs — Interactive, Modern, Tablatures & Chords" />
+   <meta property="og:site_name" content="Bop Tabs — Interactive, Beautiful, Tablatures & Chords" />
 </svelte:head>
 
 <svelte:window bind:scrollY="{scrollPosition}" />
@@ -82,10 +138,10 @@ onMount(() => {
 </div>
 
 <div id="BANNER" class="relative h-[800px]">
-   <h1 class="flex flex-col items-center pt-6 text-center text-9xl font-extrabold">
+   <h1 class="flex flex-col items-center pt-6 text-center text-7xl font-extrabold md:text-8xl lg:text-9xl">
       <div class="">interactive.</div>
 
-      <p class="bg-gradient-to-r from-[#7928CA] to-[#FF0080] bg-clip-text  text-transparent">modern.</p>
+      <p class="bg-gradient-to-r from-[#7928CA] to-[#FF0080] bg-clip-text  text-transparent">beautiful.</p>
 
       <Typewriter loop cursor="{false}">
          <p class="bg-gradient-to-r from-[#007CF0] to-[#00DFD8] bg-clip-text  text-transparent">tablatures</p>
@@ -96,7 +152,6 @@ onMount(() => {
    <div class="absolute top-[475px] px-[10%] text-center text-[20px] font-light text-[#666666]">
       bop tabs leverages modern technology to enchance the antiquated way of learning music, making it more accessible and enjoyable to learn.
       <div class="pt-10">
-         <span class="mr-3 text-3xl"> 👉</span>
          <a
             href="/signup"
             class=" rounded-md bg-black px-3 py-2 text-white ring-2 ring-black transition duration-300 ease-in-out hover:bg-white hover:text-black">
@@ -106,47 +161,132 @@ onMount(() => {
    </div>
 </div>
 
-<img
-   style="transform: rotate({linear({ iStart: 0, iEnd: 600, oStart: 300, oEnd: 360, i: scrollPosition })}deg); opacity: {linear({
-      iStart: 200,
-      iEnd: 600,
-      oStart: 0,
-      oEnd: 1,
-      i: scrollPosition,
-   })}; 
-   top: {linear({ iStart: 200, iEnd: 600, oStart: 360, oEnd: 900, i: scrollPosition })}px; 
-   left: {linear({
-      iStart: 200,
-      iEnd: 600,
-      oStart: 360,
-      oEnd: 600,
-      i: scrollPosition,
-   })}px"
-   class=" absolute top-[500px] left-[-200px] z-[-60] h-[130px]  select-none opacity-5"
-   src="{exampleTab}"
-   alt="" />
+<div class="relative z-50 mt-44 text-white">
+   <div class="flex flex-row justify-between">
+      <div class="flex w-1/2 flex-col justify-center">
+         <div>
+            <p class="z-50 text-5xl">interactive, modern chord charts</p>
+            <p class="z-50 mt-4 text-3xl text-purple-300">all synced to Spotify</p>
 
-<img
-   style="transform: rotate({linear({ iStart: 12, iEnd: 600, oStart: 300, oEnd: 360, i: scrollPosition })}deg); opacity: {linear({
-      iStart: 200,
-      iEnd: 600,
-      oStart: 0,
-      oEnd: 1,
-      i: scrollPosition,
-   })}; 
-   top: {linear({ iStart: 0, iEnd: 600, oStart: 360, oEnd: 1050, i: scrollPosition })}px; 
-   left: {linear({
-      iStart: 0,
-      iEnd: 600,
-      oStart: 0,
-      oEnd: 600,
-      i: scrollPosition,
-   })}px"
-   class=" absolute top-[500px] left-[-200px] z-[-60] h-[130px]  select-none opacity-5"
-   src="{exampleTab1}"
-   alt="" />
+            <p class="z-50 mt-9 text-gray-300">
+               bop tabs enables simple, elegant chord viewing coupled with an incredible chord writing experience. simply select the chord you wish to
+               edit and contruct it from the ground up
+            </p>
+         </div>
+         <a
+            href="/track/34gCuhDGsG4bRPIf9bb02f/chords"
+            class="mt-16 mr-auto ml-auto cursor-pointer rounded-full bg-purple-300 py-1 px-3 font-semibold text-black transition duration-300 ease-in-out hover:bg-white">
+            see an example
+         </a>
+      </div>
 
-<div id="TABS SECTION" class="relative h-[750px] ">
+      <div class="ml-24  flex w-1/2 grow flex-col">
+         <div class="mb-10 flex flex-row items-center justify-center">
+            <div class="flex flex-col items-center">
+               <select class="mx-2 h-10 w-24 rounded text-black ring-1 ring-black focus:outline-none" bind:value="{beatValues[selectedBeat].root}">
+                  {#each [null, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as chord}
+                     <option value="{chord}">{majorKeyNotes[0][chord] || ""}</option>
+                  {/each}
+               </select>
+               <p class="pt-2">root</p>
+            </div>
+            <div class="flex flex-col items-center">
+               <select class="mx-2 h-10 w-24 rounded text-black ring-1 ring-black focus:outline-none" bind:value="{beatValues[selectedBeat].type}">
+                  {#each [null, "maj", "m", "aug", "dim", "sus2", "sus4", "6", "m6", "7", "maj7", "maj7(#5)", "m7", "m(maj7)", "dim7", "7sus2", "7sus4", "5"] as type}
+                     <option value="{type}">{type || ""}</option>
+                  {/each}
+               </select>
+               <p class="pt-2">type</p>
+            </div>
+            <div class="flex  flex-col  items-center">
+               <select
+                  class="mx-2 h-10 w-24 rounded text-black ring-1 ring-black focus:outline-none"
+                  bind:value="{beatValues[selectedBeat].extension}">
+                  {#each [null, "add9", "9", "add11", "11", "add13", "13"] as extension}
+                     <option value="{extension}">{extension || ""}</option>
+                  {/each}
+               </select>
+               <p class="pt-2">extension</p>
+            </div>
+            <p class="mb-8 text-7xl text-white/60">/</p>
+            <div class="flex flex-col items-center">
+               <select class="mx-2 h-10 w-24 rounded text-black ring-1 ring-black focus:outline-none" bind:value="{beatValues[selectedBeat].over}">
+                  {#each [null, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as chord}
+                     <option value="{chord}">{majorKeyNotes[0][chord] || ""}</option>
+                  {/each}
+               </select>
+               <p class="pt-2">over</p>
+            </div>
+         </div>
+
+         <div class=" mb-2 grid grow basis-1/4 grid-cols-8 gap-0">
+            {#each beatValues as beat, i}
+               <div>
+                  <div
+                     on:click="{() => (selectedBeat = i)}"
+                     class:bg-white="{selectedBeat == i}"
+                     class:text-black="{selectedBeat == i}"
+                     class:text-white="{selectedBeat != i}"
+                     class="grid h-12 cursor-pointer place-items-center  border-white  bg-white/5  ring-1 ring-white focus:outline-none"
+                     class:border-r-4="{(i + 1) % 4 == 0 && (i + 1) % 8 != 0}">
+                     <p class="select-none">
+                        {contructChord(beat)}
+                     </p>
+                  </div>
+               </div>
+            {/each}
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- <div id="BANNER" class="relative h-[800px]">
+   <h1 class="flex flex-col items-center pt-6 text-center text-9xl font-extrabold">
+      <div class="">interactive.</div>
+
+      <p class="bg-gradient-to-r from-[#7928CA] to-[#FF0080] bg-clip-text  text-transparent">beautiful.</p>
+
+      <Typewriter loop cursor="{false}">
+         <p class="bg-gradient-to-r from-[#007CF0] to-[#00DFD8] bg-clip-text  text-transparent">tablatures</p>
+         <p class="bg-gradient-to-r from-[#007CF0] to-[#00DFD8] bg-clip-text  text-transparent">chords</p>
+      </Typewriter>
+   </h1>
+
+   <div class="absolute top-[475px] px-[10%] text-center text-[20px] font-light text-[#666666]">
+      bop tabs leverages modern technology to enchance the antiquated way of learning music, making it more accessible and enjoyable to learn.
+      <div class="pt-10">
+         <a
+            href="/signup"
+            class=" rounded-md bg-black px-3 py-2 text-white ring-2 ring-black transition duration-300 ease-in-out hover:bg-white hover:text-black">
+            get started
+         </a>
+      </div>
+   </div>
+</div> -->
+
+<div class="pointer-events-none absolute top-[650px] left-0 z-0 h-[1200px] w-full overflow-hidden">
+   <div class="absolute left-[-200px] top-[200px] z-0 h-[800px] w-[2000px] rotate-[-8deg] bg-[#190027]"></div>
+</div>
+
+<div class="pointer-events-none absolute top-[10000px] left-0 h-10 w-10"></div>
+<!-- [#45006A] -->
+<!-- <div class="whitespace-nowrap">
+   <p class=" absolute top-0 bg-gradient-to-r from-pink-600 to-purple-400 bg-clip-text text-7xl font-extrabold text-transparent" style="left: 0px;">
+      Don't Guess
+   </p>
+   <p
+      class="absolute top-[75px] bg-gradient-to-r from-pink-600 to-purple-400 bg-clip-text pb-5  text-7xl font-extrabold text-transparent"
+      style="left:0px;">
+      The Rhythm
+   </p>
+   <p
+      class=" absolute bg-gradient-to-r from-pink-600 to-purple-400 bg-clip-text text-7xl font-extrabold text-transparent"
+      style="
+      top: 150px;">
+      Feel It.
+   </p>
+</div> -->
+<!-- <div id="TABS SECTION" class="relative h-[750px] ">
    <div class="whitespace-nowrap">
       <p
          class=" absolute top-0 bg-gradient-to-r from-pink-600 to-purple-400 bg-clip-text text-7xl font-extrabold text-transparent"
@@ -164,9 +304,9 @@ onMount(() => {
          top: 150px;">
          Feel It.
       </p>
-   </div>
+   </div> -->
 
-   <!-- <div class="absolute top-[250px] w-96 text-xl">
+<!-- <div class="absolute top-[250px] w-96 text-xl">
       <p>
          Bop Tabs never displays static tabs. Listen to all your dynamic, <span
             class="  bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text font-bold text-transparent">interactive</span> tablatures to get a sense of
@@ -178,7 +318,5 @@ onMount(() => {
          <Flat xml="{homePageMusicXml}" style="height:300px; width: 700px" />
       </div>
    {/if} -->
-</div>
-
 <style>
 </style>

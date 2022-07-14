@@ -47,11 +47,11 @@ const formattedKey = () => {
          <p class="">{trackDetails.album.name}</p>
       </div>
 
-      <div class="mt-auto flex flex-nowrap pb-4">
+      <div class="mt-auto flex flex-row flex-nowrap pb-4">
          {#each trackDetails.artists as artist}
-            <div class="flex w-32  flex-col items-center pr-6 text-center">
+            <div class="mr-6 flex shrink flex-col items-center text-center">
                <img class="h-24  w-24  rounded-[20px] shadow-2xl" src="{artist.images?.[0]?.url}" alt="" />
-               <p class="pt-1">{artist.name}</p>
+               <p class="mt-1">{artist.name}</p>
             </div>
          {/each}
       </div>

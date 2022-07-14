@@ -8,7 +8,7 @@ export async function load({ stuff }) {
 export let trackDetails;
 import Info from "$lib/Info.svelte";
 import ColorSplotch from "$lib/ColorSplotch.svelte";
-import { spotifyPosition, chordPosition, currentlyPlaying } from "../../../../store.js";
+import { spotifyPosition, chordPosition, currentlyPlaying, currentTabs, currentChords } from "../../../../store.js";
 import { user } from "../.././../../store.js";
 import { supabase } from "../../../../supabase.js";
 import { page } from "$app/stores";
@@ -58,6 +58,10 @@ $: chords = supabase
    .eq("spotifyId", trackId)
    .eq("approvalstatus", "approved")
    .then((r) => r.data);
+
+$: if (chords) {
+   chords.then((chords) => currentChords.set(chords));
+}
 
 // every track will default to the first tab
 let selected = 0;
@@ -143,7 +147,7 @@ $: (async () => {
       </div>
       <div class="flex flex-row mb-4 ">
          <div class="flex flex-row justify-between items-center mr-16">
-            <button class="px-1 py-1 text-white cursor-pointer rounded-lg bg-purple-500" on:click="{() => (transpose < 11 ? transpose++ : null)}">
+            <button class="px-1 py-1 text-white cursor-pointer rounded-lg bg-[#190027]" on:click="{() => (transpose < 11 ? transpose++ : null)}">
                <svg class="h-8 w-8 fill-white" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"></path>
                </svg>
@@ -172,7 +176,7 @@ $: (async () => {
                <p class="text-gray-600">transpose</p>
             </div>
 
-            <button class="px-1 py-1 text-white cursor-pointer rounded-lg bg-purple-500" on:click="{() => (transpose < 11 ? transpose++ : null)}">
+            <button class="px-1 py-1 text-white cursor-pointer rounded-lg bg-[#190027]" on:click="{() => (transpose < 11 ? transpose++ : null)}">
                <svg class="h-8 w-8 fill-white" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
                   ><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
             </button>
@@ -190,12 +194,12 @@ $: (async () => {
             <p class="text-gray-600 items-center justify-center">auto scroll</p>
          </div>
       </div>
-      <div class="grid basis-1/4 grid-cols-16 gap-0 mb-8 bg-gray-100 ">
+      <div class="grid basis-1/4 grid-cols-4 sm:grid-cols-8 lg:grid-cols-16 gap-0 mb-8">
          {#each chords[selected].chords as beat, i}
             <div on:click="{() => changeSpotifyPosition(beat.start, i)}">
                <div
-                  class:border-r-4="{(i + 1) % 4 == 0 && (i + 1) % 16 != 0}"
-                  class:bg-gray-700="{i == currentBar}"
+                  class:lg:border-r-4="{(i + 1) % 4 == 0 && (i + 1) % 16 != 0}"
+                  class:bg-[#190027]="{i == currentBar}"
                   class:text-white="{i == currentBar}"
                   id="{i}"
                   class="grid h-12 w-full place-items-center ring-1 ring-black bg-white/5 border-black text-black focus:outline-none cursor-pointer">
@@ -219,11 +223,11 @@ $: (async () => {
 {#if colors}
    {#await colors then colors}
       <div class="pointer-events-none">
-         <div transition:fade|local>
-            <ColorSplotch stylePosition="top: 700px; right: 0px; opacity: 0.5;" color="{colors[0]}" />
-            <!-- <ColorSplotch stylePosition="top: 700px; left: 0px; transform: rotate(180deg);opacity: 0.5" color="{colors[1]}" /> -->
-            <!-- <ColorSplotch stylePosition="top: 1000px; left: 200px; transform: rotate(-90deg);opacity: 0.5" color="{colors[2]}" /> -->
-         </div>
+         <!-- <div transition:fade|local> -->
+         <ColorSplotch stylePosition="top: 700px; right: 0px; opacity: 0.5;" color="{colors[0]}" />
+         <!-- <ColorSplotch stylePosition="top: 700px; left: 0px; transform: rotate(180deg);opacity: 0.5" color="{colors[1]}" /> -->
+         <!-- <ColorSplotch stylePosition="top: 1000px; left: 200px; transform: rotate(-90deg);opacity: 0.5" color="{colors[2]}" /> -->
+         <!-- </div> -->
 
          <div class=" absolute right-0 top-[1000px] h-[500px] w-[1000px] overflow-hidden">
             <div

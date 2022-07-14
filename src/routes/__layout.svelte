@@ -8,7 +8,6 @@ import Nav from "$lib/Nav.svelte";
 import WebPlayback from "$lib/WebPlayback.svelte";
 import Footer from "../lib/Footer.svelte";
 import Search from "../lib/Search.svelte";
-import Cookies from "js-cookie";
 import { supabase } from "../supabase.js";
 
 user.set(supabase.auth.user());
@@ -45,9 +44,9 @@ supabase.auth.onAuthStateChange((_, session) => {
       </div>
    </div>
 
-   <div class="">
+   <!-- <div class="">
       <Footer />
-   </div>
+   </div> -->
 </div>
 
 <style>

@@ -227,11 +227,7 @@ const upload = async () => {
    <div class=" flex w-1/3 flex-col items-center justify-center">
       <div class="flex flex-row items-center justify-center ">
          <div class="flex flex-col items-center">
-            <select
-               class="mx-2 h-10 w-24 rounded ring-1 ring-black focus:outline-none"
-               name="root"
-               id=""
-               bind:value="{beatValues[selectedBeats[0]].root}">
+            <select class="mx-2 h-10 w-24 rounded ring-1 ring-black focus:outline-none" name="root" bind:value="{beatValues[selectedBeats[0]].root}">
                {#each [null, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as chord}
                   <option value="{chord}">{majorKeyNotes[0][chord] || ""}</option>
                {/each}
@@ -239,11 +235,7 @@ const upload = async () => {
             <p class="pt-2">root</p>
          </div>
          <div class="flex flex-col items-center">
-            <select
-               class="mx-2 h-10 w-24 rounded ring-1 ring-black focus:outline-none"
-               name="extension"
-               id=""
-               bind:value="{beatValues[selectedBeats[0]].type}">
+            <select class="mx-2 h-10 w-24 rounded ring-1 ring-black focus:outline-none" bind:value="{beatValues[selectedBeats[0]].type}">
                {#each [null, "maj", "m", "aug", "dim", "sus2", "sus4", "6", "m6", "7", "maj7", "maj7(#5)", "m7", "m(maj7)", "dim7", "7sus2", "7sus4", "5"] as type}
                   <option value="{type}">{type || ""}</option>
                {/each}
@@ -252,11 +244,7 @@ const upload = async () => {
          </div>
 
          <div class="flex w-1/3 flex-col  items-center">
-            <select
-               class="mx-2 h-10 w-24 rounded ring-1 ring-black focus:outline-none"
-               name="extension"
-               id=""
-               bind:value="{beatValues[selectedBeats[0]].extension}">
+            <select class="mx-2 h-10 w-24 rounded ring-1 ring-black focus:outline-none" bind:value="{beatValues[selectedBeats[0]].extension}">
                {#each [null, "add9", "9", "add11", "11", "add13", "13"] as extension}
                   <option value="{extension}">{extension || ""}</option>
                {/each}
@@ -265,11 +253,7 @@ const upload = async () => {
          </div>
          <p class="mb-8 text-7xl text-black/40">/</p>
          <div class="flex flex-col items-center">
-            <select
-               class="mx-2 h-10 w-24 rounded ring-1 ring-black focus:outline-none"
-               name="over"
-               id=""
-               bind:value="{beatValues[selectedBeats[0]].over}">
+            <select class="mx-2 h-10 w-24 rounded ring-1 ring-black focus:outline-none" bind:value="{beatValues[selectedBeats[0]].over}">
                {#each [null, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as chord}
                   <option value="{chord}">{majorKeyNotes[0][chord] || ""}</option>
                {/each}
@@ -277,12 +261,6 @@ const upload = async () => {
             <p class="pt-2">over</p>
          </div>
       </div>
-      <!-- <p
-         class:invisible="{(beatValues[selectedBeats[0]].root && beatValues[selectedBeats[0]].type) ||
-            (!beatValues[selectedBeats[0]].root && !beatValues[selectedBeats[0]].type)}"
-         class="text-red-500">
-         every chord must have a type!
-      </p> -->
    </div>
 
    <div class="ml-auto flex flex-col p-3 text-right text-sm opacity-50">
@@ -299,13 +277,13 @@ const upload = async () => {
 <copy use:shortcut="{{ control: true, code: 'KeyC', callback: copy }}"> </copy>
 <cut use:shortcut="{{ control: true, code: 'KeyX', callback: cut }}"> </cut>
 <paste use:shortcut="{{ control: true, code: 'KeyV', callback: paste }}"> </paste>
-<div class="grid basis-1/4 grid-cols-16 gap-0 ">
+<div class="grid basis-1/4 grid-cols-16 gap-0">
    {#each analysis.beats as beat, i}
       <div
          on:click="{() => (isCommandDown ? changeSpotifyPosition(beat.start, i) : beatClicked(i))}"
          id="{i}"
          class:border-r-4="{(i + 1) % 4 == 0 && (i + 1) % 16 != 0}"
-         class:bg-purple-500="{i == currentBar}"
+         class:bg-[#190027]="{i == currentBar}"
          class:text-white="{i == currentBar}"
          class:cursor-pointer="{isCommandDown}"
          class="grid h-12 w-full place-items-center border-black bg-white/5 bg-clip-padding  text-black  ring-1 ring-black focus:outline-none"
@@ -326,5 +304,5 @@ const upload = async () => {
       rows="1"
       bind:value="{description}"></textarea>
 
-   <button on:click="{upload}" class="ml-auto mt-auto rounded bg-purple-600 px-4 py-2 text-white"> upload </button>
+   <button on:click="{upload}" class="ml-auto mt-auto rounded bg-purple-600 px-4 py-2 text-white">upload</button>
 </div>
