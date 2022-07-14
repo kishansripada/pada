@@ -20,6 +20,16 @@ import { majorKeyNotes } from "../../../../musicTheory.js";
 import plus from "../../../../static/plus.svg";
 import minus from "../../../../static/minus.svg";
 
+const contructChord = (beat, transpose) => {
+   if (!beat.chord?.root) return "";
+   let root = majorKeyNotes[0][(beat.chord?.root + transpose + 12) % 12];
+   let type = beat.chord?.type == "maj" ? "" : beat.chord?.type;
+   let extension = beat.chord?.extension || "";
+   if (!beat.chord?.over) return root + type + extension;
+   let over = majorKeyNotes[0][(beat.chord?.over + transpose + 12) % 12];
+   return root + type + extension + "/" + over;
+};
+
 let transpose = 0;
 
 function rgbToHex(r, g, b) {
@@ -54,10 +64,10 @@ let selected = 0;
 
 // if the trackId changes, then reset the current selected track to the first
 $: (selected = 0), trackId;
-let autoScroll = false;
+let autoScroll = true;
 
 if (browser && !localStorage.autoScroll) {
-   localStorage.autoScroll = false;
+   localStorage.autoScroll = true;
 } else if (browser) {
    autoScroll = JSON.parse(localStorage.autoScroll);
 }
@@ -176,9 +186,9 @@ $: (async () => {
             <p class="text-gray-600 items-center justify-center">auto scroll</p>
          </div>
       </div>
-      <div class="grid basis-1/4 grid-cols-16 gap-0 mb-8">
-         {#each chords[selected].chords as chord, i}
-            <div on:click="{() => changeSpotifyPosition(chord.start, i)}">
+      <div class="grid basis-1/4 grid-cols-16 gap-0 mb-8 bg-gray-100 ">
+         {#each chords[selected].chords as beat, i}
+            <div on:click="{() => changeSpotifyPosition(beat.start, i)}">
                <div
                   class:border-r-4="{(i + 1) % 4 == 0 && (i + 1) % 16 != 0}"
                   class:bg-gray-700="{i == currentBar}"
@@ -186,10 +196,7 @@ $: (async () => {
                   id="{i}"
                   class="grid h-12 w-full place-items-center ring-1 ring-black bg-white/5 border-black text-black focus:outline-none cursor-pointer">
                   <p class="select-none">
-                     {majorKeyNotes[0][
-                        chord.chord?.root +
-                           (chord.chord?.root + transpose > 11 ? transpose - 12 : chord.chord?.root + transpose < 0 ? transpose + 12 : transpose)
-                     ] || ""}{chord.chord?.type || ""}{chord.chord?.extension || ""}
+                     {contructChord(beat, transpose)}
                   </p>
                </div>
             </div>
@@ -229,7 +236,7 @@ $: (async () => {
             <!-- <ColorSplotch stylePosition="top: 1000px; left: 200px; transform: rotate(-90deg);opacity: 0.5" color="{colors[2]}" /> -->
          </div>
 
-         <div class=" absolute right-0 top-[1000px] h-[500px] w-[1000px] overflow-hidden">
+         <!-- <div class=" absolute right-0 top-[1000px] h-[500px] w-[1000px] overflow-hidden">
             <div
                class=" w-full"
                style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, {colors[0]} 0%, rgba(239, 255, 250, 0) 100%);
@@ -242,7 +249,7 @@ $: (async () => {
        z-index: -50;
        opacity: 0.3;">
             </div>
-         </div>
+         </div> -->
 
          <div class=" absolute top-[700px] h-[500px] w-[1000px] overflow-hidden left-0">
             <div

@@ -82,7 +82,7 @@ onMount(() => {
 </div>
 
 <div id="BANNER" class="relative h-[800px]">
-   <div class="flex flex-col items-center pt-6 text-center text-9xl font-extrabold">
+   <h1 class="flex flex-col items-center pt-6 text-center text-9xl font-extrabold">
       <div class="">interactive.</div>
 
       <p class="bg-gradient-to-r from-[#7928CA] to-[#FF0080] bg-clip-text  text-transparent">modern.</p>
@@ -91,7 +91,7 @@ onMount(() => {
          <p class="bg-gradient-to-r from-[#007CF0] to-[#00DFD8] bg-clip-text  text-transparent">tablatures</p>
          <p class="bg-gradient-to-r from-[#007CF0] to-[#00DFD8] bg-clip-text  text-transparent">chords</p>
       </Typewriter>
-   </div>
+   </h1>
 
    <div class="absolute top-[475px] px-[10%] text-center text-[20px] font-light text-[#666666]">
       bop tabs leverages modern technology to enchance the antiquated way of learning music, making it more accessible and enjoyable to learn.
@@ -153,17 +153,17 @@ onMount(() => {
          style="left: 0px;">
          Don't Guess
       </p>
-      <h1
+      <p
          class="absolute top-[75px] bg-gradient-to-r from-pink-600 to-purple-400 bg-clip-text pb-5  text-7xl font-extrabold text-transparent"
          style="left:0px;">
          The Rhythm
-      </h1>
-      <h1
+      </p>
+      <p
          class=" absolute bg-gradient-to-r from-pink-600 to-purple-400 bg-clip-text text-7xl font-extrabold text-transparent"
          style="
          top: 150px;">
          Feel It.
-      </h1>
+      </p>
    </div>
 
    <!-- <div class="absolute top-[250px] w-96 text-xl">

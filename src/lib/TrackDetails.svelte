@@ -49,7 +49,7 @@ const formattedKey = () => {
 
       <div class="mt-auto flex flex-nowrap pb-4">
          {#each trackDetails.artists as artist}
-            <div class="flex w-32  flex-col items-center pr-6">
+            <div class="flex w-32  flex-col items-center pr-6 text-center">
                <img class="h-24  w-24  rounded-[20px] shadow-2xl" src="{artist.images?.[0]?.url}" alt="" />
                <p class="pt-1">{artist.name}</p>
             </div>

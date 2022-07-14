@@ -39,13 +39,26 @@ function range(start, end) {
 let description;
 let selectedBeats = [0];
 let copied = [{ root: null, type: null, extension: null }];
-let beatValues = Array.from({ length: analysis.beats.length }, () => ({ root: null, type: null, extension: null }));
+let beatValues = Array.from({ length: analysis.beats.length }, () => ({ root: null, type: null, extension: null, over: null }));
 let isShiftDown = false;
 let isCommandDown = false;
 
 const copy = () => {
    copied = beatValues.filter((beatValue, i) => {
       return selectedBeats.includes(i);
+   });
+};
+
+const cut = () => {
+   copied = beatValues.filter((beatValue, i) => {
+      return selectedBeats.includes(i);
+   });
+   beatValues = beatValues.map((beatValue, i) => {
+      if (selectedBeats.includes(i)) {
+         return { root: null, type: null, extension: null, over: null };
+      } else {
+         return beatValue;
+      }
    });
 };
 
@@ -106,7 +119,7 @@ function on_key_down(event) {
       event.preventDefault();
       beatValues = beatValues.map((beatValue, i) => {
          if (selectedBeats.includes(i)) {
-            return { root: null, type: null, extension: null };
+            return { root: null, type: null, extension: null, over: null };
          } else {
             return beatValue;
          }
@@ -189,11 +202,12 @@ const upload = async () => {
 
 <svelte:window on:keydown="{on_key_down}" on:keyup="{on_key_up}" />
 
-<div class=" mb-8 mt-4 flex h-36  flex-row rounded-xl shadow-xl">
+<div class=" h-42 mb-8 mt-4 flex  flex-row rounded-xl shadow-xl">
    <div class=" flex w-1/3 flex-col">
       <p class="m-3 mb-auto mr-auto text-5xl">{Math.min(...selectedBeats)}</p>
       <button
-         on:click="{() => (beatValues = Array.from({ length: analysis.beats.length }, () => ({ root: null, type: null, extension: null })))}"
+         on:click="{() =>
+            (beatValues = Array.from({ length: analysis.beats.length }, () => ({ root: null, type: null, extension: null, over: null })))}"
          class="m-2 mt-auto mr-auto rounded px-4 py-2 ring-1 ring-black">
          clear 🗑
       </button>
@@ -238,6 +252,19 @@ const upload = async () => {
             </select>
             <p class="pt-2">extension</p>
          </div>
+         <p class="mb-8 text-7xl text-black/40">/</p>
+         <div class="flex flex-col items-center">
+            <select
+               class="mx-2 h-10 w-24 rounded ring-1 ring-black focus:outline-none"
+               name="over"
+               id=""
+               bind:value="{beatValues[selectedBeats[0]].over}">
+               {#each [null, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as chord}
+                  <option value="{chord}">{majorKeyNotes[0][chord] || ""}</option>
+               {/each}
+            </select>
+            <p class="pt-2">over</p>
+         </div>
       </div>
       <!-- <p
          class:invisible="{(beatValues[selectedBeats[0]].root && beatValues[selectedBeats[0]].type) ||
@@ -253,11 +280,13 @@ const upload = async () => {
       <p>hold ⌘ and click to jump to beat in track</p>
       <p>⌘C to copy</p>
       <p>⌘V to paste</p>
+      <p>⌘X to cut</p>
       <p>chords should be in the original key</p>
    </div>
 </div>
 
 <copy use:shortcut="{{ control: true, code: 'KeyC', callback: copy }}"> </copy>
+<cut use:shortcut="{{ control: true, code: 'KeyX', callback: cut }}"> </cut>
 <paste use:shortcut="{{ control: true, code: 'KeyV', callback: paste }}"> </paste>
 
 <div class="grid basis-1/4 grid-cols-16 gap-2 ">
@@ -273,7 +302,11 @@ const upload = async () => {
             class:ring-1="{!selectedBeats.includes(i)}"
             class:ring-2="{selectedBeats.includes(i)}"
             class:bg-gray-200="{selectedBeats.includes(i) && i != currentBar}">
-            <p class="select-none">{majorKeyNotes[0][beatValues[i].root] || ""}{beatValues[i].type || ""}{beatValues[i].extension || ""}</p>
+            <p class="select-none">
+               {majorKeyNotes[0][beatValues[i].root] || ""}{beatValues[i].type || ""}{beatValues[i].extension || ""}{beatValues[i].over
+                  ? "/"
+                  : ""}{majorKeyNotes[0][beatValues[i].over] || "" || ""}
+            </p>
          </div>
       </div>
    {/each}
