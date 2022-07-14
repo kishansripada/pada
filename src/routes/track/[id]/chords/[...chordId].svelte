@@ -21,7 +21,7 @@ import plus from "../../../../static/plus.svg";
 import minus from "../../../../static/minus.svg";
 
 const contructChord = (beat, transpose) => {
-   if (!beat.chord?.root) return "";
+   if (beat.chord?.root == null) return "";
    let root = majorKeyNotes[0][(beat.chord?.root + transpose + 12) % 12];
    let type = beat.chord?.type == "maj" ? "" : beat.chord?.type;
    let extension = beat.chord?.extension || "";
