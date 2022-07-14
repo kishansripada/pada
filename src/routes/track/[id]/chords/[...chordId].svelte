@@ -97,7 +97,7 @@ const changeSpotifyPosition = (bar, i) => {
 let currentBar = 0;
 // given the spotify position, calculate the current bar of rthe song
 $: (async () => {
-   if (!(await chords).length) return;
+   if (!(await chords)?.length) return;
    currentBar = (await chords)[selected].chords.findIndex((beat) => {
       return $spotifyPosition / 1000 < beat.start + beat.duration;
    });
@@ -133,7 +133,7 @@ $: (async () => {
 {#await chords}
    <p>Loading...</p>
 {:then chords}
-   {#if chords.length}
+   {#if chords?.length}
       <div class="py-3">
          <Info bind:selected approvedTabsOrChords="{chords}" />
       </div>
