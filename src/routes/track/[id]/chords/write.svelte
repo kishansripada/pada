@@ -23,6 +23,17 @@ import { goto } from "$app/navigation";
 import { toast } from "@zerodevx/svelte-toast";
 import { majorKeyNotes } from "../../../../musicTheory.js";
 
+const contructChord = (i, beatValues) => {
+   let beat = beatValues[i];
+   if (beat.root == null) return "";
+   let root = majorKeyNotes[0][beat.root];
+   let type = beat.type == "maj" ? "" : !beat.type ? "" : beat.type;
+   let extension = beat.extension || "";
+   if (!beat.over) return root + type + extension;
+   let over = majorKeyNotes[0][beat.over];
+   return root + type + extension + "/" + over;
+};
+
 function range(start, end) {
    var len = (Math.abs(end - start) + 0 * 2) / 1 + 1;
    var direction = start < end ? 1 : -1;
@@ -38,7 +49,7 @@ function range(start, end) {
 
 let description;
 let selectedBeats = [0];
-let copied = [{ root: null, type: null, extension: null }];
+let copied = [{ root: null, type: null, extension: null, over: null }];
 let beatValues = Array.from({ length: analysis.beats.length }, () => ({ root: null, type: null, extension: null, over: null }));
 let isShiftDown = false;
 let isCommandDown = false;
@@ -171,9 +182,9 @@ const upload = async () => {
       {
          chords,
          description,
-         authorId: supabase.auth.user()?.id,
+         authorid: supabase.auth.user()?.id,
          spotifyId: trackDetails.id,
-         approvalStatus: "pending",
+         approvalstatus: "pending",
       },
    ]);
 
@@ -288,26 +299,21 @@ const upload = async () => {
 <copy use:shortcut="{{ control: true, code: 'KeyC', callback: copy }}"> </copy>
 <cut use:shortcut="{{ control: true, code: 'KeyX', callback: cut }}"> </cut>
 <paste use:shortcut="{{ control: true, code: 'KeyV', callback: paste }}"> </paste>
-
-<div class="grid basis-1/4 grid-cols-16 gap-2 ">
+<div class="grid basis-1/4 grid-cols-16 gap-0 ">
    {#each analysis.beats as beat, i}
       <div
-         class:mr-2="{(i + 1) % 4 == 0 && (i + 1) % 16 != 0}"
-         on:click="{() => (isCommandDown ? changeSpotifyPosition(beat.start, i) : beatClicked(i))}">
-         <div
-            id="{i}"
-            class:bg-purple-300="{i == currentBar}"
-            class:cursor-pointer="{isCommandDown}"
-            class="grid h-12 w-full place-items-center rounded bg-white/5  text-black  ring-black  focus:outline-none"
-            class:ring-1="{!selectedBeats.includes(i)}"
-            class:ring-2="{selectedBeats.includes(i)}"
-            class:bg-gray-200="{selectedBeats.includes(i) && i != currentBar}">
-            <p class="select-none">
-               {majorKeyNotes[0][beatValues[i].root] || ""}{beatValues[i].type || ""}{beatValues[i].extension || ""}{beatValues[i].over
-                  ? "/"
-                  : ""}{majorKeyNotes[0][beatValues[i].over] || "" || ""}
-            </p>
-         </div>
+         on:click="{() => (isCommandDown ? changeSpotifyPosition(beat.start, i) : beatClicked(i))}"
+         id="{i}"
+         class:border-r-4="{(i + 1) % 4 == 0 && (i + 1) % 16 != 0}"
+         class:bg-purple-500="{i == currentBar}"
+         class:text-white="{i == currentBar}"
+         class:cursor-pointer="{isCommandDown}"
+         class="grid h-12 w-full place-items-center border-black bg-white/5 bg-clip-padding  text-black  ring-1 ring-black focus:outline-none"
+         class:bg-gray-200="{selectedBeats.includes(i) && i != currentBar}"
+         class:border-2="{selectedBeats.includes(i)}">
+         <p class="select-none">
+            {contructChord(i, beatValues)}
+         </p>
       </div>
    {/each}
 </div>

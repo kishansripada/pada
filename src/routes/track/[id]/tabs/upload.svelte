@@ -31,9 +31,9 @@ const postFiles = async () => {
       {
          musicXml,
          description,
-         authorId: supabase.auth.user()?.id,
+         authorid: supabase.auth.user()?.id,
          spotifyId: trackDetails.id,
-         approvalStatus: "pending",
+         approvalstatus: "pending",
       },
    ]);
 

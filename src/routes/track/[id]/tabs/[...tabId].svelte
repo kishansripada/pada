@@ -29,7 +29,7 @@ $: tabs = supabase
    .from("tabs")
    .select("*")
    .eq("spotifyId", trackId)
-   .eq("approvalStatus", "approved")
+   .eq("approvalstatus", "approved")
    .then((r) => r.data);
 
 // every track will default to the first tab
@@ -65,7 +65,9 @@ $: (selected = 0), trackId;
 </svelte:head>
 
 {#await tabs}
-   <p>Loading...</p>
+   <div class="flex items-center justify-center pt-8">
+      <div class="h-16 w-16 animate-spin rounded-full border-b-2 border-gray-900"></div>
+   </div>
 {:then tabs}
    {#if tabs.length}
       <div class="mb-8">

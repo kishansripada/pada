@@ -39,7 +39,9 @@ onMount(async () => {
 </script>
 
 {#if loading}
-   Loading... this may take a while
+   <div class="mt-6 flex items-center justify-center">
+      <div class="h-16 w-16 animate-spin rounded-full border-b-2 border-gray-900"></div>
+   </div>
 {:else if tabbedSavedTracks.length}
    <div class="grid grid-cols-8 gap-3 text-[#091834] mt-6">
       {#each tabbedSavedTracks as track}

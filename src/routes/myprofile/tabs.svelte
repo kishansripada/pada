@@ -1,82 +1,99 @@
 <script>
-import { queryStore, gql } from "@urql/svelte";
-import { clientWithCookieSession } from "../../client.js";
-import Cookie from "js-cookie";
 import { goto } from "$app/navigation";
 import { page } from "$app/stores";
-const cookies = Cookie.get("fauna-session");
-const { email, secret } = cookies ? JSON.parse(cookies) : {};
-let client = clientWithCookieSession(secret);
+import { supabase } from "../../supabase.js";
+import warning from "../../static/warning.svg";
+import check from "../../static/check.svg";
+import rejected from "../../static/rejected.svg";
+import trash from "../../static/trash.svg";
 
-let cursor = null;
-$: findCurrentOwner = gql`
-   query ($email: String!) {
-      findUserByEmail(email: $email) {
-         tabs(_size: 8, _cursor: ${cursor}) {
-            data {
-               _id
-               description
-               approved
-               track {
-                  name
-                  artists
-                  spotifyId
-               }
-            }
-            before
-            after
-         }
-      }
+let offset = 0;
+let updater;
+$: myTabs = supabase
+   .from("tabs")
+   .select(
+      `
+      created_at,
+    id,
+    approvalstatus,
+    tracks (
+      name,
+      artists,
+      spotifyId
+    )
+  `
+   )
+   .eq("authorid", supabase.auth.user()?.id)
+   .order("created_at", { ascending: false })
+   .range(offset, offset + 11)
+   .then((r) => r.data);
+
+const deleteTab = async (id) => {
+   const { data, error } = await supabase.from("tabs").delete().eq("id", id);
+   if (data) {
+      toast.push("tab deleted!", {
+         theme: {
+            "--toastBackground": "#006400",
+            "--toastBarBackground": "#006400",
+            "--toastBorderRadius": "1rem",
+         },
+      });
    }
-`;
-
-$: myTabs = queryStore({ client, query: findCurrentOwner, variables: { email }, requestPolicy: "network-only" });
-
-$: console.log($myTabs);
+   myTabs = (await myTabs).filter((tab) => tab.id != id);
+   console.log(data);
+};
 </script>
 
 <div class="flex w-full flex-col">
    <div class="pl-3">
-      <h1 class=" pb-2 text-3xl font-light">my submitted tablatures 💯</h1>
+      <h1 class=" pb-2 text-3xl font-light">my submitted tablatures</h1>
       <hr class="pb-4" />
    </div>
 
-   {#if !$myTabs.loading}
-      {#if $myTabs?.data?.findUserByEmail?.tabs?.data}
-         {#if $myTabs.data.findUserByEmail.tabs.data.length}
-            {#each $myTabs.data.findUserByEmail.tabs.data as tab}
+   {#await myTabs}
+      <div class="flex items-center justify-center pt-8">
+         <div class="h-16 w-16 animate-spin rounded-full border-b-2 border-gray-900"></div>
+      </div>
+   {:then myTabs}
+      {#if myTabs?.length}
+         {#each myTabs as tab}
+            <div class=" flex flex-row items-center hover:bg-gray-100">
                <a
                   sveltekit:prefetch
-                  href="/track/{tab.track.spotifyId}/tabs/{tab._id}"
-                  class:pointer-events-none="{!tab.approved}"
-                  class=" flex h-16  flex-row items-center rounded  hover:bg-gray-100">
-                  <p class="pl-3 text-xl">{tab.approved ? "✅" : "🟠"}</p>
+                  href="/track/{tab.tracks.spotifyId}/tabs/{tab.id}"
+                  class:pointer-events-none="{['pending', 'rejected'].includes(tab.approvalstatus)}"
+                  class=" flex h-16  flex-row items-center rounded   grow">
+                  <img
+                     alt=""
+                     src="{tab.approvalstatus == 'approved' ? check : tab.approvalstatus == 'pending' ? warning : rejected}"
+                     class="pl-3 w-10" />
                   <div class="flex flex-col">
-                     <p class="pl-3">{tab.track.name}</p>
-                     <p class="pl-3 text-xs">{tab.track.artists.join(", ")}</p>
+                     <p class="pl-3">{tab.tracks.name}</p>
+                     <p class="pl-3 text-xs">{tab.tracks.artists.join(", ")}</p>
                   </div>
-                  <p class="ml-auto pl-3 pr-3 text-right text-xs">{tab.description}</p>
+                  <p class="ml-auto pl-3 pr-3 text-right text-xs">{tab.created_at}</p>
                </a>
-               <hr />
-            {/each}
-            <div class=" flex flex-row justify-center pt-8">
-               <button
-                  sveltekit:prefetch
-                  class:opacity-50="{!$myTabs.data.findUserByEmail.tabs.before}"
-                  class:pointer-events-none="{!$myTabs.data.findUserByEmail.tabs.before}"
-                  class="pl-2"
-                  on:click="{() => (cursor = `"${$myTabs.data.findUserByEmail.tabs.before}"`)}">⬅️ back</button>
-               <button
-                  class:opacity-50="{!$myTabs.data.findUserByEmail.tabs.after}"
-                  class:pointer-events-none="{!$myTabs.data.findUserByEmail.tabs.after}"
-                  class=" pl-2 "
-                  on:click="{() => (cursor = `"${$myTabs.data.findUserByEmail.tabs.after}"`)}">next ➡️</button>
+               <img on:click="{() => deleteTab(tab.id)}" class="w-6 mx-3 ml-auto shrink cursor-pointer" src="{trash}" alt="" />
             </div>
-         {:else}
-            <p class="flex flex-row justify-center text-3xl">you haven't submitted any tabs yet! 😞</p>
-         {/if}
+
+            <hr />
+         {/each}
+         <div class=" flex flex-row justify-center pt-8">
+            <button
+               sveltekit:prefetch
+               class:opacity-50="{offset == 0}"
+               class:pointer-events-none="{offset == 0}"
+               class="pl-2"
+               on:click="{() => (offset > 0 ? (offset = offset - 12) : null)}">⬅️ back</button>
+            <button
+               sveltekit:prefetch
+               class:opacity-50="{false}"
+               class:pointer-events-none="{false}"
+               class="pl-2"
+               on:click="{() => (offset = offset + 12)}">next ➡️</button>
+         </div>
+      {:else}
+         <p class="flex flex-row justify-center text-3xl">you haven't submitted any tabs yet! 😞</p>
       {/if}
-   {:else}
-      loading...
-   {/if}
+   {/await}
 </div>

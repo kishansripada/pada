@@ -11,9 +11,9 @@ export let selected = 0;
 // if the page is accessed with a specified tabId, then find that in the approved tracks and set it to the currently selected tab
 onMount(() => {
    let index =
-      approvedTabsOrChords.findIndex((tab) => tab._id == $page.params.tabId) == -1
+      approvedTabsOrChords.findIndex((tab) => tab.id == $page.params.tabId) == -1
          ? 0
-         : approvedTabsOrChords.findIndex((tab) => tab._id == $page.params.tabId);
+         : approvedTabsOrChords.findIndex((tab) => tab.id == $page.params.tabId);
    if ($page.params.tabId) {
       selected = index;
    } else {

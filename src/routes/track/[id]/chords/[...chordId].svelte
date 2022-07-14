@@ -8,7 +8,7 @@ export async function load({ stuff }) {
 export let trackDetails;
 import Info from "$lib/Info.svelte";
 import ColorSplotch from "$lib/ColorSplotch.svelte";
-import { spotifyPosition, chordPosition } from "../../../../store.js";
+import { spotifyPosition, chordPosition, currentlyPlaying } from "../../../../store.js";
 import { user } from "../.././../../store.js";
 import { supabase } from "../../../../supabase.js";
 import { page } from "$app/stores";
@@ -56,7 +56,7 @@ $: chords = supabase
    .from("chords")
    .select("*")
    .eq("spotifyId", trackId)
-   .eq("approvalStatus", "approved")
+   .eq("approvalstatus", "approved")
    .then((r) => r.data);
 
 // every track will default to the first tab
@@ -98,6 +98,8 @@ let currentBar = 0;
 // given the spotify position, calculate the current bar of rthe song
 $: (async () => {
    if (!(await chords)?.length) return;
+   // if the currently playing song is different than the song being viewed, don't display synced chords
+   if ($currentlyPlaying?.id != $page.params.id) return -1;
    currentBar = (await chords)[selected].chords.findIndex((beat) => {
       return $spotifyPosition / 1000 < beat.start + beat.duration;
    });
@@ -131,7 +133,9 @@ $: (async () => {
 </svelte:head>
 
 {#await chords}
-   <p>Loading...</p>
+   <div class="flex items-center justify-center mt-3">
+      <div class="h-16 w-16 animate-spin rounded-full border-b-2 border-gray-900"></div>
+   </div>
 {:then chords}
    {#if chords?.length}
       <div class="py-3">
@@ -202,21 +206,6 @@ $: (async () => {
             </div>
          {/each}
       </div>
-
-      <!-- {#each [...Array(Math.ceil(chords[selected].chords.length / 16))].map((_, i) => chords[selected].chords.slice(i * 16, i * 16 + 16)) as chunk, i}
-         <div class="flex flex-row pb-2">
-            {#each chunk as beat, j}
-               <div
-                  on:click="{() => changeSpotifyPosition(beat.start, (i + 1) * 16 + (j + 1) - 17)}"
-                  class:mr-3="{(j + 1) % 4 == 0 && (j + 1) % 16 != 0}"
-                  class:bg-gray-400="{(i + 1) * 16 + (j + 1) - 16 == currentBar + 1}"
-                  id="{(i + 1) * 16 + (j + 1) - 17}"
-                  class="grid h-12 w-full place-items-center rounded bg-white/5 ring-1 ring-black text-black ml-3 focus:outline-none cursor-pointer">
-                  <p class="select-none">{Object.values(beat.chord || { "": "" }).join("")}</p>
-               </div>
-            {/each}
-         </div>
-      {/each} -->
    {:else}
       <div class="flex flex-row justify-center pt-8">
          <div class="flex flex-col items-center">

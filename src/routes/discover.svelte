@@ -5,22 +5,20 @@ import { page } from "$app/stores";
 import { supabase } from "../supabase.js";
 import { onMount } from "svelte";
 import ColorSplotch from "$lib/ColorSplotch.svelte";
-import A from "./track/[id]/tabs/[...tabId].svelte";
-import Approvalqueue from "./approvalqueue.svelte";
 import Chords from "./myprofile/chords.svelte";
 import Flat from "../lib/Tabs/Flat.svelte";
 
 let tabbedTracks = supabase
    .from("tracks")
-   .select("name, tabs!inner( approvalStatus ), spotifyId")
-   .filter("tabs.approvalStatus", "eq", "approved")
+   .select("name, tabs!inner( approvalstatus ), spotifyId")
+   .filter("tabs.approvalstatus", "eq", "approved")
    .range(0, 50)
    .then((r) => r.data);
 
 let chordedTracks = supabase
    .from("tracks")
-   .select("name, chords!inner( approvalStatus ), spotifyId")
-   .filter("chords.approvalStatus", "eq", "approved")
+   .select("name, chords!inner( approvalstatus ), spotifyId")
+   .filter("chords.approvalstatus", "eq", "approved")
    .range(0, 50)
    .then((r) => r.data);
 
