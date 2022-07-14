@@ -29,7 +29,7 @@ export let minorKeys = {
 }
 
 export let majorKeyNotes = {
-    0: ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"], //C
+    0: ["C", "C#", "D", "E♭", "E", "F", "F#", "G", "Ab", "A", "B♭", "B"], //C
     1: [], //D♭
     2: [], //D
     3: [], //E♭

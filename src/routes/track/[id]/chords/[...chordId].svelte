@@ -232,11 +232,11 @@ $: (async () => {
       <div class="pointer-events-none">
          <div transition:fade|local>
             <ColorSplotch stylePosition="top: 700px; right: 0px; opacity: 0.5;" color="{colors[0]}" />
-            <ColorSplotch stylePosition="top: 700px; left: 0px; transform: rotate(180deg);opacity: 0.5" color="{colors[1]}" />
+            <!-- <ColorSplotch stylePosition="top: 700px; left: 0px; transform: rotate(180deg);opacity: 0.5" color="{colors[1]}" /> -->
             <!-- <ColorSplotch stylePosition="top: 1000px; left: 200px; transform: rotate(-90deg);opacity: 0.5" color="{colors[2]}" /> -->
          </div>
 
-         <!-- <div class=" absolute right-0 top-[1000px] h-[500px] w-[1000px] overflow-hidden">
+         <div class=" absolute right-0 top-[1000px] h-[500px] w-[1000px] overflow-hidden">
             <div
                class=" w-full"
                style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, {colors[0]} 0%, rgba(239, 255, 250, 0) 100%);
@@ -249,7 +249,7 @@ $: (async () => {
        z-index: -50;
        opacity: 0.3;">
             </div>
-         </div> -->
+         </div>
 
          <div class=" absolute top-[700px] h-[500px] w-[1000px] overflow-hidden left-0">
             <div
