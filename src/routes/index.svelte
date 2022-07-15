@@ -4,8 +4,7 @@ import { onMount } from "svelte";
 import { fade } from "svelte/transition";
 import { browser } from "$app/env";
 import Typewriter from "svelte-typewriter";
-import exampleTab from "../static/exampleTab.png";
-import exampleTab1 from "../static/exampleTab1.png";
+import ExampleTab from "../lib/ExampleTab.svelte";
 import ColorSplotch from "$lib/ColorSplotch.svelte";
 import { goto } from "$app/navigation";
 import { majorKeyNotes } from "../musicTheory.js";
@@ -154,7 +153,7 @@ onMount(() => {
       <div class="pt-10">
          <a
             href="/signup"
-            class=" rounded-md bg-black px-3 py-2 text-white ring-2 ring-black transition duration-300 ease-in-out hover:bg-white hover:text-black">
+            class=" text-md rounded-full bg-purple-500 px-5 py-2 text-white transition duration-300 ease-in-out hover:bg-black hover:text-white">
             get started
          </a>
       </div>
@@ -240,83 +239,35 @@ onMount(() => {
    </div>
 </div>
 
-<!-- <div id="BANNER" class="relative h-[800px]">
-   <h1 class="flex flex-col items-center pt-6 text-center text-9xl font-extrabold">
-      <div class="">interactive.</div>
-
-      <p class="bg-gradient-to-r from-[#7928CA] to-[#FF0080] bg-clip-text  text-transparent">beautiful.</p>
-
-      <Typewriter loop cursor="{false}">
-         <p class="bg-gradient-to-r from-[#007CF0] to-[#00DFD8] bg-clip-text  text-transparent">tablatures</p>
-         <p class="bg-gradient-to-r from-[#007CF0] to-[#00DFD8] bg-clip-text  text-transparent">chords</p>
-      </Typewriter>
-   </h1>
-
-   <div class="absolute top-[475px] px-[10%] text-center text-[20px] font-light text-[#666666]">
-      bop tabs leverages modern technology to enchance the antiquated way of learning music, making it more accessible and enjoyable to learn.
-      <div class="pt-10">
-         <a
-            href="/signup"
-            class=" rounded-md bg-black px-3 py-2 text-white ring-2 ring-black transition duration-300 ease-in-out hover:bg-white hover:text-black">
-            get started
-         </a>
-      </div>
-   </div>
-</div> -->
-
 <div class="pointer-events-none absolute top-[650px] left-0 z-0 h-[1200px] w-full overflow-hidden">
    <div class="absolute left-[-200px] top-[200px] z-0 h-[800px] w-[2000px] rotate-[-8deg] bg-[#190027]"></div>
 </div>
 
 <div class="pointer-events-none absolute top-[10000px] left-0 h-10 w-10"></div>
-<!-- [#45006A] -->
-<!-- <div class="whitespace-nowrap">
-   <p class=" absolute top-0 bg-gradient-to-r from-pink-600 to-purple-400 bg-clip-text text-7xl font-extrabold text-transparent" style="left: 0px;">
-      Don't Guess
-   </p>
-   <p
-      class="absolute top-[75px] bg-gradient-to-r from-pink-600 to-purple-400 bg-clip-text pb-5  text-7xl font-extrabold text-transparent"
-      style="left:0px;">
-      The Rhythm
-   </p>
-   <p
-      class=" absolute bg-gradient-to-r from-pink-600 to-purple-400 bg-clip-text text-7xl font-extrabold text-transparent"
-      style="
-      top: 150px;">
-      Feel It.
-   </p>
-</div> -->
-<!-- <div id="TABS SECTION" class="relative h-[750px] ">
-   <div class="whitespace-nowrap">
-      <p
-         class=" absolute top-0 bg-gradient-to-r from-pink-600 to-purple-400 bg-clip-text text-7xl font-extrabold text-transparent"
-         style="left: 0px;">
-         Don't Guess
-      </p>
-      <p
-         class="absolute top-[75px] bg-gradient-to-r from-pink-600 to-purple-400 bg-clip-text pb-5  text-7xl font-extrabold text-transparent"
-         style="left:0px;">
-         The Rhythm
-      </p>
-      <p
-         class=" absolute bg-gradient-to-r from-pink-600 to-purple-400 bg-clip-text text-7xl font-extrabold text-transparent"
-         style="
-         top: 150px;">
-         Feel It.
-      </p>
-   </div> -->
 
-<!-- <div class="absolute top-[250px] w-96 text-xl">
-      <p>
-         Bop Tabs never displays static tabs. Listen to all your dynamic, <span
-            class="  bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text font-bold text-transparent">interactive</span> tablatures to get a sense of
-         the rhythm
-      </p>
-   </div>
-   {#if browser}
-      <div class="absolute right-[0] top-[50px] -z-50">
-         <Flat xml="{homePageMusicXml}" style="height:300px; width: 700px" />
+<div class="absolute left-0 z-[-10] h-[900px] w-full bg-blue-50"></div>
+
+<div class="mt-[400px] flex flex-col md:flex-row">
+   <div class="flex w-1/3 flex-col justify-center">
+      <div>
+         <p class="z-50 text-5xl">playback ALL your guitar tabs</p>
+         <p class="z-50 mt-4 text-3xl text-blue-700">never guess the rhythm again</p>
+
+         <p class="z-50 mt-9 text-[#190027]">
+            bop tabs enables simple, elegant chord viewing coupled with an incredible chord writing experience. simply select the chord you wish to
+            edit and contruct it from the ground up
+         </p>
       </div>
-   {/if} -->
+      <a
+         href="/track/34gCuhDGsG4bRPIf9bb02f/chords"
+         class="mt-16 mr-auto ml-auto cursor-pointer rounded-full bg-blue-300 py-1 px-3 font-semibold text-black transition duration-300 ease-in-out hover:bg-white">
+         see an example
+      </a>
+   </div>
+   <div class="w-2/3">
+      <ExampleTab />
+   </div>
+</div>
+
 <style>
 </style>

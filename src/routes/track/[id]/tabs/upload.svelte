@@ -60,23 +60,26 @@ const postFiles = async () => {
 };
 </script>
 
-<div class="flex flex-row justify-center">
-   <div class="flex h-80 w-1/3 flex-col items-center rounded-[20px] bg-white/10 text-[#091834] ">
-      <p class="pt-3 text-xl">upload a musicxml file</p>
-
+<div class="flex flex-col ">
+   <p class="ml-auto mr-auto text-xl font-semibold text-purple-600">upload a musicxml file</p>
+   <div class="flex flex-row items-center text-[#091834] ">
       <div class="mb-3 w-96 pt-4">
-         <input class=" mx-4  rounded bg-transparent ring-2 ring-black focus:outline-none" type="file" accept=".xml" bind:files />
+         <input
+            type="file"
+            class="block w-full cursor-pointer text-sm
+            text-slate-500 file:mr-4 file:rounded-full
+            file:border-0 file:bg-violet-50
+            file:py-2 file:px-4
+            file:text-sm file:font-semibold
+            file:text-violet-700
+            hover:file:bg-violet-100
+          " />
       </div>
-
-      <div class="pt-2">
-         <textarea
-            class="resize-none rounded bg-transparent px-2 py-1 ring-2 ring-black placeholder:text-black/50 focus:outline-none"
-            placeholder="Description..."
-            cols="30"
-            rows="3"
-            bind:value="{description}"></textarea>
-      </div>
-
-      <button on:click="{postFiles}" class=" mt-10 mb-4 w-48  rounded bg-[#091834] py-1 text-white"> upload ☝️</button>
+      <textarea
+         class="mt-2 w-full resize-none rounded bg-transparent px-2 py-1 ring-2 ring-[#190027] placeholder:text-black/50 focus:outline-none"
+         placeholder="Description..."
+         rows="1"
+         bind:value="{description}"></textarea>
    </div>
+   <button on:click="{postFiles}" class=" mt-5 mb-4 ml-auto  mr-auto w-48 rounded bg-[#190027] py-1 text-white"> upload</button>
 </div>

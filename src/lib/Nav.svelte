@@ -54,7 +54,7 @@ const logout = async () => {
             >log in <span class="text-xl spinning">👋</span></a>
          <a
             href="/signup"
-            class="transition duration-300 ease-in-out ring-2 ring-black py-2 px-3 ml-1 rounded-md hover:text-gray-500 text-white bg-black hover:bg-white">
+            class=" text-md rounded-full bg-purple-500 px-4 py-1 text-white transition duration-300 ease-in-out hover:bg-black hover:text-white">
             sign up
          </a>
       {/if}
