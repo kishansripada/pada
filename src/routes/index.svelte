@@ -103,10 +103,12 @@ onMount(() => {
 <svelte:window bind:scrollY="{scrollPosition}" />
 
 <ColorSplotch stylePosition="top: -250px; right: 0px;" color="#F5CDFF" />
+<!-- <ColorSplotch stylePosition="top: 1300px; right: 0px;" color="#F5CDFF" /> -->
 <ColorSplotch stylePosition="top: -250px; left: 0px; transform: rotate(180deg)" color="#ADD8E6" />
+<!-- <ColorSplotch stylePosition="top: 1500px; left: 0px; transform: rotate(180deg); z-index:0" color="#ADD8E6" /> -->
 <!-- <ColorSplotch stylePosition="top: 600px; left: 0px; transform: rotate(180deg)" color="#1DB954" /> -->
 
-<div class=" absolute top-24 h-[500px] w-[1000px] overflow-hidden">
+<div class=" pointer-events-none absolute top-24 h-[500px] w-[1000px] overflow-hidden">
    <div
       class=" w-full"
       style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, #6a0dad 0%, rgba(239, 255, 250, 0) 100%);
@@ -121,7 +123,7 @@ onMount(() => {
    </div>
 </div>
 
-<div class=" absolute right-0 top-0 h-[500px] w-[1000px] overflow-hidden">
+<div class=" pointer-events-none absolute right-0 top-0 h-[500px] w-[1000px] overflow-hidden">
    <div
       class=" w-full"
       style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, #6495ED 0%, rgba(239, 255, 250, 0) 100%);
@@ -133,6 +135,36 @@ onMount(() => {
  right: 0px;
  z-index: -50;
  opacity: 0.3;">
+   </div>
+</div>
+
+<div class=" pointer-events-none absolute right-0 top-[1700px] h-[500px] w-[1000px] overflow-hidden">
+   <div
+      class=" w-full"
+      style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, #6a0dad 0%, rgba(239, 255, 250, 0) 100%);
+ background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, #6a0dad 0%, rgba(239, 255, 250, 0) 100%);
+ position: absolute;
+ height: 100%;
+ width: 100%;
+ top: 0px;
+ right: 0px;
+ z-index: -50;
+ opacity: 0.2;">
+   </div>
+</div>
+
+<div class=" pointer-events-none absolute right-0 top-[2000px] h-[500px] w-[1000px] overflow-hidden">
+   <div
+      class=" w-full"
+      style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, #6495ED 0%, rgba(239, 255, 250, 0) 100%);
+ background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, #6495ED 0%, rgba(239, 255, 250, 0) 100%);
+ position: absolute;
+ height: 100%;
+ width: 100%;
+ top: 0px;
+ right: 0px;
+ z-index: -50;
+ opacity: 0.2;">
    </div>
 </div>
 
@@ -243,10 +275,6 @@ onMount(() => {
    <div class="absolute left-[-200px] top-[200px] z-0 h-[800px] w-[2000px] rotate-[-8deg] bg-[#190027]"></div>
 </div>
 
-<div class="pointer-events-none absolute top-[10000px] left-0 h-10 w-10"></div>
-
-<div class="absolute left-0 z-[-10] h-[900px] w-full bg-blue-50"></div>
-
 <div class="mt-[400px] flex flex-col md:flex-row">
    <div class="flex w-1/3 flex-col justify-center">
       <div>
@@ -254,8 +282,9 @@ onMount(() => {
          <p class="z-50 mt-4 text-3xl text-blue-700">never guess the rhythm again</p>
 
          <p class="z-50 mt-9 text-[#190027]">
-            bop tabs enables simple, elegant chord viewing coupled with an incredible chord writing experience. simply select the chord you wish to
-            edit and contruct it from the ground up
+            bop tabs allows users to upload a unversally accepted <span class="font-semibold text-blue-600">MusicXML</span> file, which enables
+            <span class="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text  font-semibold text-transparent">live playback</span>
+            for every tab on the platform. don't try to guess the rhythm, just hear it.
          </p>
       </div>
       <a
@@ -266,6 +295,32 @@ onMount(() => {
    </div>
    <div class="w-2/3">
       <ExampleTab />
+   </div>
+</div>
+
+<div class="absolute left-0 z-[-10] mt-48 h-[600px] w-full  bg-slate-100"></div>
+
+<div class="mt-[325px] flex flex-col md:flex-row">
+   <div class="flex flex-col items-center justify-center">
+      <p class="z-50 text-5xl">it's easy! let's get started.</p>
+      <div class="mt-16 flex flex-row items-center">
+         <p class="text-wrap z-50 w-1/2 text-center text-3xl text-green-700">sign up with Spotify and start playing and listening</p>
+         <p class="mx-8 text-3xl">OR</p>
+         <p class="z-50  w-1/2 text-center text-3xl text-blue-700">join bop tabs and start uploading tabs</p>
+      </div>
+      <div class="mt-16 mb-16 flex flex-row items-center justify-around">
+         <a
+            href="/track/34gCuhDGsG4bRPIf9bb02f/chords"
+            class="mt-16 mr-96 cursor-pointer rounded-full bg-blue-300 py-1 px-3 font-semibold text-black transition duration-300 ease-in-out hover:bg-white">
+            sign up!
+         </a>
+         <div></div>
+         <a
+            href="/track/34gCuhDGsG4bRPIf9bb02f/chords"
+            class="mt-16 cursor-pointer rounded-full bg-blue-300 py-1 px-3 font-semibold text-black transition duration-300 ease-in-out hover:bg-white">
+            connect to spotify
+         </a>
+      </div>
    </div>
 </div>
 

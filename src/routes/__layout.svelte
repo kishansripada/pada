@@ -44,9 +44,9 @@ supabase.auth.onAuthStateChange((_, session) => {
       </div>
    </div>
 
-   <!-- <div class="">
+   <div class="">
       <Footer />
-   </div> -->
+   </div>
 </div>
 
 <style>

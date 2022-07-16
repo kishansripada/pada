@@ -1,33 +1,39 @@
 <script>
-import { browser } from "$app/env";
-// import open from "../../opensheetmusicdisplay.min.js"
+import play from "../../static/play.svg";
+import pause from "../../static/pause.svg";
+import { logIn } from "../../store";
 export let xml;
 export let style;
 let container;
-let embed;
 
-// function loadFlat() {
-//    embed = new Flat.Embed(container, {
-//       embedParams: {
-//          appId: "5fe56705315dc443c12fb489",
-//          controlsPosition: "bottom",
-//       },
-//    });
-// }
-
-// $: if (embed && browser) {
-//    embed.loadMusicXML(xml);
-// }
+let isPlaying = false;
+let osmd;
+let playbackManager;
+let timingSource;
 async function loadTabs() {
-   var osmd = new opensheetmusicdisplay.OpenSheetMusicDisplay(container);
+   osmd = new opensheetmusicdisplay.OpenSheetMusicDisplay(container);
    osmd.setOptions({
       autoResize: true,
       backend: "svg",
       drawTitle: false,
       drawComposer: false,
+      performanceMode: "performanceMode",
+      pageFormat: "A4 P",
+      cursorsOptions: [{ type: 0, color: "#CBC3E3", alpha: 0.6, follow: true }],
    });
-   osmd.load(xml).then(function () {
+
+   osmd.load(xml).then(() => {
       osmd.render();
+      timingSource = new opensheetmusicdisplay.LinearTimingSource();
+      playbackManager = new opensheetmusicdisplay.PlaybackManager(timingSource, undefined, new opensheetmusicdisplay.BasicAudioPlayer(), undefined);
+      playbackManager.DoPlayback = true;
+      playbackManager.DoPreCount = false;
+      playbackManager.PreCountMeasures = 1; // note that DoPreCount has to be true for a precount to happen
+      timingSource.Settings = osmd.Sheet.playbackSettings;
+      playbackManager.initialize(osmd.Sheet.musicPartManager);
+      playbackManager.addListener(osmd.cursor);
+      playbackManager.reset();
+      osmd.PlaybackManager = playbackManager;
    });
 }
 </script>
@@ -37,9 +43,15 @@ async function loadTabs() {
 
    <script src="/src/opensheetmusicdisplay.min.js" on:load="{loadTabs}"></script>
 </svelte:head>
+<img
+   src="{isPlaying ? pause : play}"
+   alt=""
+   class="cursor-pointer"
+   on:click="{() =>
+      isPlaying ? osmd.PlaybackManager.pause().then(() => (isPlaying = false)) : osmd.PlaybackManager.play().then(() => (isPlaying = true))}" />
+
+<button on:click="{() => osmd.PlaybackManager.setPlaybackStart()}">reset</button>
 
 <div class="z-[-50]">
-   <!-- {#if browser} -->
-   <div id="container" style="{style};" bind:this="{container}"></div>
-   <!-- {/if} -->
+   <div id="container" style="{style}; height: 100%" bind:this="{container}"></div>
 </div>
