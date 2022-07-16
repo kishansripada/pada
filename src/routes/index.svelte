@@ -15,7 +15,7 @@ const contructChord = (beat) => {
    let root = majorKeyNotes[0][beat.root];
    let type = beat.type == "maj" ? "" : !beat.type ? "" : beat.type;
    let extension = beat.extension || "";
-   if (!beat.over) return root + type + extension;
+   if (beat.over == null) return root + type + extension;
    let over = majorKeyNotes[0][beat.over];
    return root + type + extension + "/" + over;
 };
@@ -168,6 +168,11 @@ onMount(() => {
    </div>
 </div>
 
+<!-- background stuff -->
+<div class="pointer-events-none absolute top-[700px] z-0 h-[2000px] w-full overflow-hidden">
+   <div class="relative left-[-100px] z-0 mt-[200px] h-[750px] w-[120%] rotate-[-8deg] bg-[#190027]"></div>
+</div>
+
 <div id="BANNER" class="relative h-[800px]">
    <h1 class="flex flex-col items-center pt-6 text-center text-7xl font-extrabold md:text-8xl lg:text-9xl">
       <div class="">interactive.</div>
@@ -180,8 +185,10 @@ onMount(() => {
       </Typewriter>
    </h1>
 
-   <div class="absolute top-[475px] px-[10%] text-center text-[20px] font-light text-[#666666]">
-      bop tabs leverages modern technology to enchance the antiquated way of learning music, making it more accessible and enjoyable to learn.
+   <div class="absolute top-[475px] flex w-full flex-col  items-center text-center text-[20px] font-light text-[#666666]">
+      <p class="max-w-[1200px] px-[10%]">
+         bop tabs leverages modern technology to enchance the antiquated way of learning music, making it more accessible and enjoyable to learn.
+      </p>
       <div class="pt-10">
          <a
             href="/signup"
@@ -192,9 +199,9 @@ onMount(() => {
    </div>
 </div>
 
-<div class="relative z-50 mt-44 text-white">
-   <div class="flex flex-row justify-between">
-      <div class="flex w-1/2 flex-col justify-center">
+<div class="container relative z-50 mt-24 text-white lg:mt-44">
+   <div class="flex flex-col items-center justify-between lg:flex-row">
+      <div class="flex flex-col justify-center lg:w-1/2">
          <div>
             <p class="z-50 text-5xl">interactive, modern chord charts</p>
             <p class="z-50 mt-4 text-3xl text-purple-300">all synced to Spotify</p>
@@ -211,7 +218,7 @@ onMount(() => {
          </a>
       </div>
 
-      <div class="ml-24  flex w-1/2 grow flex-col">
+      <div class="flex grow flex-col lg:ml-24 lg:w-1/2">
          <div class="mb-10 flex flex-row items-center justify-center">
             <div class="flex flex-col items-center">
                <select class="mx-2 h-10 w-24 rounded text-black ring-1 ring-black focus:outline-none" bind:value="{beatValues[selectedBeat].root}">
@@ -271,11 +278,7 @@ onMount(() => {
    </div>
 </div>
 
-<div class="pointer-events-none absolute top-[650px] left-0 z-0 h-[1200px] w-full overflow-hidden">
-   <div class="absolute left-[-200px] top-[200px] z-0 h-[800px] w-[2000px] rotate-[-8deg] bg-[#190027]"></div>
-</div>
-
-<div class="mt-[400px] flex flex-col md:flex-row">
+<div class="container mt-[400px] mb-[200px] flex flex-col lg:flex-row">
    <div class="flex w-1/3 flex-col justify-center">
       <div>
          <p class="z-50 text-5xl">playback ALL your guitar tabs</p>
@@ -298,28 +301,28 @@ onMount(() => {
    </div>
 </div>
 
-<div class="absolute left-0 z-[-10] mt-48 h-[600px] w-full  bg-slate-100"></div>
-
-<div class="mt-[325px] flex flex-col md:flex-row">
-   <div class="flex flex-col items-center justify-center">
-      <p class="z-50 text-5xl">it's easy! let's get started.</p>
-      <div class="mt-16 flex flex-row items-center">
-         <p class="text-wrap z-50 w-1/2 text-center text-3xl text-green-700">sign up with Spotify and start playing and listening</p>
-         <p class="mx-8 text-3xl">OR</p>
-         <p class="z-50  w-1/2 text-center text-3xl text-blue-700">join bop tabs and start uploading tabs</p>
-      </div>
-      <div class="mt-16 mb-16 flex flex-row items-center justify-around">
-         <a
-            href="/track/34gCuhDGsG4bRPIf9bb02f/chords"
-            class="mt-16 mr-96 cursor-pointer rounded-full bg-blue-300 py-1 px-3 font-semibold text-black transition duration-300 ease-in-out hover:bg-white">
-            sign up!
-         </a>
-         <div></div>
-         <a
-            href="/track/34gCuhDGsG4bRPIf9bb02f/chords"
-            class="mt-16 cursor-pointer rounded-full bg-blue-300 py-1 px-3 font-semibold text-black transition duration-300 ease-in-out hover:bg-white">
-            connect to spotify
-         </a>
+<div class=" z-[-10]  flex h-[600px] w-full flex-col justify-center bg-slate-100">
+   <div class="container  flex flex-col md:flex-row ">
+      <div class="flex flex-col items-center justify-center">
+         <p class="z-50 text-5xl">it's easy! let's get started.</p>
+         <div class="mt-16 flex flex-row items-center">
+            <p class="text-wrap z-50 w-1/2 text-center text-3xl text-green-700">sign up with Spotify and start playing and listening</p>
+            <p class="mx-8 text-3xl">OR</p>
+            <p class="z-50  w-1/2 text-center text-3xl text-blue-700">join bop tabs and start uploading tabs</p>
+         </div>
+         <div class="mt-16 mb-16 flex flex-row items-center justify-around">
+            <a
+               href="/track/34gCuhDGsG4bRPIf9bb02f/chords"
+               class="mt-16 mr-96 cursor-pointer rounded-full bg-blue-300 py-1 px-3 font-semibold text-black transition duration-300 ease-in-out hover:bg-white">
+               sign up!
+            </a>
+            <div></div>
+            <a
+               href="/track/34gCuhDGsG4bRPIf9bb02f/chords"
+               class="mt-16 cursor-pointer rounded-full bg-blue-300 py-1 px-3 font-semibold text-black transition duration-300 ease-in-out hover:bg-white">
+               connect to spotify
+            </a>
+         </div>
       </div>
    </div>
 </div>

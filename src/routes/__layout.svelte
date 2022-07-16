@@ -38,9 +38,9 @@ supabase.auth.onAuthStateChange((_, session) => {
       {/if}
 
       <div class="overflow-hidden ">
-         <main class="container ">
-            <slot />
-         </main>
+         <!-- <main class="container ">
+         </main> -->
+         <slot />
       </div>
    </div>
 

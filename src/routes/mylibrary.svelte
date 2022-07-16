@@ -38,18 +38,20 @@ onMount(async () => {
 });
 </script>
 
-{#if loading}
-   <div class="mt-6 flex items-center justify-center">
-      <div class="h-16 w-16 animate-spin rounded-full border-b-2 border-gray-900"></div>
-   </div>
-{:else if tabbedSavedTracks.length}
-   <div class="grid grid-cols-8 gap-3 text-[#091834] mt-6">
-      {#each tabbedSavedTracks as track}
-         <a href="{`/track/${track.track.id}/tabs`}" class="hover:scale-[1.1] transition ease-in-out duration-300">
-            <img class="h-36 w-36 rounded-xl" src="{track.track.album.images[0].url}" alt="" />
-         </a>
-      {/each}
-   </div>
-{:else}
-   Seems like your library doesn't have any saved tracks that we tabbed!
-{/if}
+<main class="container ">
+   {#if loading}
+      <div class="mt-6 flex items-center justify-center">
+         <div class="h-16 w-16 animate-spin rounded-full border-b-2 border-gray-900"></div>
+      </div>
+   {:else if tabbedSavedTracks.length}
+      <div class="grid grid-cols-8 gap-3 text-[#091834] mt-6">
+         {#each tabbedSavedTracks as track}
+            <a href="{`/track/${track.track.id}/tabs`}" class="hover:scale-[1.1] transition ease-in-out duration-300">
+               <img class="h-36 w-36 rounded-xl" src="{track.track.album.images[0].url}" alt="" />
+            </a>
+         {/each}
+      </div>
+   {:else}
+      Seems like your library doesn't have any saved tracks that we tabbed!
+   {/if}
+</main>

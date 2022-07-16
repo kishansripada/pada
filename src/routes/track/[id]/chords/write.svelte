@@ -29,7 +29,7 @@ const contructChord = (i, beatValues) => {
    let root = majorKeyNotes[0][beat.root];
    let type = beat.type == "maj" ? "" : !beat.type ? "" : beat.type;
    let extension = beat.extension || "";
-   if (!beat.over) return root + type + extension;
+   if (beat.over == null) return root + type + extension;
    let over = majorKeyNotes[0][beat.over];
    return root + type + extension + "/" + over;
 };

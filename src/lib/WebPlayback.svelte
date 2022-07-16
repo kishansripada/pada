@@ -23,7 +23,7 @@ const formattedTime = (duration_ms) => {
 };
 
 function on_key_down(event) {
-   if ($isSearching) return;
+   if (document.activeElement.tagName != "BODY") return;
    if (event.repeat) return;
    if (event.code == "Space") {
       event.preventDefault();

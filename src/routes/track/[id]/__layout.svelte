@@ -64,11 +64,12 @@ $: playbackData.set(trackDetails);
       <!-- </div> -->
    {/await}
 {/if}
+<main class="container ">
+   <TrackDetails trackDetails="{trackDetails}" />
 
-<TrackDetails trackDetails="{trackDetails}" />
+   <div class="pb-4 pt-9">
+      <TabsChordsNav />
+   </div>
 
-<div class="pb-4 pt-9">
-   <TabsChordsNav />
-</div>
-
-<slot trackDetails="{trackDetails}" />
+   <slot trackDetails="{trackDetails}" />
+</main>

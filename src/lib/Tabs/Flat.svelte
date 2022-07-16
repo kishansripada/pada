@@ -1,6 +1,8 @@
 <script>
 import play from "../../static/play.svg";
 import pause from "../../static/pause.svg";
+import reset from "../../static/reset.svg";
+
 import { logIn } from "../../store";
 export let xml;
 export let style;
@@ -39,18 +41,26 @@ async function loadTabs() {
 </script>
 
 <svelte:head>
-   <!-- <script src="https://prod.flat-cdn.com/embed-js/v1.4.1/embed.min.js" on:load="{loadFlat}"></script> -->
-
-   <script src="/src/opensheetmusicdisplay.min.js" on:load="{loadTabs}"></script>
+   <script src="https://cdn.jsdelivr.net/gh/kishansripada/BopTabs/opensheetmusicdisplay.js" on:load="{loadTabs}"></script>
 </svelte:head>
-<img
-   src="{isPlaying ? pause : play}"
-   alt=""
-   class="cursor-pointer"
-   on:click="{() =>
-      isPlaying ? osmd.PlaybackManager.pause().then(() => (isPlaying = false)) : osmd.PlaybackManager.play().then(() => (isPlaying = true))}" />
 
-<button on:click="{() => osmd.PlaybackManager.setPlaybackStart()}">reset</button>
+<div class="flex w-full flex-row items-center justify-center">
+   <img
+      src="{reset}"
+      class="h-10 w-10 cursor-pointer"
+      alt=""
+      on:click="{() => {
+         osmd.PlaybackManager.setPlaybackStart();
+         osmd.PlaybackManager.pause();
+         isPlaying = false;
+      }}" />
+   <img
+      src="{isPlaying ? pause : play}"
+      alt=""
+      class="cursor-pointer"
+      on:click="{() =>
+         isPlaying ? osmd.PlaybackManager.pause().then(() => (isPlaying = false)) : osmd.PlaybackManager.play().then(() => (isPlaying = true))}" />
+</div>
 
 <div class="z-[-50]">
    <div id="container" style="{style}; height: 100%" bind:this="{container}"></div>
