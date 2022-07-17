@@ -3,7 +3,7 @@ import { supabase } from "../supabase.js";
 import { goto } from "$app/navigation";
 import { toast } from "@zerodevx/svelte-toast";
 
-let name;
+let full_name;
 let email;
 let password = "";
 let passwordCheck;
@@ -34,14 +34,15 @@ const signup = async () => {
    }
    if (user) {
       console.log(user);
-      toast.push("Check your email to finish signing up", {
-         theme: {
-            "--toastBackground": "#006400",
-            "--toastBarBackground": "#006400",
-            "--toastBorderRadius": "1rem",
+
+      const { data, profileError } = await supabase.from("profiles").insert([
+         {
+            user_id: user.id,
+            full_name,
          },
-      });
-      goto("/login");
+      ]);
+      console.log(data);
+      goto("/");
    }
 };
 </script>
@@ -55,8 +56,8 @@ const signup = async () => {
       <p class="">already have an account? <a class="text-blue-600" href="/login">log in</a></p>
 
       <div class="mr-auto flex flex-col items-center pt-10 pb-2">
-         <p class="font mr-auto pb-2">name</p>
-         <input type="text" bind:value="{name}" class="h-8 w-96 rounded bg-transparent px-2 ring-2 ring-black focus:outline-none" />
+         <p class="font mr-auto pb-2">full name</p>
+         <input type="text" bind:value="{full_name}" class="h-8 w-96 rounded bg-transparent px-2 ring-2 ring-black focus:outline-none" />
       </div>
 
       <div class="mr-auto flex flex-col items-center">

@@ -6,7 +6,6 @@ import { supabase } from "../supabase.js";
 import { onMount } from "svelte";
 import ColorSplotch from "$lib/ColorSplotch.svelte";
 import Chords from "./myprofile/chords.svelte";
-import Flat from "../lib/Tabs/Flat.svelte";
 
 let tabbedTracks = supabase
    .from("tracks")

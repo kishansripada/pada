@@ -73,7 +73,9 @@ const postFiles = async () => {
             file:text-sm file:font-semibold
             file:text-violet-700
             hover:file:bg-violet-100
-          " />
+          "
+            accept=".xml"
+            bind:files />
       </div>
       <textarea
          class="mt-2 w-full resize-none rounded bg-transparent px-2 py-1 ring-2 ring-[#190027] placeholder:text-black/50 focus:outline-none"

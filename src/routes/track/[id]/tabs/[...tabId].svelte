@@ -7,7 +7,7 @@ export async function load({ stuff }) {
 <script>
 export let trackDetails;
 import Info from "../../../../lib/Info.svelte";
-import Flat from "../../../../lib/Tabs/Flat.svelte";
+import OSMD from "../../../../lib/OSMD.svelte";
 import { page } from "$app/stores";
 import { user } from "../.././../../store.js";
 import { goto } from "$app/navigation";
@@ -37,6 +37,8 @@ let selected = 0;
 
 // if the trackId changes, then reset the current selected track to the first
 $: (selected = 0), trackId;
+
+$: console.log(tabs);
 </script>
 
 <svelte:head>
@@ -74,7 +76,7 @@ $: (selected = 0), trackId;
          <div class="py-3">
             <Info bind:selected approvedTabsOrChords="{tabs}" />
          </div>
-         <Flat style="height:500px" xml="{tabs[selected].musicXml}" />
+         <OSMD xml="{tabs[selected].musicXml}" />
       </div>
    {:else}
       <div class="flex flex-row justify-center pt-8 mb-8">

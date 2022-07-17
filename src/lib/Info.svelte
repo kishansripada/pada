@@ -20,10 +20,14 @@ onMount(() => {
       selected = 0;
    }
 });
+console.log(approvedTabsOrChords[selected].authorId);
 </script>
 
 <div class="z-40 flex h-24 flex-row rounded-[20px] bg-white/10 bg-gray-100 text-black">
-   <img class="h-24 w-24 rounded-[20px]" src="https://i.scdn.co/image/ab6775700000ee85769926cc29d872eaec8dc953" alt="" />
+   <img
+      class="h-24 w-24 rounded-full object-cover"
+      src="https://mofbpdxaxkjlvywcbpmj.supabase.co/storage/v1/object/public/profilepics/{approvedTabsOrChords[selected].authorid}/pfp.png"
+      alt="" />
 
    <div class="flex flex-col pl-3 pt-3">
       <!-- <p class="">{approvedTabsOrChords[selected].author.name}</p> -->

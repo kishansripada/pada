@@ -1,5 +1,4 @@
 <script>
-import Flat from "../lib/Tabs/Flat.svelte";
 import { onMount } from "svelte";
 import { fade } from "svelte/transition";
 import { browser } from "$app/env";
@@ -173,19 +172,20 @@ onMount(() => {
    <div class="relative left-[-100px] z-0 mt-[200px] h-[750px] w-[120%] rotate-[-8deg] bg-[#190027]"></div>
 </div>
 
-<div id="BANNER" class="relative h-[800px]">
-   <h1 class="flex flex-col items-center pt-6 text-center text-7xl font-extrabold md:text-8xl lg:text-9xl">
-      <div class="">interactive.</div>
+<div id="BANNER" class=" flex  flex-col items-center justify-center">
+   <h1 class="flex flex-col  pt-6 text-left text-7xl font-extrabold md:text-8xl lg:text-9xl">
+      <div class="">interactive <span class=" text-transparent">.</span></div>
 
-      <p class="bg-gradient-to-r from-[#7928CA] to-[#FF0080] bg-clip-text  text-transparent">beautiful.</p>
-
-      <Typewriter loop cursor="{false}">
-         <p class="bg-gradient-to-r from-[#007CF0] to-[#00DFD8] bg-clip-text  text-transparent">tablatures</p>
-         <p class="bg-gradient-to-r from-[#007CF0] to-[#00DFD8] bg-clip-text  text-transparent">chords</p>
-      </Typewriter>
+      <p class="">beautiful</p>
+      <div class="inline-flex">
+         <Typewriter loop cursor="{false}">
+            <p class="bg-gradient-to-r from-[#7928CA] to-[#FF0080] bg-clip-text  text-transparent">tablatures.</p>
+            <p class="bg-gradient-to-r from-[#007CF0] to-[#00DFD8] bg-clip-text  text-transparent">chords.</p>
+         </Typewriter> <span class="text-transparent"> .</span>
+      </div>
    </h1>
 
-   <div class="absolute top-[475px] flex w-full flex-col  items-center text-center text-[20px] font-light text-[#666666]">
+   <div class=" mt-20 flex w-full  flex-col items-center text-center text-[20px] font-light text-[#666666]">
       <p class="max-w-[1200px] px-[10%]">
          bop tabs leverages modern technology to enchance the antiquated way of learning music, making it more accessible and enjoyable to learn.
       </p>
@@ -199,7 +199,7 @@ onMount(() => {
    </div>
 </div>
 
-<div class="container relative z-50 mt-24 text-white lg:mt-44">
+<div class="container relative z-50 mt-24 text-white lg:mt-96">
    <div class="flex flex-col items-center justify-between lg:flex-row">
       <div class="flex flex-col justify-center lg:w-1/2">
          <div>

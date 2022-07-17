@@ -1,18 +1,26 @@
 <script>
-import play from "../../static/play.svg";
-import pause from "../../static/pause.svg";
-import reset from "../../static/reset.svg";
+import play from "../static/play.svg";
+import pause from "../static/pause.svg";
+import reset from "../static/reset.svg";
 
-import { logIn } from "../../store";
+import { logIn } from "../store";
+
 export let xml;
-export let style;
-let container;
 
+let container;
+let loaded = false;
 let isPlaying = false;
 let osmd;
 let playbackManager;
 let timingSource;
-async function loadTabs() {
+
+const loadedTrue = () => (loaded = true);
+
+$: if (loaded && xml) {
+   loadTabs(xml);
+}
+
+async function loadTabs(xml) {
    osmd = new opensheetmusicdisplay.OpenSheetMusicDisplay(container);
    osmd.setOptions({
       autoResize: true,
@@ -20,7 +28,7 @@ async function loadTabs() {
       drawTitle: false,
       drawComposer: false,
       performanceMode: "performanceMode",
-      pageFormat: "A4 P",
+      pageFormat: "endless",
       cursorsOptions: [{ type: 0, color: "#CBC3E3", alpha: 0.6, follow: true }],
    });
 
@@ -41,7 +49,8 @@ async function loadTabs() {
 </script>
 
 <svelte:head>
-   <script src="https://cdn.jsdelivr.net/gh/kishansripada/BopTabs/opensheetmusicdisplay.js" on:load="{loadTabs}"></script>
+   <script src="https://cdn.jsdelivr.net/gh/kishansripada/BopTabs/opensheetmusicdisplay.js" on:load="{loadedTrue}">
+   </script>
 </svelte:head>
 
 <div class="flex w-full flex-row items-center justify-center">
@@ -62,6 +71,4 @@ async function loadTabs() {
          isPlaying ? osmd.PlaybackManager.pause().then(() => (isPlaying = false)) : osmd.PlaybackManager.play().then(() => (isPlaying = true))}" />
 </div>
 
-<div class="z-[-50]">
-   <div id="container" style="{style}; height: 100%" bind:this="{container}"></div>
-</div>
+<div bind:this="{container}"></div>

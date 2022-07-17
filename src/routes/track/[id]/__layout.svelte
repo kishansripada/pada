@@ -44,11 +44,11 @@ function rgbToHex(r, g, b) {
 }
 
 let colors;
-$: if (browser) {
-   colors = prominent(trackDetails.album.images[0].url, { amount: 4 }).then((colors) => colors.map((color) => rgbToHex(...color)));
-}
 
-console.log(trackDetails);
+onMount(() => {
+   colors = prominent(trackDetails.album.images[0].url, { amount: 4 }).then((colors) => colors.map((color) => rgbToHex(...color)));
+});
+
 $: playbackData.set(trackDetails);
 </script>
 
