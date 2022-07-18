@@ -23,6 +23,8 @@ user.then((user) => {
 
 const changeName = async () => {
    isEditingName = false;
+   console.log({ full_name });
+   console.log({ full_name_original });
    if (full_name == full_name_original) return;
 
    const { data, error } = await supabase.from("profiles").update({ full_name }).eq("user_id", supabase.auth.user()?.id);
@@ -48,7 +50,11 @@ $: if (files) {
 }
 </script>
 
-{#await user then user}
+{#await user}
+   <div class="flex items-center justify-center pt-8">
+      <div class="h-16 w-16 animate-spin rounded-full border-b-2 border-gray-900"></div>
+   </div>
+{:then user}
    <div class="flex flex-col w-full">
       <div class=" justify-center items-center w-1/2">
          <label

@@ -7,6 +7,7 @@ import { onMount } from "svelte";
 import { search as spotifySearch } from "../spotify.js";
 import algoliasearch from "algoliasearch";
 import { supabase } from "../supabase.js";
+import { goto } from "$app/navigation";
 
 let searchInput;
 let query;
@@ -72,20 +73,30 @@ const debounce = (query) => {
       <hr />
       {#await algoliaresults then algoliaresults}
          {#each algoliaresults.hits as hit}
-            <a href="/track/{hit.path.split('/')[1]}/tabs" class="h-full grow flex flex-row items-center hover:bg-gray-100">
+            <div
+               on:click="{() => {
+                  goto(`/track/${hit.path.split('/')[1]}/tabs`);
+                  isSearching.set(false);
+               }}"
+               class="h-full grow flex flex-row items-center hover:bg-gray-100 cursor-pointer">
                <p class="pl-5">{hit.name}</p>
                <p class="pl-2  text-xs">{hit.artists.join(", ")}</p>
-            </a>
+            </div>
             <hr />
          {/each}
       {/await}
       {#if spotifySearchResults}
          {#await spotifySearchResults then spotifySearchResults}
             {#each spotifySearchResults as track}
-               <a sveltekit:prefetch href="/track/{track.id}/tabs" class="h-full grow flex flex-row items-center hover:bg-gray-100 bg-red-200/20">
+               <div
+                  on:click="{() => {
+                     goto(`/track/{track.id}/tabs`);
+                     isSearching.set(false);
+                  }}"
+                  class="h-full grow flex flex-row items-center hover:bg-gray-100 bg-red-200/20 cursor-pointer">
                   <p class="pl-5">{track.name}</p>
                   <p class="pl-2  text-xs">{track.artists.map((artist) => artist.name).join(", ")}</p>
-               </a>
+               </div>
                <hr />
             {/each}
          {/await}

@@ -3,7 +3,7 @@ import { goto } from "$app/navigation";
 import { page } from "$app/stores";
 </script>
 
-<div class="flex justify-center">
+<div class="z-50 flex justify-center">
    <a
       sveltekit:noscroll
       href="{`/track/${$page.params.id}/tabs`}"

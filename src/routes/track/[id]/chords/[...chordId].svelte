@@ -6,7 +6,6 @@ export async function load({ stuff }) {
 
 <script>
 export let trackDetails;
-import Info from "$lib/Info.svelte";
 import ColorSplotch from "$lib/ColorSplotch.svelte";
 import { spotifyPosition, chordPosition, currentlyPlaying, currentTabs, currentChords } from "../../../../store.js";
 import { user } from "../.././../../store.js";
@@ -15,7 +14,6 @@ import { page } from "$app/stores";
 import { goto } from "$app/navigation";
 import { browser } from "$app/env";
 import { prominent } from "color.js";
-import { fade } from "svelte/transition";
 import { majorKeyNotes } from "../../../../musicTheory.js";
 import plus from "../../../../static/plus.svg";
 import minus from "../../../../static/minus.svg";
@@ -143,6 +141,18 @@ $: (async () => {
 {:then chords}
    {#if chords?.length}
       <div class="flex flex-row mb-4 ">
+         <div class=" flex flex-col  pr-3 justify-center">
+            <select
+               bind:value="{selected}"
+               class=" form-select  mr-5 w-24 appearance-none rounded-xl border bg-white/5 bg-clip-padding px-2 py-1.5 text-center text-base font-normal text-[#091834] outline-none hover:bg-white/10">
+               {#each chords as version, index}
+                  <option value="{index}">
+                     version {index + 1}
+                  </option>
+               {/each}
+            </select>
+         </div>
+
          <div class="flex flex-row justify-between items-center mr-16">
             <button class="px-1 py-1 text-white cursor-pointer rounded-lg bg-[#190027]" on:click="{() => (transpose < 11 ? transpose++ : null)}">
                <svg class="h-8 w-8 fill-white" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -179,7 +189,7 @@ $: (async () => {
             </button>
          </div>
 
-         <div class="flex flex-col justify-end mb-6 items-center px-10">
+         <div class="flex flex-col justify-end mb-4 items-center px-10">
             <div>
                <label for="default-toggle" class="relative inline-flex cursor-pointer items-center">
                   <input type="checkbox" value="" id="default-toggle" class="peer sr-only" bind:checked="{autoScroll}" />
@@ -192,8 +202,16 @@ $: (async () => {
             <p class="text-gray-600 items-center justify-center">auto scroll</p>
          </div>
 
-         <div class="py-3 grow">
-            <Info bind:selected approvedTabsOrChords="{chords}" />
+         <div class="z-40 flex h-24  flex-row items-center r text-black ml-auto">
+            <img
+               class="h-16 w-16 rounded-full object-cover"
+               src="https://mofbpdxaxkjlvywcbpmj.supabase.co/storage/v1/object/public/profilepics/{chords[selected].authorid}/pfp.png"
+               alt="" />
+
+            <div class="flex flex-col pl-3 pt-3">
+               <p class="">Kishan Sripada</p>
+               <!-- <p class="mt-auto mb-4">{approvedTabsOrChords[selected].description}</p> -->
+            </div>
          </div>
       </div>
 
