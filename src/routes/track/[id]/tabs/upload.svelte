@@ -72,8 +72,7 @@ const postFiles = async () => {
             file:py-2 file:px-4
             file:text-sm file:font-semibold
             file:text-violet-700
-            hover:file:bg-violet-100
-          "
+            hover:file:bg-violet-100"
             accept=".xml"
             bind:files />
       </div>

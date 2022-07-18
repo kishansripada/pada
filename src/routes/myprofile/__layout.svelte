@@ -12,7 +12,7 @@ $: if (!$user && browser) {
 <main class="container ">
    <div class="mt-8 flex min-h-[500px] flex-row justify-between text-sm">
       <div
-         class="mr-36 flex min-w-[300px] flex-col  rounded-xl bg-gray-100 p-6  child:flex child:h-8 child:flex-row child:items-center child:rounded-lg child:py-4 child:pl-2 child-hover:bg-white/30">
+         class="mr-36 flex min-w-[200px] flex-col  rounded-xl bg-gray-100 p-6  child:flex child:h-8 child:flex-row child:items-center child:rounded-lg child:py-4 child:pl-2 child-hover:bg-white/30">
          <a class="{$page.url.pathname == '/myprofile/profilesettings' ? 'bg-white/30' : ''}" href="/myprofile/profilesettings">
             <span class="pr-2 text-xl grayscale"></span>profile settings</a>
          <a class="{$page.url.pathname == '/myprofile/tabs' ? 'bg-white/30' : ''}" href="/myprofile/tabs">

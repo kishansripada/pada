@@ -23,21 +23,21 @@ onMount(() => {
 console.log(approvedTabsOrChords[selected].authorId);
 </script>
 
-<div class="z-40 flex h-24 flex-row rounded-[20px] bg-white/10 bg-gray-100 text-black">
+<div class="z-40 flex h-24  flex-row items-center rounded-full bg-white/10 bg-gray-100 text-black">
    <img
       class="h-24 w-24 rounded-full object-cover"
       src="https://mofbpdxaxkjlvywcbpmj.supabase.co/storage/v1/object/public/profilepics/{approvedTabsOrChords[selected].authorid}/pfp.png"
       alt="" />
 
    <div class="flex flex-col pl-3 pt-3">
-      <!-- <p class="">{approvedTabsOrChords[selected].author.name}</p> -->
-      <p class="mt-auto mb-4">{approvedTabsOrChords[selected].description}</p>
+      <p class="">Kishan Sripada</p>
+      <!-- <p class="mt-auto mb-4">{approvedTabsOrChords[selected].description}</p> -->
    </div>
 
    <div class="ml-auto flex flex-col py-2 pr-3">
       <select
          bind:value="{selected}"
-         class=" form-select mt-auto ml-auto w-24 appearance-none rounded-xl border bg-white/5 bg-clip-padding px-2 py-1.5 text-center text-base font-normal text-[#091834] outline-none hover:bg-white/10">
+         class=" form-select mt-auto ml-auto mr-5 w-24 appearance-none rounded-xl border bg-white/5 bg-clip-padding px-2 py-1.5 text-center text-base font-normal text-[#091834] outline-none hover:bg-white/10">
          {#each approvedTabsOrChords as version, index}
             <option value="{index}">
                version {index + 1}

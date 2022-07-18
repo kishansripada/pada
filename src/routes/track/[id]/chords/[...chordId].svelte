@@ -142,9 +142,6 @@ $: (async () => {
    </div>
 {:then chords}
    {#if chords?.length}
-      <div class="py-3">
-         <Info bind:selected approvedTabsOrChords="{chords}" />
-      </div>
       <div class="flex flex-row mb-4 ">
          <div class="flex flex-row justify-between items-center mr-16">
             <button class="px-1 py-1 text-white cursor-pointer rounded-lg bg-[#190027]" on:click="{() => (transpose < 11 ? transpose++ : null)}">
@@ -158,14 +155,14 @@ $: (async () => {
                <p class="text-gray-600">capo</p>
             </div>
 
-            <button class="px-1 py-1 text-white cursor-pointer rounded-lg bg-purple-500" on:click="{() => (transpose > -11 ? transpose-- : null)}">
+            <button class="px-1 py-1 text-white cursor-pointer rounded-lg bg-[#190027]" on:click="{() => (transpose > -11 ? transpose-- : null)}">
                <svg class="h-8 w-8 fill-white" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
                   ><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
             </button>
          </div>
 
          <div class="flex flex-row justify-between items-center">
-            <button class="px-1 py-1 text-white cursor-pointer rounded-lg bg-purple-500" on:click="{() => (transpose > -11 ? transpose-- : null)}">
+            <button class="px-1 py-1 text-white cursor-pointer rounded-lg bg-[#190027] " on:click="{() => (transpose > -11 ? transpose-- : null)}">
                <svg class="h-8 w-8 fill-white" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"></path>
                </svg>
@@ -181,7 +178,8 @@ $: (async () => {
                   ><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
             </button>
          </div>
-         <div class="flex flex-col justify-end items-center ml-auto">
+
+         <div class="flex flex-col justify-end mb-6 items-center px-10">
             <div>
                <label for="default-toggle" class="relative inline-flex cursor-pointer items-center">
                   <input type="checkbox" value="" id="default-toggle" class="peer sr-only" bind:checked="{autoScroll}" />
@@ -193,7 +191,12 @@ $: (async () => {
 
             <p class="text-gray-600 items-center justify-center">auto scroll</p>
          </div>
+
+         <div class="py-3 grow">
+            <Info bind:selected approvedTabsOrChords="{chords}" />
+         </div>
       </div>
+
       <div class="grid basis-1/4 grid-cols-4 sm:grid-cols-8 lg:grid-cols-16 gap-0 mb-8">
          {#each chords[selected].chords as beat, i}
             <div on:click="{() => changeSpotifyPosition(beat.start, i)}">
