@@ -22,8 +22,8 @@ const logout = async () => {
 };
 </script>
 
-<div class=" flex h-[70px] flex-row items-center  whitespace-nowrap  bg-white/95  px-[13%] text-[#666666] backdrop-blur-[2px]">
-   <a class="shrink-0 " href="/"> <img class="relative  w-[120px] " src="{newLogo}" alt="" /></a>
+<div class=" flex h-[70px] flex-row  items-center  whitespace-nowrap  bg-white/95 px-[13%] text-[#666666] backdrop-blur-[2px]">
+   <a class="shrink-0 " href="/"> <img class="relative  w-[110px] " src="{newLogo}" alt="" /></a>
 
    <div class="ml-5 mr-5 flex flex-row  items-center">
       <a href="/discover" class="px-3 transition duration-300 ease-in-out hover:-translate-y-1">discover</a>

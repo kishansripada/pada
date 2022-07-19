@@ -81,22 +81,22 @@ onMount(() => {
 </script>
 
 <svelte:head>
-   <title>Pada — Interactive, Beautiful, Tablatures & Chords</title>
+   <title>Pada — Impressively, Beautiful, Tablatures & Chords</title>
    <meta
       name="description"
       content="learn to play guitar chords & tabs synced to your spotify account, add capo, transpose key, chord diagrams and more" />
    <meta name="keywords" content=" Chords, guitar chords, chords, tab, ukulele, tab, tablature, tablatures, sync easy" />
    <meta name="twitter:card" content="summary" />
-   <meta name="twitter:title" content="Pada — Interactive, Beautiful, Tablatures & Chords" />
+   <meta name="twitter:title" content="Pada — Impressively, Beautiful, Tablatures & Chords" />
    <meta name="twitter:image" content="https://i.imgur.com/Exyvnad.png" />
    <meta property="og:type" content="song" />
-   <meta property="og:title" content="Pada — Interactive, Beautiful, Tablatures & Chords" />
+   <meta property="og:title" content="Pada — Impressively, Beautiful, Tablatures & Chords" />
    <meta
       property="og:description"
       content="learn to play guitar chords & tabs synced to your spotify account, add capo, transpose key, chord diagrams and more" />
    <meta property="og:image" content="https://i.imgur.com/Exyvnad.png" />
    <!-- <meta property="og:url" content="PERMALINK" /> -->
-   <meta property="og:site_name" content="Pada — Interactive, Beautiful, Tablatures & Chords" />
+   <meta property="og:site_name" content="Pada — Impressively, Beautiful, Tablatures & Chords" />
 </svelte:head>
 
 <svelte:window bind:scrollY="{scrollPosition}" />
@@ -174,7 +174,7 @@ onMount(() => {
 
 <div id="BANNER" class=" flex  flex-col items-center justify-center">
    <h1 class="flex flex-col  pt-6 text-left text-7xl font-extrabold md:text-8xl lg:text-9xl">
-      <div class="">interactive <span class=" text-transparent">.</span></div>
+      <div class="">impressively <span class=" text-transparent">.</span></div>
 
       <p class="">beautiful</p>
       <div class="inline-flex">

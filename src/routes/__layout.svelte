@@ -18,7 +18,7 @@ supabase.auth.onAuthStateChange((_, session) => {
 </script>
 
 <div class="flex h-screen flex-col font-inter">
-   <div class="sticky top-0 z-40">
+   <div class="sticky top-0">
       <Nav />
    </div>
 
