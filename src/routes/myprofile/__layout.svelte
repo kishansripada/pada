@@ -24,11 +24,3 @@ $: if (!$user && browser) {
       <slot />
    </div>
 </main>
-
-<!-- {#if !$userData.fetching}
-   <h4>{$userData.data.findUserByEmail.name}</h4>
-   <div><b>Email:</b> {$userData.data.findUserByEmail.email}</div> -->
-
-<!-- {:else}
-   <p>Loading...</p>
-{/if}  -->

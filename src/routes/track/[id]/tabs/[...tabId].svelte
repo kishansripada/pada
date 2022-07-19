@@ -6,7 +6,6 @@ export async function load({ stuff }) {
 
 <script>
 export let trackDetails;
-import { onMount } from "svelte";
 import play from "../../../../static/play.svg";
 import pause from "../../../../static/pause.svg";
 import reset from "../../../../static/reset.svg";
@@ -16,7 +15,6 @@ import { user } from "../.././../../store.js";
 import { goto } from "$app/navigation";
 import { supabase } from "../../../../supabase.js";
 
-// $: console.log(tabs);
 const upload = () => {
    if (!$user) {
       goto(`/login?referrer=${$page.url.href}`, { noscroll: true });
@@ -25,36 +23,29 @@ const upload = () => {
    }
 };
 
-// get the current track id from the URL
-$: trackId = $page.params.id;
-
-$: tabs = supabase
-   .from("tabs")
-   .select("*")
-   .eq("spotifyId", trackId)
-   .eq("approvalstatus", "approved")
-   .then((r) => r.data);
-
-// every track will default to the first tab
 let selected = 0;
+$: tabs = (async () => {
+   let resp = await supabase
+      .from("tabs")
+      .select(
+         `     
+    created_at,
+    id,
+    approvalstatus,
+    musicXml,
+    profiles (
+      full_name,
+      profile_pic_url
+    )`
+      )
+      .eq("spotifyId", $page.params.id)
+      .eq("approvalstatus", "approved")
+      .then((r) => r.data);
 
-// if the trackId changes, then reset the current selected track to the first
-$: (selected = 0), trackId;
+   selected = resp.findIndex((tab) => tab.id == $page.params.tabId) == -1 ? 0 : resp.findIndex((tab) => tab.id == $page.params.tabId);
 
-// if the page is accessed with a specified tabId, then find that in the approved tracks and set it to the currently selected tab
-// $: if (tabs && browser) {
-//    (async () => {
-//       let index = tabs.then((tabs) =>
-//          tabs.findIndex((tab) => tab.id == $page.params.tabId) == -1 ? 0 : tabs.findIndex((tab) => tab.id == $page.params.tabId)
-//       );
-//       console.log(index);
-//       if ($page.params.tabId) {
-//          selected = index;
-//       } else {
-//          selected = 0;
-//       }
-//    })();
-// }
+   return resp;
+})();
 
 // OSMD
 let container;
@@ -106,7 +97,7 @@ $: (() => {
    osmd?.PlaybackManager?.pause();
    isPlaying = false;
 })(),
-   trackId;
+   $page;
 </script>
 
 <svelte:head>
@@ -180,11 +171,11 @@ $: (() => {
             <div class="flex flex-row items-center w-1/3 justify-end">
                <img
                   class="h-16 w-16 rounded-full object-cover"
-                  src="https://mofbpdxaxkjlvywcbpmj.supabase.co/storage/v1/object/public/profilepics/{tabs[selected].authorid}/pfp.png"
+                  src="https://mofbpdxaxkjlvywcbpmj.supabase.co/storage/v1/object/public/{tabs[selected].profiles.profile_pic_url}"
                   alt="" />
 
                <div class="flex flex-col pl-3 pt-3">
-                  <p class="">Kishan Sripada</p>
+                  <p class="">{tabs[selected].profiles.full_name}</p>
                </div>
             </div>
          </div>

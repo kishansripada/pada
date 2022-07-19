@@ -327,5 +327,6 @@ onMount(() => {
    </div>
 </div>
 
+<!-- <section class="h-96" style="background-image: linear-gradient(90deg, rgba(161, 119, 255, 0.6), rgba(2, 206, 255, 0.6))"></section> -->
 <style>
 </style>

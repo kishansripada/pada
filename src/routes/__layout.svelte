@@ -1,7 +1,7 @@
 <script>
 import "../app.css";
 import { browser } from "$app/env";
-import { isPremium, isSearching, faunaSession, user } from "../store.js";
+import { isPremium, isSearching, user } from "../store.js";
 import { SvelteToast } from "@zerodevx/svelte-toast";
 import LogIn from "$lib/LogIn.svelte";
 import Nav from "$lib/Nav.svelte";
@@ -9,7 +9,7 @@ import WebPlayback from "$lib/WebPlayback.svelte";
 import Footer from "../lib/Footer.svelte";
 import Search from "../lib/Search.svelte";
 import { supabase } from "../supabase.js";
-
+import favicon from "../static/favicon.png";
 user.set(supabase.auth.user());
 
 supabase.auth.onAuthStateChange((_, session) => {
@@ -38,8 +38,6 @@ supabase.auth.onAuthStateChange((_, session) => {
       {/if}
 
       <div class="overflow-hidden ">
-         <!-- <main class="container ">
-         </main> -->
          <slot />
       </div>
    </div>
@@ -49,8 +47,9 @@ supabase.auth.onAuthStateChange((_, session) => {
    </div>
 </div>
 
+<svelte:head>
+   <link rel="icon" type="image/svg" href="{favicon}" />
+</svelte:head>
+
 <style>
-::selection {
-   background: #c228d3;
-}
 </style>

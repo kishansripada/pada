@@ -14,9 +14,7 @@ export async function load({ params, stuff }) {
 <script>
 export let analysis;
 export let trackDetails;
-
 import { spotifyPosition, chordPosition, isSearching } from "../../../../store.js";
-import { page } from "$app/stores";
 import { shortcut } from "../../../../shortcut.js";
 import { supabase } from "../../../../supabase.js";
 import { goto } from "$app/navigation";

@@ -8,7 +8,7 @@ import rejected from "../../static/rejected.svg";
 import trash from "../../static/trash.svg";
 
 let offset = 0;
-let updater;
+
 $: myTabs = supabase
    .from("tabs")
    .select(

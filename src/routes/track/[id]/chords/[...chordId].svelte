@@ -15,8 +15,6 @@ import { goto } from "$app/navigation";
 import { browser } from "$app/env";
 import { prominent } from "color.js";
 import { majorKeyNotes } from "../../../../musicTheory.js";
-import plus from "../../../../static/plus.svg";
-import minus from "../../../../static/minus.svg";
 
 const contructChord = (beat, transpose) => {
    if (beat.chord?.root == null) return "";
@@ -47,25 +45,25 @@ const upload = () => {
    }
 };
 
-// get the current track id from the URL
-$: trackId = $page.params.id;
-
-$: chords = supabase
-   .from("chords")
-   .select("*")
-   .eq("spotifyId", trackId)
-   .eq("approvalstatus", "approved")
-   .then((r) => r.data);
-
 $: if (chords) {
    chords.then((chords) => currentChords.set(chords));
 }
 
-// every track will default to the first tab
+// every track will default to the first chord
 let selected = 0;
+$: chords = (async () => {
+   let resp = await supabase
+      .from("chords")
+      .select("*")
+      .eq("spotifyId", $page.params.id)
+      .eq("approvalstatus", "approved")
+      .then((r) => r.data);
 
-// if the trackId changes, then reset the current selected track to the first
-$: (selected = 0), trackId;
+   selected = resp.findIndex((chord) => chord.id == $page.params.chordId) == -1 ? 0 : resp.findIndex((chord) => chord.id == $page.params.chordId);
+
+   return resp;
+})();
+
 let autoScroll = true;
 
 if (browser && !localStorage.autoScroll) {

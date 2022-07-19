@@ -11,7 +11,7 @@ let full_name;
 let full_name_original;
 let user = supabase
    .from("profiles")
-   .select("full_name")
+   .select("full_name, profile_pic_url")
    .eq("user_id", supabase.auth.user()?.id)
    .single()
    .then((r) => r.data);
@@ -39,14 +39,28 @@ const changeName = async () => {
    }
 };
 
-$: if (files) {
-   (async function uploadPic() {
-      let buffer = await files[0].arrayBuffer();
-      const { data, error } = await supabase.storage.from("profilepics").upload(`${supabase.auth.user()?.id}/pfp.png`, buffer, {
-         //  cacheControl: "3600",
-         upsert: true,
+async function uploadPic() {
+   let buffer = await files[0].arrayBuffer();
+   console.log(files[0].name);
+   const { data, error } = await supabase.storage.from("profilepics").upload(`${supabase.auth.user()?.id}/${files[0].name}`, buffer, {
+      //  cacheControl: "3600",
+      upsert: true,
+   });
+   console.log(data);
+   const { profileData, profileError } = await supabase
+      .from("profiles")
+      .update({ profile_pic_url: data.Key })
+      .eq("user_id", supabase.auth.user()?.id);
+
+   if (!error && !profileError) {
+      toast.push("profile picture changed successfully", {
+         theme: {
+            "--toastBackground": "#006400",
+            "--toastBarBackground": "#006400",
+            "--toastBorderRadius": "1rem",
+         },
       });
-   })();
+   }
 }
 </script>
 
@@ -59,8 +73,7 @@ $: if (files) {
       <div class=" justify-center items-center w-1/2">
          <label
             for="dropzone-file"
-            style="background-image: url('https://mofbpdxaxkjlvywcbpmj.supabase.co/storage/v1/object/public/profilepics/{supabase.auth.user()
-               ?.id}/pfp.png'); background-position: center; background-size: cover"
+            style="background-image: url('https://mofbpdxaxkjlvywcbpmj.supabase.co/storage/v1/object/public/{user.profile_pic_url}'); background-position: center; background-size: cover"
             class="object-cover flex flex-col justify-center items-center  w-48 h-48 bg-gray-50 border-2 border-gray-300 border-dashed cursor-pointer rounded-full hover:opacity-80">
             <div class="flex flex-col justify-center items-center pt-5 pb-6">
                <svg
@@ -79,8 +92,18 @@ $: if (files) {
             </div>
             <input id="dropzone-file" type="file" class="hidden" bind:files />
          </label>
-         <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload a profile picture</span></p>
-         <p class="text-xs text-gray-500 dark:text-gray-400">PNG or JPG (MAX. 800x400px)</p>
+         <div class="flex flex-row">
+            <div>
+               <p class="mb-2 text-sm text-gray-500 dark:text-gray-400 mt-3"><span class="font-semibold">Click to upload a profile picture</span></p>
+               <p class="text-xs text-gray-500 dark:text-gray-400">PNG or JPG (MAX. 800x400px)</p>
+            </div>
+
+            {#if files}
+               <button on:click="{uploadPic}" class="bg-purple-500 text-white px-3 py-2 hover:opacity-50 ml-3 rounded-xl ">Save</button>
+               <button on:click="{() => (files = undefined)}" class="bg-blue-500 text-white px-3 py-2 hover:opacity-50 ml-3 rounded-xl "
+                  >Clear</button>
+            {/if}
+         </div>
       </div>
 
       <div class="flex flex-col w-1/2 mt-10">

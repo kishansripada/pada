@@ -6,7 +6,6 @@ export async function load({ stuff }) {
 
 <script>
 export let trackDetails;
-import { page } from "$app/stores";
 import { goto } from "$app/navigation";
 import { supabase } from "../../../../supabase.js";
 import { toast } from "@zerodevx/svelte-toast";

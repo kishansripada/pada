@@ -8,7 +8,6 @@ import rejected from "../../static/rejected.svg";
 import trash from "../../static/trash.svg";
 
 let offset = 0;
-let updater;
 $: myTabs = supabase
    .from("chords")
    .select(
@@ -93,7 +92,7 @@ const deleteTab = async (id) => {
                on:click="{() => (offset = offset + 12)}">next ➡️</button>
          </div>
       {:else}
-         <p class="flex flex-row justify-center text-3xl">you haven't submitted any tabs yet! 😞</p>
+         <p class="flex flex-row justify-center text-3xl">you haven't submitted any chords yet! 😞</p>
       {/if}
    {/await}
 </div>

@@ -10,7 +10,7 @@ export const spotifyPosition = writable(null);
 export const chordPosition = writable({ bar: 0 });
 export const isSearching = writable(false)
 export const spotifyIsPaused = writable(true)
-export const faunaSession = writable(null);
+
 export const currentlyPlaying = writable(null)
 export const logIn = readable(function logIn(state) {
    // console.log(window.location.origin);
