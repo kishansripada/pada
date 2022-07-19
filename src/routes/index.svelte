@@ -81,22 +81,22 @@ onMount(() => {
 </script>
 
 <svelte:head>
-   <title>Bop Tabs — Interactive, Beautiful, Tablatures & Chords</title>
+   <title>Pada — Interactive, Beautiful, Tablatures & Chords</title>
    <meta
       name="description"
       content="learn to play guitar chords & tabs synced to your spotify account, add capo, transpose key, chord diagrams and more" />
    <meta name="keywords" content=" Chords, guitar chords, chords, tab, ukulele, tab, tablature, tablatures, sync easy" />
    <meta name="twitter:card" content="summary" />
-   <meta name="twitter:title" content="Bop Tabs — Interactive, Beautiful, Tablatures & Chords" />
-   <meta name="twitter:image" content="https://i.imgur.com/xGowEtj.png" />
+   <meta name="twitter:title" content="Pada — Interactive, Beautiful, Tablatures & Chords" />
+   <meta name="twitter:image" content="https://i.imgur.com/Exyvnad.png" />
    <meta property="og:type" content="song" />
-   <meta property="og:title" content="Bop Tabs — Interactive, Beautiful, Tablatures & Chords" />
+   <meta property="og:title" content="Pada — Interactive, Beautiful, Tablatures & Chords" />
    <meta
       property="og:description"
       content="learn to play guitar chords & tabs synced to your spotify account, add capo, transpose key, chord diagrams and more" />
-   <meta property="og:image" content="https://i.imgur.com/xGowEtj.png" />
+   <meta property="og:image" content="https://i.imgur.com/Exyvnad.png" />
    <!-- <meta property="og:url" content="PERMALINK" /> -->
-   <meta property="og:site_name" content="Bop Tabs — Interactive, Beautiful, Tablatures & Chords" />
+   <meta property="og:site_name" content="Pada — Interactive, Beautiful, Tablatures & Chords" />
 </svelte:head>
 
 <svelte:window bind:scrollY="{scrollPosition}" />
@@ -187,7 +187,7 @@ onMount(() => {
 
    <div class=" mt-20 flex w-full  flex-col items-center text-center text-[20px] font-light text-[#666666]">
       <p class="max-w-[1200px] px-[10%]">
-         bop tabs leverages modern technology to enchance the antiquated way of learning music, making it more accessible and enjoyable to learn.
+         pada leverages modern technology to enchance the antiquated way of learning music, making it more accessible and enjoyable to learn.
       </p>
       <div class="pt-10">
          <a
@@ -207,7 +207,7 @@ onMount(() => {
             <p class="z-50 mt-4 text-3xl text-purple-300">all synced to Spotify</p>
 
             <p class="z-50 mt-9 text-gray-300">
-               bop tabs enables simple, elegant chord viewing coupled with an incredible chord writing experience. simply select the chord you wish to
+               pada enables simple, elegant chord viewing coupled with an incredible chord writing experience. simply select the chord you wish to
                edit and contruct it from the ground up
             </p>
          </div>
@@ -285,7 +285,7 @@ onMount(() => {
          <p class="z-50 mt-4 text-3xl text-blue-700">never guess the rhythm again</p>
 
          <p class="z-50 mt-9 text-[#190027]">
-            bop tabs allows users to upload a unversally accepted <span class="font-semibold text-blue-600">MusicXML</span> file, which enables
+            pada allows users to upload a unversally accepted <span class="font-semibold text-blue-600">MusicXML</span> file, which enables
             <span class="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text  font-semibold text-transparent">live playback</span>
             for every tab on the platform. don't try to guess the rhythm, just hear it.
          </p>
@@ -308,7 +308,7 @@ onMount(() => {
          <div class="mt-16 flex flex-row items-center">
             <p class="text-wrap z-50 w-1/2 text-center text-3xl text-green-700">sign up with Spotify and start playing and listening</p>
             <p class="mx-8 text-3xl">OR</p>
-            <p class="z-50  w-1/2 text-center text-3xl text-blue-700">join bop tabs and start uploading tabs</p>
+            <p class="z-50  w-1/2 text-center text-3xl text-blue-700">join pada and start uploading tabs</p>
          </div>
          <div class="mt-16 mb-16 flex flex-row items-center justify-around">
             <a

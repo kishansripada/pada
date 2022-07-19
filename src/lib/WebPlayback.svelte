@@ -33,7 +33,7 @@ function on_key_down(event) {
 
 window.onSpotifyWebPlaybackSDKReady = () => {
    player = new window.Spotify.Player({
-      name: "Bop Tabs",
+      name: "pada",
       getOAuthToken: (cb) => {
          cb($loggedIn);
       },

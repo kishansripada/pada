@@ -90,7 +90,7 @@ const debounce = (query) => {
             {#each spotifySearchResults as track}
                <div
                   on:click="{() => {
-                     goto(`/track/{track.id}/tabs`);
+                     goto(`/track/${track.id}/tabs`);
                      isSearching.set(false);
                   }}"
                   class="h-full grow flex flex-row items-center hover:bg-gray-100 bg-red-200/20 cursor-pointer">

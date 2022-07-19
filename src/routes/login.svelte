@@ -29,13 +29,13 @@ const login = async () => {
 </script>
 
 <svelte:head>
-   <title>Login — Bop Tabs</title>
+   <title>Login — Pada</title>
 </svelte:head>
 
 <main class="container ">
    <div class="mt-16 flex flex-col  md:ml-[15%]">
       <p class="pb-3 text-4xl">log in</p>
-      <p class="">new to BopTabs? <a class="text-blue-600" href="/signup">sign up for an account</a></p>
+      <p class="">new to pada? <a class="text-blue-600" href="/signup">sign up for an account</a></p>
 
       <div class="mr-auto flex flex-col items-center pt-10 ">
          <p class="font mr-auto pb-2">email</p>

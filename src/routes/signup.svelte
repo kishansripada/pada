@@ -48,7 +48,7 @@ const signup = async () => {
 </script>
 
 <svelte:head>
-   <title>Sign Up — Bop Tabs</title>
+   <title>Sign Up — Pada</title>
 </svelte:head>
 <main class="container ">
    <div class="ml-36 mt-6 flex flex-col ">

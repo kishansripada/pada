@@ -13,7 +13,7 @@
             >@kishansripada</a>
       </p>
       <p class="ml-auto">view on GitHub</p>
-      <a href="https://github.com/kishansripada/BopTabsSvelte" class="pl-3">
+      <a href="https://github.com/kishansripada/pada" class="pl-3">
          <img
             src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
             alt=""
