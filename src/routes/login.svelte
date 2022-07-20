@@ -32,7 +32,7 @@ const login = async () => {
    <title>Login — Pada</title>
 </svelte:head>
 
-<main class="container ">
+<main class="container flex-grow">
    <div class="mt-16 flex flex-col  md:ml-[15%]">
       <p class="pb-3 text-4xl">log in</p>
       <p class="">new to pada? <a class="text-blue-600" href="/signup">sign up for an account</a></p>

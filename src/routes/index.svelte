@@ -100,79 +100,22 @@ onMount(() => {
 </svelte:head>
 
 <svelte:window bind:scrollY="{scrollPosition}" />
+<!-- top right -->
+<ColorSplotch stylePosition="top: -200px; right: -500px; opacity: 0.8; z-index:20" color="#F5CDFF" />
 
-<ColorSplotch stylePosition="top: -250px; right: 0px;" color="#F5CDFF" />
-<!-- <ColorSplotch stylePosition="top: 1300px; right: 0px;" color="#F5CDFF" /> -->
-<ColorSplotch stylePosition="top: -250px; left: 0px; transform: rotate(180deg)" color="#ADD8E6" />
-<!-- <ColorSplotch stylePosition="top: 1500px; left: 0px; transform: rotate(180deg); z-index:0" color="#ADD8E6" /> -->
-<!-- <ColorSplotch stylePosition="top: 600px; left: 0px; transform: rotate(180deg)" color="#1DB954" /> -->
+<!-- top left -->
+<ColorSplotch stylePosition="top: -250px; left: -500px; opacity: 0.8; z-index:20" color="#ADD8E6" />
 
-<div class=" pointer-events-none absolute top-24 h-[500px] w-[1000px] overflow-hidden">
-   <div
-      class=" w-full"
-      style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, #6a0dad 0%, rgba(239, 255, 250, 0) 100%);
- background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, #6a0dad 0%, rgba(239, 255, 250, 0) 100%);
- position: absolute;
- height: 100%;
- width: 100%;
- top: 0px;
- right: 0px;
- z-index: -50;
- opacity: 0.3;">
-   </div>
-</div>
-
-<div class=" pointer-events-none absolute right-0 top-0 h-[500px] w-[1000px] overflow-hidden">
-   <div
-      class=" w-full"
-      style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, #6495ED 0%, rgba(239, 255, 250, 0) 100%);
- background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, #6495ED 0%, rgba(239, 255, 250, 0) 100%);
- position: absolute;
- height: 100%;
- width: 100%;
- top: 0px;
- right: 0px;
- z-index: -50;
- opacity: 0.3;">
-   </div>
-</div>
-
-<div class=" pointer-events-none absolute right-0 top-[1700px] h-[500px] w-[1000px] overflow-hidden">
-   <div
-      class=" w-full"
-      style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, #6a0dad 0%, rgba(239, 255, 250, 0) 100%);
- background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, #6a0dad 0%, rgba(239, 255, 250, 0) 100%);
- position: absolute;
- height: 100%;
- width: 100%;
- top: 0px;
- right: 0px;
- z-index: -50;
- opacity: 0.2;">
-   </div>
-</div>
-
-<div class=" pointer-events-none absolute right-0 top-[2000px] h-[500px] w-[1000px] overflow-hidden">
-   <div
-      class=" w-full"
-      style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, #6495ED 0%, rgba(239, 255, 250, 0) 100%);
- background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, #6495ED 0%, rgba(239, 255, 250, 0) 100%);
- position: absolute;
- height: 100%;
- width: 100%;
- top: 0px;
- right: 0px;
- z-index: -50;
- opacity: 0.2;">
-   </div>
-</div>
+<!-- middle banner -->
+<ColorSplotch stylePosition="top: -250px;  opacity: 0.2; z-index:20" color="#6a0dad" />
+<ColorSplotch stylePosition="top: -250px; right:100px; opacity: 0.2; z-index:20" color="#6495ED" />
 
 <!-- background stuff -->
-<div class="pointer-events-none absolute top-[700px] z-0 h-[2000px] w-full overflow-hidden">
+<div class="pointer-events-none absolute top-[700px] z-10 h-[2000px] w-full overflow-hidden">
    <div class="relative left-[-100px] z-0 mt-[200px] h-[750px] w-[120%] rotate-[-8deg] bg-[#190027]"></div>
 </div>
 
-<div id="BANNER" class=" flex  flex-col items-center justify-center">
+<div id="BANNER" class=" z-30  flex flex-col items-center justify-center">
    <h1 class="flex flex-col  pt-6 text-left text-7xl font-extrabold md:text-8xl lg:text-9xl">
       <div class="">impressively <span class=" text-transparent">.</span></div>
 

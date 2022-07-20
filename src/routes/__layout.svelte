@@ -17,12 +17,12 @@ supabase.auth.onAuthStateChange((_, session) => {
 });
 </script>
 
-<div class="flex h-screen flex-col font-inter">
+<div class="relative overflow-x-hidden">
    <div class="sticky top-0">
       <Nav />
    </div>
 
-   <div class="flex-grow">
+   <div class="flex flex-col font-inter">
       {#if $isSearching}
          <Search />
       {/if}
@@ -37,13 +37,9 @@ supabase.auth.onAuthStateChange((_, session) => {
          <LogIn />
       {/if}
 
-      <div class="overflow-hidden ">
-         <slot />
-      </div>
-   </div>
-
-   <div class="">
-      <Footer />
+      <slot />
+      <!-- 
+      <Footer /> -->
    </div>
 </div>
 

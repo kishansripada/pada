@@ -38,7 +38,7 @@ const formattedKey = () => {
 };
 </script>
 
-<div class="flex h-64 flex-row  rounded-[20px] bg-white/10 shadow-2xl">
+<div class="z-30 flex h-64  flex-row rounded-[20px] bg-white/10 shadow-2xl">
    <img class="ml-4 mt-4 h-56 w-56" src="{trackDetails.album.images[0].url}" alt="" />
 
    <div class="ml-6 mt-0 flex flex-col text-black">
