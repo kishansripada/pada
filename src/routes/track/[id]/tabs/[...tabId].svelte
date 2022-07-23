@@ -29,14 +29,14 @@ $: tabs = (async () => {
       .from("tabs")
       .select(
          `     
-    created_at,
-    id,
-    approvalstatus,
-    musicXml,
-    profiles (
-      full_name,
-      profile_pic_url
-    )`
+       created_at,
+       id,
+       approvalstatus,
+       musicXml,
+       profiles (
+         full_name,
+         profile_pic_url
+       )`
       )
       .eq("spotifyId", $page.params.id)
       .eq("approvalstatus", "approved")

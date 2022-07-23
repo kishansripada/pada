@@ -71,13 +71,6 @@ let beatValues = Array.from({ length: 5 }, () => [
 // };
 
 let scrollPosition = 0;
-// $: console.log(scrollPosition);
-let currentBar = 0;
-onMount(() => {
-   let interval = window.setInterval(async () => {
-      currentBar = currentBar < 40 ? currentBar + 1 : 0;
-   }, 700);
-});
 </script>
 
 <svelte:head>
@@ -107,16 +100,26 @@ onMount(() => {
 <ColorSplotch stylePosition="top: -250px; left: -500px; opacity: 0.8; z-index:20" color="#ADD8E6" />
 
 <!-- middle banner -->
-<ColorSplotch stylePosition="top: -250px;  opacity: 0.2; z-index:20" color="#6a0dad" />
-<ColorSplotch stylePosition="top: -250px; right:100px; opacity: 0.2; z-index:20" color="#6495ED" />
+<ColorSplotch
+   stylePosition="top: -100px;  opacity: 0.3; z-index:20;margin-left: auto;
+margin-right: auto;
+left: 400px;
+right: 0;"
+   color="#6a0dad" />
+<ColorSplotch
+   stylePosition="top: -100px;  opacity: 0.3; z-index:20;margin-left: auto;
+margin-right: auto;
+left: 0px;
+right: 400px;"
+   color="#6495ED" />
 
 <!-- background stuff -->
 <div class="pointer-events-none absolute top-[700px] z-10 h-[2000px] w-full overflow-hidden">
    <div class="relative left-[-100px] z-0 mt-[200px] h-[750px] w-[120%] rotate-[-8deg] bg-[#190027]"></div>
 </div>
 
-<div id="BANNER" class=" z-30  flex flex-col items-center justify-center">
-   <h1 class="flex flex-col  pt-6 text-left text-7xl font-extrabold md:text-8xl lg:text-9xl">
+<div id="BANNER" class=" z-30  mt-10 flex flex-col items-center justify-center">
+   <h1 class="flex flex-col pt-6 text-left text-5xl font-extrabold md:text-8xl lg:text-9xl">
       <div class="">impressively <span class=" text-transparent">.</span></div>
 
       <p class="">beautiful</p>
@@ -124,12 +127,12 @@ onMount(() => {
          <Typewriter loop cursor="{false}">
             <p class="bg-gradient-to-r from-[#7928CA] to-[#FF0080] bg-clip-text  text-transparent">tablatures.</p>
             <p class="bg-gradient-to-r from-[#007CF0] to-[#00DFD8] bg-clip-text  text-transparent">chords.</p>
-         </Typewriter> <span class="text-transparent"> .</span>
+         </Typewriter> <span class="text-transparent">.</span>
       </div>
    </h1>
 
-   <div class=" mt-20 flex w-full  flex-col items-center text-center text-[20px] font-light text-[#666666]">
-      <p class="max-w-[1200px] px-[10%]">
+   <div class=" mt-20 flex w-full  flex-col items-center text-center text-[20px] font-light ">
+      <p class="max-w-[1200px] px-[10%] text-sm lg:text-xl">
          pada leverages modern technology to enchance the antiquated way of learning music, making it more accessible and enjoyable to learn.
       </p>
       <div class="pt-10">

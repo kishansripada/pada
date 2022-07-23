@@ -54,12 +54,22 @@ let selected = 0;
 $: chords = (async () => {
    let resp = await supabase
       .from("chords")
-      .select("*")
+      .select(
+         `created_at,
+       id,
+       approvalstatus,
+       chords,
+       profiles (
+         full_name,
+         profile_pic_url
+       )`
+      )
       .eq("spotifyId", $page.params.id)
       .eq("approvalstatus", "approved")
       .then((r) => r.data);
 
-   selected = resp.findIndex((chord) => chord.id == $page.params.chordId) == -1 ? 0 : resp.findIndex((chord) => chord.id == $page.params.chordId);
+   console.log(resp);
+   // selected = resp.findIndex((chord) => chord.id == $page.params.chordId) == -1 ? 0 : resp.findIndex((chord) => chord.id == $page.params.chordId);
 
    return resp;
 })();
@@ -203,7 +213,7 @@ $: (async () => {
          <div class="z-40 flex h-24  flex-row items-center r text-black ml-auto">
             <img
                class="h-16 w-16 rounded-full object-cover"
-               src="https://mofbpdxaxkjlvywcbpmj.supabase.co/storage/v1/object/public/profilepics/{chords[selected].authorid}/pfp.png"
+               src="https://mofbpdxaxkjlvywcbpmj.supabase.co/storage/v1/object/public/{chords[selected].profiles.profile_pic_url}"
                alt="" />
 
             <div class="flex flex-col pl-3 pt-3">
@@ -252,14 +262,14 @@ $: (async () => {
             <div
                class=" w-full"
                style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, {colors[0]} 0%, rgba(239, 255, 250, 0) 100%);
-       background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, {colors[0]} 0%, rgba(239, 255, 250, 0) 100%);
-       position: absolute;
-       height: 100%;
-       width: 100%;
-       top: 0px;
-       right: 0px;
-       z-index: -50;
-       opacity: 0.3;">
+          background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, {colors[0]} 0%, rgba(239, 255, 250, 0) 100%);
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          top: 0px;
+          right: 0px;
+          z-index: -50;
+          opacity: 0.3;">
             </div>
          </div>
 
@@ -267,14 +277,14 @@ $: (async () => {
             <div
                class=" w-full"
                style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, {colors[1]} 0%, rgba(239, 255, 250, 0) 100%);
-       background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, {colors[1]} 0%, rgba(239, 255, 250, 0) 100%);
-       position: absolute;
-       height: 100%;
-       width: 100%;
-       top: 0px;
-       right: 0px;
-       z-index: -50;
-       opacity: 0.3;">
+          background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, {colors[1]} 0%, rgba(239, 255, 250, 0) 100%);
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          top: 0px;
+          right: 0px;
+          z-index: -50;
+          opacity: 0.3;">
             </div>
          </div>
       </div>

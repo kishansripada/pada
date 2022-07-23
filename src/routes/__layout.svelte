@@ -17,8 +17,8 @@ supabase.auth.onAuthStateChange((_, session) => {
 });
 </script>
 
-<div class="relative overflow-x-hidden">
-   <div class="sticky top-0">
+<div class="relative" style="overflow: hidden; overflow:clip;">
+   <div class="sticky">
       <Nav />
    </div>
 
@@ -37,7 +37,10 @@ supabase.auth.onAuthStateChange((_, session) => {
          <LogIn />
       {/if}
 
-      <slot />
+      <div class="mb-24">
+         <slot />
+      </div>
+
       <!-- 
       <Footer /> -->
    </div>

@@ -15,17 +15,13 @@ let poweredBy;
 
 onMount(() => searchInput.focus());
 
-(async () => {
-   const { data, error } = await supabase
-      .from("tracks")
-      .select("name, tabs!inner( approvalstatus ), chords!inner( approvalstatus ), spotifyId, artists")
-      .filter("tabs.approvalstatus", "eq", "approved")
-      .filter("chords.approvalstatus", "eq", "approved")
-      // .or("tabs.approvalstatus.eq.approved, chords.approvalstatus.eq.approved")
-      .textSearch("name", `'move on'`);
-
-   console.log(data);
-})();
+// (async () => {
+//    const { data, error } = await supabase
+//   .from('trc')
+//   .select()
+//   .textSearch('description', `'little' | 'big'`)
+//    console.log(data);
+// })();
 
 let token = fetch(`/api/spotify/gettoken`).then((r) => r.json());
 const client = algoliasearch("1K06LV6AVV", "80e1726a9cd002b7e3669ce45f383101");

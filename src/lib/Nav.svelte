@@ -27,9 +27,6 @@ const logout = async () => {
 
    <div class="ml-5 mr-5 flex flex-row  items-center">
       <a href="/discover" class="px-3 transition duration-300 ease-in-out hover:-translate-y-1">discover</a>
-      <a sveltekit:prefetch href="/track/5LHHKZOwV8XW4LJP2C64mw/tabs" class="px-3  transition duration-300 ease-in-out hover:-translate-y-1"
-         >about
-      </a>
 
       {#if $loggedIn}
          <a href="/mylibrary" class="  px-3 duration-300 ease-in-out  hover:-translate-y-1">my library</a>
