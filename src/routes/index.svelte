@@ -74,22 +74,22 @@ let scrollPosition = 0;
 </script>
 
 <svelte:head>
-   <title>Pada — Impressively, Beautiful, Tablatures & Chords</title>
+   <title>Pada — Impressively Beautiful Tablatures & Chords</title>
    <meta
       name="description"
       content="learn to play guitar chords & tabs synced to your spotify account, add capo, transpose key, chord diagrams and more" />
    <meta name="keywords" content=" Chords, guitar chords, chords, tab, ukulele, tab, tablature, tablatures, sync easy" />
    <meta name="twitter:card" content="summary" />
-   <meta name="twitter:title" content="Pada — Impressively, Beautiful, Tablatures & Chords" />
+   <meta name="twitter:title" content="Pada — Impressively Beautiful Tablatures & Chords" />
    <meta name="twitter:image" content="https://i.imgur.com/Exyvnad.png" />
    <meta property="og:type" content="song" />
-   <meta property="og:title" content="Pada — Impressively, Beautiful, Tablatures & Chords" />
+   <meta property="og:title" content="Pada — Impressively Beautiful Tablatures & Chords" />
    <meta
       property="og:description"
       content="learn to play guitar chords & tabs synced to your spotify account, add capo, transpose key, chord diagrams and more" />
    <meta property="og:image" content="https://i.imgur.com/Exyvnad.png" />
    <!-- <meta property="og:url" content="PERMALINK" /> -->
-   <meta property="og:site_name" content="Pada — Impressively, Beautiful, Tablatures & Chords" />
+   <meta property="og:site_name" content="Pada — Impressively Beautiful Tablatures & Chords" />
 </svelte:head>
 
 <svelte:window bind:scrollY="{scrollPosition}" />
@@ -100,18 +100,23 @@ let scrollPosition = 0;
 <ColorSplotch stylePosition="top: -250px; left: -500px; opacity: 0.8; z-index:20" color="#ADD8E6" />
 
 <!-- middle banner -->
-<ColorSplotch
-   stylePosition="top: -100px;  opacity: 0.3; z-index:20;margin-left: auto;
+
+<div
+   class="pointer-events-none absolute  h-[1000px] w-[1000px]"
+   style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, #6a0dad 0%, rgba(239, 255, 250, 0) 100%);
+background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, #6a0dad 0%, rgba(239, 255, 250, 0) 100%); top: -100px;  opacity: 0.3; z-index:20;margin-left: auto;
 margin-right: auto;
 left: 400px;
-right: 0;"
-   color="#6a0dad" />
-<ColorSplotch
-   stylePosition="top: -100px;  opacity: 0.3; z-index:20;margin-left: auto;
+right: 0;">
+</div>
+<div
+   class="pointer-events-none absolute  h-[1000px] w-[1000px]"
+   style="background-image: -o-radial-gradient(47.64% 52.94%, 37.66% 48.2%, #6495ED 0%, rgba(239, 255, 250, 0) 100%);
+background-image: radial-gradient(37.66% 48.2% at 47.64% 52.94%, #6495ED 0%, rgba(239, 255, 250, 0) 100%); top: -100px;  opacity: 0.3; z-index:20;margin-left: auto;
 margin-right: auto;
 left: 0px;
-right: 400px;"
-   color="#6495ED" />
+right: 400px;">
+</div>
 
 <!-- background stuff -->
 <div class="pointer-events-none absolute top-[700px] z-10 h-[2000px] w-full overflow-hidden">
@@ -122,11 +127,11 @@ right: 400px;"
    <h1 class="flex flex-col pt-6 text-left text-5xl font-extrabold md:text-8xl lg:text-9xl">
       <div class="">impressively <span class=" text-transparent">.</span></div>
 
-      <p class="">beautiful</p>
-      <div class="inline-flex">
+      <p class="z-30">beautiful</p>
+      <div class="z-30 inline-flex">
          <Typewriter loop cursor="{false}">
-            <p class="bg-gradient-to-r from-[#7928CA] to-[#FF0080] bg-clip-text  text-transparent">tablatures.</p>
-            <p class="bg-gradient-to-r from-[#007CF0] to-[#00DFD8] bg-clip-text  text-transparent">chords.</p>
+            <p class="z-30 bg-gradient-to-r from-[#7928CA] to-[#FF0080] bg-clip-text  text-transparent">tablatures.</p>
+            <p class="z-30 bg-gradient-to-r from-[#007CF0] to-[#00DFD8] bg-clip-text  text-transparent">chords.</p>
          </Typewriter> <span class="text-transparent">.</span>
       </div>
    </h1>
