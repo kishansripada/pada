@@ -242,7 +242,7 @@ right: 400px;">
          </p>
       </div>
       <a
-         href="/track/34gCuhDGsG4bRPIf9bb02f/chords"
+         href="/track/7iHHxY2NLlJRAmlAmC4ahQ/tabs"
          class="mt-16 mr-auto ml-auto cursor-pointer rounded-full bg-blue-300 py-1 px-3 font-semibold text-black transition duration-300 ease-in-out hover:bg-white">
          see an example
       </a>

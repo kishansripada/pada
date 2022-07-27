@@ -45,7 +45,7 @@ const deleteTab = async (id) => {
 
 <div class="flex w-full flex-col">
    <div class="pl-3">
-      <h1 class=" pb-2 text-3xl font-light">my submitted tablatures</h1>
+      <h1 class=" pb-2 text-3xl font-light">my submitted chords</h1>
       <hr class="pb-4" />
    </div>
 
