@@ -3,3 +3,8 @@
 An interactive chord and guitar tablature library connected to Spotify. 
 
 Powered by: SvelteKit, Tailwind, Spotify API and Supabase
+
+
+Check out our demo video!
+https://www.youtube.com/watch?v=2HGNAIPBQkE
+
